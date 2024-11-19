@@ -11,7 +11,7 @@ import { RecipeIcon } from '../assets/icons';
 
 const pages = ['Recipes', 'Groceries', 'Profile'];
 
-function NavigationBar() {
+export default function NavigationBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
@@ -103,5 +103,3 @@ function NavigationBar() {
     </AppBar>
   );
 }
-
-export default NavigationBar;
