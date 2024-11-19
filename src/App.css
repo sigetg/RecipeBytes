@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Patrick+Hand+SC&family=Shadows+Into+Light&display=swap');
+
 .App {
   text-align: center;
 }
@@ -35,4 +37,10 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+body {
+  font-family: "Patrick Hand SC", cursive;
+  font-weight: 400;
+  font-style: normal;
 }
