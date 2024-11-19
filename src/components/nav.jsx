@@ -9,7 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Container from '@mui/material/Container';
 import { RecipeIcon } from '../assets/icons';
 
-const pages = ['Recipes', 'Groceries', 'Profile'];
+const pages = ['Recipes', 'Groceries', 'Profile','Pantry'];
 
 export default function NavigationBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
