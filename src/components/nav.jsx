@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,6 +16,7 @@ const pages = ['Recipes', 'Groceries', 'Pantry', 'Profile'];
 
 export default function NavigationBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const navigate = useNavigate(); // Call useNavigate to get the navigate function
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -22,6 +24,11 @@ export default function NavigationBar() {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+  };
+
+  const handleNavigate = (page) => {
+    const path = page.toLowerCase();
+    navigate(`/${path}`);
   };
 
   return (
@@ -37,7 +44,6 @@ export default function NavigationBar() {
               sx={{
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },
-                fontFamily: 'monospace',
                 fontWeight: 700,
                 letterSpacing: '.3rem',
                 color: 'inherit',
@@ -69,7 +75,12 @@ export default function NavigationBar() {
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page}
+                  onClick={() => {
+                    handleCloseNavMenu();
+                    handleNavigate(page);
+                  }}
+                >
                   <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
                 </MenuItem>
               ))}
@@ -86,7 +97,10 @@ export default function NavigationBar() {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => {
+                  handleCloseNavMenu();
+                  handleNavigate(page);
+                }}
                 sx={{
                     mr: 2,
                     my: 2,
@@ -110,7 +124,6 @@ export default function NavigationBar() {
               mr: 2,
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
-              fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
               color: 'inherit',
@@ -149,7 +162,12 @@ export default function NavigationBar() {
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} 
+                  onClick={() => {
+                    handleCloseNavMenu();
+                    handleNavigate(page);
+                  }}
+                >
                   <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
                 </MenuItem>
               ))}
