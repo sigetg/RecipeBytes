@@ -1,14 +1,14 @@
 import React from "react";
-import './../styles/Grocery-list.css';
+import './../styles/PantryList.css';
 
 
-const GroceryList = () => {
+const PantryList = () => {
     return (
         <body>
         <main class="container">
-          <h1 class="header">Groceries</h1>
+          <h1 class="header">Pantry</h1>
           <button type="button" class="button header">⨁ New Item</button>
-          <section class="grocery">
+          <section class="pantry">
             <div class="produce">
               <h2>Produce</h2>
               <ul>
@@ -68,4 +68,4 @@ const GroceryList = () => {
       </body>
     )
 }      
-export default GroceryList;
+export default PantryList;
