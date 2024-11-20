@@ -109,7 +109,7 @@ export default function NavigationBar() {
             sx={{
               flexGrow: 1,
               display: { xs: 'none', md: 'flex' },
-              justifyContent: 'center', // Center navigation items
+              justifyContent: 'end', 
             }}
           >
             {pages.map((page) => (
