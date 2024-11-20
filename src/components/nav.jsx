@@ -37,7 +37,6 @@ export default function NavigationBar() {
               sx={{
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },
-                fontFamily: 'monospace',
                 fontWeight: 700,
                 letterSpacing: '.3rem',
                 color: 'inherit',
@@ -92,15 +91,14 @@ export default function NavigationBar() {
                     my: 2,
                     color: 'white',
                     display: 'block',
-                    fontFamily: "'Patrick Hand SC', cursive", // Change font family
-                    fontSize: 18, // Adjust font size if needed
+                    fontFamily: "'Patrick Hand SC', cursive",
+                    fontSize: 18, 
                 }}
               >
                 {page}
               </Button>
             ))}
           </Box>
-
           <Typography
             variant="h5"
             noWrap
@@ -110,7 +108,6 @@ export default function NavigationBar() {
               mr: 2,
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
-              fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
               color: 'inherit',
