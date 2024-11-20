@@ -5,9 +5,10 @@ import Box from "@mui/material/Box";
 import StarIcon from "@mui/icons-material/Star";
 import { Typography } from "@mui/material";
 import { recipeData } from "../data/recipeData";
+import { Link } from "react-router-dom";
 import "../styles/RecipeList.css";
 
-// Styled Components for Search Bar
+
 const SearchBar = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -36,7 +37,7 @@ export default function RecipeList() {
     setSearchQuery(e.target.value.toLowerCase());
   };
 
-  // Filter Recipes
+
   const filteredFavorites = recipeData.filter(
     (recipe) =>
       recipe.is_favorite &&
@@ -51,7 +52,6 @@ export default function RecipeList() {
 
   return (
     <Box sx={{ padding: "30px", height:"auto", alignContent:"center", display: "block", marginTop: "5vh" }}>
-      {/* Search Bar */}
       <SearchBar>
         <SearchInput
           type="text"
@@ -82,37 +82,44 @@ export default function RecipeList() {
           </Typography>
         )}
         {filteredFavorites.map((recipe) => (
-          <div className="recipe-card" key={recipe.title}>
-            <img
-              className="recipe-image"
-              src={recipe.image}
-              alt={recipe.title}
-            />
-            <div style={{ flex: 1 }}>
-              <Typography
-                variant="h5"
-                sx={{
-                  fontWeight: "bold",
-                  fontFamily: "'Patrick Hand SC', cursive",
-                  textAlign: "left",
-                  paddingBottom: "15px",
-                }}
-              >
-                {recipe.title}
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{ color: "#666", textAlign: "left" }}
-              >
-                <strong>Ingredients:</strong>{" "}
-                {recipe.ingredients
-                  .map((item) => `${item.quantity} ${item.name}`)
-                  .slice(0, 5)
-                  .join(", ")}{" "}
-                ...
-              </Typography>
+          <Link 
+            to={`/recipe/${encodeURIComponent(recipe.title)}`}
+            key={recipe.title}
+            style={{ TextDecoration: "none", color: "inherit" }}
+          >
+            <div className="recipe-card" key={recipe.title}>
+              <img
+                className="recipe-image"
+                src={recipe.image}
+                alt={recipe.title}
+              />
+              <div style={{ flex: 1 }}>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    fontWeight: "bold",
+                    fontFamily: "'Patrick Hand SC', cursive",
+                    textAlign: "left",
+                    paddingBottom: "15px",
+                  }}
+                >
+                  {recipe.title}
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{ color: "#666", textAlign: "left" }}
+                >
+                  <strong>Ingredients:</strong>{" "}
+                  {recipe.ingredients
+                    .map((item) => `${item.quantity} ${item.name}`)
+                    .slice(0, 5)
+                    .join(", ")}{" "}
+                  ...
+                </Typography>
+              </div>
             </div>
-          </div>
+          </Link>
+          
         ))}
       </Box>
 
@@ -131,37 +138,43 @@ export default function RecipeList() {
           Suggestions
         </Typography>
         {filteredSuggestions.map((recipe) => (
-          <div className="recipe-card" key={recipe.title}>
-            <img
-              className="recipe-image"
-              src={recipe.image}
-              alt={recipe.title}
-            />
-            <div style={{ flex: 1 }}>
-              <Typography
-                variant="h5"
-                sx={{
-                  fontWeight: "bold",
-                  fontFamily: "'Patrick Hand SC', cursive",
-                  textAlign: "left",
-                  paddingBottom: "15px",
-                }}
-              >
-                {recipe.title}
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{ color: "#666", textAlign: "left" }}
-              >
-                <strong>Ingredients:</strong>{" "}
-                {recipe.ingredients
-                  .map((item) => `${item.quantity} ${item.name}`)
-                  .slice(0, 5)
-                  .join(", ")}{" "}
-                ...
-              </Typography>
+          <Link 
+            to={`/recipe/${encodeURIComponent(recipe.title)}`}
+            key={recipe.title}
+            style={{ TextDecoration: "none", color: "inherit" }}
+          >
+            <div className="recipe-card" key={recipe.title}>
+              <img
+                className="recipe-image"
+                src={recipe.image}
+                alt={recipe.title}
+              />
+              <div style={{ flex: 1 }}>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    fontWeight: "bold",
+                    fontFamily: "'Patrick Hand SC', cursive",
+                    textAlign: "left",
+                    paddingBottom: "15px",
+                  }}
+                >
+                  {recipe.title}
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{ color: "#666", textAlign: "left" }}
+                >
+                  <strong>Ingredients:</strong>{" "}
+                  {recipe.ingredients
+                    .map((item) => `${item.quantity} ${item.name}`)
+                    .slice(0, 5)
+                    .join(", ")}{" "}
+                  ...
+                </Typography>
+              </div>
             </div>
-          </div>
+          </Link>  
         ))}
       </Box>
     </Box>
