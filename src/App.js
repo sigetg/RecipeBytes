@@ -6,6 +6,9 @@ import GroceryList from "./components/Grocery-list";
 import Profile from "./components/Profile";
 import PantryList from "./components/PantryList";
 import RecipeDetailView from "./components/RecipeDetailView";
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
+import PrivateRoute from "./components/PrivateRoute";
 import "./App.css";
 
 function App() {
@@ -13,11 +16,48 @@ function App() {
     <Router>
       <NavigationBar />
       <Routes>
-        <Route path="/recipes" element={<RecipeList />} />
-        <Route path="/grocery-list" element={<GroceryList />} />
-        <Route path="/" element={<Profile />} />
-        <Route path="/pantry" element={<PantryList />} />
-        <Route path="/recipe/:title" element={<RecipeDetailView />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route
+          path="/recipes"
+          element={
+            <PrivateRoute>
+              <RecipeList />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/grocery-list"
+          element={
+            <PrivateRoute>
+              <GroceryList />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/pantry"
+          element={
+            <PrivateRoute>
+              <PantryList />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/recipe/:title"
+          element={
+            <PrivateRoute>
+              <RecipeDetailView />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </Router>
   );
