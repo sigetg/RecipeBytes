@@ -4,7 +4,7 @@ import NavigationBar from "./components/Navbar";
 import RecipeList from "./components/RecipeList";
 import GroceryList from "./components/Grocery-list";
 import Profile from "./components/Profile";
-import Pantry from "./components/PantryList";
+import PantryList from "./components/PantryList";
 import RecipeDetailView from "./components/RecipeDetailView";
 import "./App.css";
 
@@ -16,7 +16,7 @@ function App() {
         <Route path="/recipes" element={<RecipeList />} />
         <Route path="/grocery-list" element={<GroceryList />} />
         <Route path="/" element={<Profile />} />
-        <Route path="/pantry" element={<Pantry />} />
+        <Route path="/pantry" element={<PantryList />} />
         <Route path="/recipe/:title" element={<RecipeDetailView />} />
       </Routes>
     </Router>
