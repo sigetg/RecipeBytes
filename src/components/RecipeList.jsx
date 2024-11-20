@@ -50,7 +50,7 @@ export default function RecipeList() {
   );
 
   return (
-    <Box sx={{ padding: "30px" }}>
+    <Box sx={{ padding: "30px", height:"auto", alignContent:"center", display: "block", marginTop: "5vh" }}>
       {/* Search Bar */}
       <SearchBar>
         <SearchInput
@@ -64,25 +64,46 @@ export default function RecipeList() {
 
       {/* Favorites Section */}
       <Box>
-      <Typography
+        <Typography
           variant="h4"
-          sx={{ margin: "30px 0 10px 0", color: "#4a90e2", fontFamily: "'Patrick Hand SC', cursive", textAlign:"left", padding:"10px 0 0 0" }}
+          sx={{
+            margin: "3vh 0 10px 0",
+            color: "#4a90e2",
+            fontFamily: "'Patrick Hand SC', cursive",
+            textAlign: "left",
+            padding: "10px 0 0 0",
+          }}
         >
           <StarIcon sx={{ marginRight: "8px" }} /> Favorites
         </Typography>
+        {filteredFavorites.length === 0 && (
+          <Typography variant="body1" sx={{ color: "#666" }}>
+            No favorite recipes found.
+          </Typography>
+        )}
         {filteredFavorites.map((recipe) => (
-          <div class="recipe-card"
-            key={recipe.title}
-          >
-            <img class="recipe-image"
+          <div className="recipe-card" key={recipe.title}>
+            <img
+              className="recipe-image"
               src={recipe.image}
               alt={recipe.title}
             />
             <div style={{ flex: 1 }}>
-              <Typography variant="h5" sx={{ fontWeight: "bold", fontFamily: "'Patrick Hand SC', cursive", textAlign:"left", paddingBottom:"15px" }}>
+              <Typography
+                variant="h5"
+                sx={{
+                  fontWeight: "bold",
+                  fontFamily: "'Patrick Hand SC', cursive",
+                  textAlign: "left",
+                  paddingBottom: "15px",
+                }}
+              >
                 {recipe.title}
               </Typography>
-              <Typography variant="body1" sx={{ color: "#666", textAlign:"left" }}>
+              <Typography
+                variant="body1"
+                sx={{ color: "#666", textAlign: "left" }}
+              >
                 <strong>Ingredients:</strong>{" "}
                 {recipe.ingredients
                   .map((item) => `${item.quantity} ${item.name}`)
@@ -99,23 +120,39 @@ export default function RecipeList() {
       <Box>
         <Typography
           variant="h4"
-          sx={{ margin: "30px 0 10px 0", color: "#4a90e2", fontFamily: "'Patrick Hand SC', cursive", textAlign:"left", padding:"10px 0 0 0" }}
+          sx={{
+            margin: "3vh 0 10px 0",
+            color: "#4a90e2",
+            fontFamily: "'Patrick Hand SC', cursive",
+            textAlign: "left",
+            padding: "10px 0 0 0",
+          }}
         >
           Suggestions
         </Typography>
         {filteredSuggestions.map((recipe) => (
-          <div class="recipe-card"
-            key={recipe.title}
-          >
-            <img class="recipe-image"
+          <div className="recipe-card" key={recipe.title}>
+            <img
+              className="recipe-image"
               src={recipe.image}
               alt={recipe.title}
             />
             <div style={{ flex: 1 }}>
-              <Typography variant="h5" sx={{ fontWeight: "bold", fontFamily: "'Patrick Hand SC', cursive", textAlign:"left", paddingBottom:"15px", paddingBottom:"15px"}}>
+              <Typography
+                variant="h5"
+                sx={{
+                  fontWeight: "bold",
+                  fontFamily: "'Patrick Hand SC', cursive",
+                  textAlign: "left",
+                  paddingBottom: "15px",
+                }}
+              >
                 {recipe.title}
               </Typography>
-              <Typography variant="body1" sx={{ color: "#666", textAlign:"left"  }}>
+              <Typography
+                variant="body1"
+                sx={{ color: "#666", textAlign: "left" }}
+              >
                 <strong>Ingredients:</strong>{" "}
                 {recipe.ingredients
                   .map((item) => `${item.quantity} ${item.name}`)
