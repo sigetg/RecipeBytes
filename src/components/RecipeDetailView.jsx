@@ -28,9 +28,20 @@ export default function RecipeDetailView() {
 
   return (
     <Box sx={{ padding: "30px" }}>
-      <Typography variant="h4" sx={{ marginBottom: "20px", fontFamily: "'Patrick Hand SC', cursive", paddingBottom: "10px" }} >
-        {recipe.title}
-      </Typography>
+      <div className="title-container">
+        <Typography variant="h4" sx={{ wordSpacing:"3px", letterSpacing:"3px", fontFamily: "'Patrick Hand SC', cursive", paddingBottom: "10px" }} >
+            {recipe.title}
+        </Typography>
+        <span className="recipe-time">
+          Prep Time: {recipe.additional_info.prep_time}
+        </span>
+        <span className="recipe-time">
+          Cook Time: {recipe.additional_info.cook_time}
+        </span>
+        <span className="recipe-time">
+          Total Time: {recipe.additional_info.total_time}
+        </span>
+      </div>
       <div className="container-content">
         <div id="ingredient-container">
             <Typography variant="h4" sx={{ marginBottom: "10px", fontFamily: "'Patrick Hand SC', cursive", }}>
@@ -48,22 +59,28 @@ export default function RecipeDetailView() {
                     disabled
                     />
                     <div>
-                        {item.quantity} {item.name}
+                        {item.quantity} {item.name.toLowerCase()}
                     </div>
                 </li>
                 ))}
             </ul>
         </div>
         <div id="recipe-tips-container">
-        <Typography variant="h4" sx={{ marginBottom: "10px", fontFamily: "'Patrick Hand SC', cursive", }}>
+            <Typography variant="h4" sx={{ marginBottom: "10px", fontFamily: "'Patrick Hand SC', cursive", }}>
                 <Box sx={{ display: "flex", alignItems: "center", gap: "10px", justifyContent: "center",  padding: "10px 0" }}>
                     <TipsIcon />
                     Recipe Tips
                 </Box>
             </Typography>
+            <ul style={{ listStyleType: 'none' }}>
+                {recipe.additional_info?.tips?.map((item, index) => (
+                    <p>{item}</p>
+                ))}
+            </ul>
+
         </div>
         <div id="substitutes-container">
-        <Typography variant="h4" sx={{ marginBottom: "10px", fontFamily: "'Patrick Hand SC', cursive", }}>
+            <Typography variant="h4" sx={{ marginBottom: "10px", fontFamily: "'Patrick Hand SC', cursive", }}>
                 <Box sx={{ display: "flex", alignItems: "center", gap: "10px", justifyContent: "center",  padding: "10px 0" }}>
                     <SubstitutionIcon />
                     Substitutes
