@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,13 +15,14 @@ import { Link } from "react-router-dom";
 
 const pages = [
     { name: "Recipes", path: "/recipes" },
-    { name: "Groceries", path: "/grocery-list" },
+    { name: "Groceries", path: "/groceryList" },
     { name: "Profile", path: "/" },
     { name: "Pantry", path: "/pantry" },
 ];
 
 export default function NavigationBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const navigate = useNavigate(); // Call useNavigate to get the navigate function
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -28,6 +30,11 @@ export default function NavigationBar() {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+  };
+
+  const handleNavigate = (page) => {
+    const path = page.toLowerCase();
+    navigate(`/${path}`);
   };
 
   return (
