@@ -4,6 +4,7 @@ import { Box, Typography } from "@mui/material";
 import { recipeData } from "../data/recipeData";
 import { ingredients } from "../data/ingredients";
 import { IngredientsIcon, TipsIcon, SubstitutionIcon } from "../assets/icons";
+import { Link } from "react-router-dom/dist";
 import "../styles/RecipeDetails.css"
 
 export default function RecipeDetailView() {
@@ -41,6 +42,23 @@ export default function RecipeDetailView() {
         <span className="recipe-time">
           Total Time: {recipe.additional_info.total_time}
         </span>
+        <br/>
+        <Link
+            className="navigation"
+            to={`/recipe/${encodeURIComponent(recipe.title)}/start`}
+            style={{
+                textDecoration: "none",
+                backgroundColor: "#306CA3",
+                color: "white",
+                padding: "5px 20px",
+                display: "inline-block",
+                textAlign: "center",
+                fontSize: "15px",
+                marginTop: "10px"
+            }}
+            >
+            START
+        </Link>
       </div>
       <div className="container-content">
         <div id="ingredient-container">

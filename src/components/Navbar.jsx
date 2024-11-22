@@ -60,7 +60,7 @@ export default function NavigationBar() {
             >
               Recipe Bytes
             </Typography>
-            {RecipeIcon}
+            <RecipeIcon />
           </Box>
 
           {/* Menu Icon for Small Screens */}

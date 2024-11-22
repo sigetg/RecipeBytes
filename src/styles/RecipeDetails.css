@@ -19,6 +19,10 @@ body {
     font-size: medium;
 }
 
+.navigation:onhover {
+    background-color: rgb(48, 108, 163, 0.5);
+}
+
 ul li { 
     margin-bottom: 20px;
     display: flex;

@@ -28,6 +28,7 @@ const SearchInput = styled("input")({
   padding: "10px",
   fontSize: "16px",
   backgroundColor: "transparent",
+  color: '#306CA3',
 });
 
 export default function RecipeList() {
@@ -85,7 +86,7 @@ export default function RecipeList() {
           <Link 
             to={`/recipe/${encodeURIComponent(recipe.title)}`}
             key={recipe.title}
-            style={{ TextDecoration: "none", color: "inherit" }}
+            style={{ textDecoration: "none", color: "inherit" }}
           >
             <div className="recipe-card" key={recipe.title}>
               <img
@@ -95,12 +96,14 @@ export default function RecipeList() {
               />
               <div style={{ flex: 1 }}>
                 <Typography
-                  variant="h5"
+                  variant="h4"
                   sx={{
-                    fontWeight: "bold",
+                    fontWeight: "200",
                     fontFamily: "'Patrick Hand SC', cursive",
                     textAlign: "left",
                     paddingBottom: "15px",
+                    wordSpacing:"3px", 
+                    letterSpacing:"2px",
                   }}
                 >
                   {recipe.title}
@@ -141,7 +144,8 @@ export default function RecipeList() {
           <Link 
             to={`/recipe/${encodeURIComponent(recipe.title)}`}
             key={recipe.title}
-            style={{ TextDecoration: "none", color: "inherit" }}
+            style={{ textDecoration: "none", color: "inherit" }}
+            
           >
             <div className="recipe-card" key={recipe.title}>
               <img
@@ -151,12 +155,14 @@ export default function RecipeList() {
               />
               <div style={{ flex: 1 }}>
                 <Typography
-                  variant="h5"
+                  variant="h4"
                   sx={{
-                    fontWeight: "bold",
+                    fontWeight: "200",
                     fontFamily: "'Patrick Hand SC', cursive",
                     textAlign: "left",
                     paddingBottom: "15px",
+                    wordSpacing:"3px", 
+                    letterSpacing:"2px",
                   }}
                 >
                   {recipe.title}
