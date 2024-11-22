@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
 import { recipeData } from "../data/recipeData";
 import { ingredients } from "../data/ingredients";
+import { Link } from "react-router-dom";
 import { IngredientsIcon, TipsIcon, SubstitutionIcon } from "../assets/icons";
 import "../styles/RecipeDetails.css"
 
@@ -32,7 +33,7 @@ export default function RecipeDetailView() {
         <Typography variant="h4" sx={{ wordSpacing:"3px", letterSpacing:"3px", fontFamily: "'Patrick Hand SC', cursive", color:"#699FD0" }} >
             {recipe.title}
         </Typography>
-        <div>
+        <div className="time-info">
           <span className="recipe-time">
             Prep Time: {recipe.additional_info.prep_time}
           </span>
@@ -43,6 +44,13 @@ export default function RecipeDetailView() {
             Total Time: {recipe.additional_info.total_time}
           </span>
         </div>
+        <Link
+          className="navigation"
+          to={`/recipe/${encodeURIComponent(recipe.title)}/start`}
+          aria-label="Start the recipe"
+        >
+          START
+        </Link>
       </div>
       <div className="container-content">
         <div id="ingredient-container">

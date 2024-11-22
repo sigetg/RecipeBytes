@@ -7,11 +7,25 @@ body {
     color: black;
     line-height: 1.4;
 }
-
+.time-info {
+    margin-bottom: 15px;
+}
 .recipe-time {
     display: inline;
     padding-right: 30px;
     font-size: medium;
+}
+
+.navigation {
+    background-color: rgb(48, 108, 163, .52);
+    color: white;
+    text-decoration: none;
+    padding: 5px 20px;
+    border-radius: 10px;
+}
+
+.navigation:hover {
+    background-color: rgb(48, 108, 163, .42);
 }
 
 ul li { 
