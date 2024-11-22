@@ -16,8 +16,8 @@ import { Link } from "react-router-dom";
 
 const pages = [
     { name: "Recipes", path: "/recipes" },
-    { name: "Groceries", path: "/grocery-list" },
-    { name: "Profile", path: "/" },
+    { name: "Groceries", path: "/groceryList" },
+    { name: "Profile", path: "/profile" },
     { name: "Pantry", path: "/pantry" },
 ];
 
@@ -50,7 +50,7 @@ export default function NavigationBar() {
 
   return (
     <AppBar position="static" sx={{ backgroundColor: '#306CA3', opacity: 0.52, height: "64px" }}>
-      <Container maxWidth="xl">
+      <Container maxWidth="100vw">
         <Toolbar
           disableGutters
           sx={{
@@ -78,7 +78,7 @@ export default function NavigationBar() {
             >
               Recipe Bytes
             </Typography>
-            {RecipeIcon}
+            <RecipeIcon />
             {user && (
               <Button
                 onClick={handleLogout}
