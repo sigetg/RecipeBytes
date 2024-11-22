@@ -6,6 +6,7 @@ import GroceryList from "./components/GroceryList";
 import Profile from "./components/Profile";
 import PantryList from "./components/PantryList";
 import RecipeDetailView from "./components/RecipeDetailView";
+import Home from "./components/Home";
 import "./App.css";
 
 function App() {
@@ -13,9 +14,10 @@ function App() {
     <Router>
       <NavigationBar />
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/recipes" element={<RecipeList />} />
         <Route path="/groceryList" element={<GroceryList />} />
-        <Route path="/" element={<Profile />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/pantry" element={<PantryList />} />
         <Route path="/recipe/:title" element={<RecipeDetailView />} />
       </Routes>

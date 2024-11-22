@@ -39,7 +39,7 @@ export default function NavigationBar() {
 
   return (
     <AppBar position="static" sx={{ backgroundColor: '#306CA3', opacity: 0.52, height: "64px" }}>
-      <Container maxWidth="xl">
+      <Container maxWidth="100vw">
         <Toolbar 
           disableGutters
           sx={{
@@ -67,7 +67,7 @@ export default function NavigationBar() {
             >
               Recipe Bytes
             </Typography>
-            {RecipeIcon}
+            <RecipeIcon />
           </Box>
 
           {/* Menu Icon for Small Screens */}

@@ -8,20 +8,18 @@ body {
     line-height: 1.4;
 }
 
-.title-container {
-    padding: 20px 10px;
-    margin-bottom: 20px;
-}
-
 .recipe-time {
     display: inline;
-    padding-right: 5%;
+    padding-right: 30px;
     font-size: medium;
 }
 
 ul li { 
     margin-bottom: 20px;
     display: flex;
+    font-size: medium;
+    padding: 0 20px; 
+    align-items: center;
 }
 
 ul li input {
@@ -31,6 +29,7 @@ ul li input {
 
 ul p {
     text-align: center;
+    font-size: medium;
 }
 
 .container-content {
@@ -38,7 +37,7 @@ ul p {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     gap: 30px;
-    margin-top: 5%;
+    margin-top: 30px;
 }
 
 #ingredient-container {
