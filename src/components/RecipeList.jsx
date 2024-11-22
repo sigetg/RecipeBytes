@@ -85,7 +85,7 @@ export default function RecipeList() {
           <Link 
             to={`/recipe/${encodeURIComponent(recipe.title)}`}
             key={recipe.title}
-            style={{ TextDecoration: "none", color: "inherit" }}
+            style={{ textDecoration: "none", color: "inherit" }}
           >
             <div className="recipe-card" key={recipe.title}>
               <img
@@ -141,7 +141,7 @@ export default function RecipeList() {
           <Link 
             to={`/recipe/${encodeURIComponent(recipe.title)}`}
             key={recipe.title}
-            style={{ TextDecoration: "none", color: "inherit" }}
+            style={{ textDecoration: "none", color: "inherit" }}
           >
             <div className="recipe-card" key={recipe.title}>
               <img
