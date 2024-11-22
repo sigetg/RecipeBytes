@@ -13,14 +13,16 @@ function App() {
   return (
     <Router>
       <NavigationBar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/recipes" element={<RecipeList />} />
-        <Route path="/groceryList" element={<GroceryList />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/pantry" element={<PantryList />} />
-        <Route path="/recipe/:title" element={<RecipeDetailView />} />
-      </Routes>
+      <div className="content">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/recipes" element={<RecipeList />} />
+          <Route path="/groceryList" element={<GroceryList />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/pantry" element={<PantryList />} />
+          <Route path="/recipe/:title" element={<RecipeDetailView />} />
+        </Routes>
+      </div>
     </Router>
   );
 }

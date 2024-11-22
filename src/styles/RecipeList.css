@@ -9,17 +9,24 @@ body, html, #root {
   body {
     font-family: Patrick Hand SC, cursive;
     box-sizing: border-box;
+    margin: 10px 20px;
+  }
+
+  .recipe-container {
+    display: flex;
+    gap: 40px;
   }
   
   .recipe-card {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     margin-bottom: 20px;
     background-color: #fff;
     padding: 16px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    
+    width: 450px;
   }
   
   .recipe-image {

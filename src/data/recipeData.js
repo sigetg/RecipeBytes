@@ -1,3 +1,8 @@
+import ChocolateChipCookieImage from '../assets/ChocolateChipCookieImage.jpg';
+import SnickerdoodleImage from '../assets/SnickerdodleImage.webp';
+import SugarCookieImage from '../assets/SugarCookieImage.jpg';
+
+
 export const recipeData = [
   {
     "title": "The Best Chocolate Chip Cookie Recipe Ever",
@@ -28,7 +33,7 @@ export const recipeData = [
       "Bake for 8-10 minutes. Remove while cookies still look slightly doughy.",
       "Cool on the baking sheet for 5 minutes before transferring to a wire rack."
     ],
-    "image": "https://example.com/chocolate-chip-cookies.jpg",
+    "image": ChocolateChipCookieImage,
     "additional_info": {
       "prep_time": "10 minutes",
       "cook_time": "8 minutes",
@@ -78,7 +83,7 @@ export const recipeData = [
       "Place dough balls 2 inches apart on the prepared baking sheet.",
       "Bake for 7 minutes. Let cookies cool on the baking sheet for 5 minutes before transferring to a wire rack."
     ],
-    "image": "https://example.com/snickerdoodle-cookies.jpg",
+    "image": SnickerdoodleImage,
     "additional_info": {
       "prep_time": "20 minutes",
       "cook_time": "10 minutes",
@@ -97,6 +102,50 @@ export const recipeData = [
       "tips": [
         "Store cookies with 1-2 slices of bread to keep them soft.",
         "Chilling the dough can help with shaping and texture."
+      ]
+    }
+  },
+  {
+    title: "Easy Sugar Cookies",
+    author: "Stephanie",
+    date: "October 25, 2024",
+    rating: 4.5,
+    votes: 8732,
+    description: "This sugar cookie recipe is quick and easy to make with simple ingredients. They are delicious as-is or with candies mixed in.",
+    is_favorite: false,
+    ingredients: [
+      { name: "All-Purpose Flour", quantity: "2 ¾ cups", note: "" },
+      { name: "Baking Soda", quantity: "1 teaspoon", note: "" },
+      { name: "Baking Powder", quantity: "½ teaspoon", note: "" },
+      { name: "Butter", quantity: "1 cup", note: "softened" },
+      { name: "White Sugar", quantity: "1 ½ cups", note: "" },
+      { name: "Egg", quantity: "1", note: "" },
+      { name: "Vanilla Extract", quantity: "1 teaspoon", note: "" }
+    ],
+    instructions: [
+      "Preheat oven to 375 degrees F (190 degrees C).",
+      "Stir flour, baking soda, and baking powder together in a small bowl.",
+      "Beat sugar and butter together in a large bowl with an electric mixer until smooth.",
+      "Beat in egg and vanilla.",
+      "Gradually blend in flour mixture.",
+      "Roll dough into walnut-sized balls and place 2 inches apart onto ungreased baking sheets.",
+      "Bake until edges are golden, 8 to 10 minutes. Cool on the baking sheets briefly before transferring to a wire rack to cool completely."
+    ],
+    image: SugarCookieImage,
+    additional_info: {
+      prep_time: "20 minutes",
+      cook_time: "10 minutes",
+      total_time: "30 minutes",
+      servings: 48,
+      calories_per_serving: 86,
+      nutrition: {
+        carbohydrates: "12g",
+        protein: "1g",
+        fat: "4g"
+      },
+      tips: [
+        "Store cookies in an airtight container for a few days at room temperature.",
+        "You can freeze baked sugar cookies or cookie dough for up to two months."
       ]
     }
   }

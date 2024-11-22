@@ -2,13 +2,19 @@
 
 .App {
   text-align: center;
-  height: 100%;
+  height: 100vh;
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
+
+.content {
+  overflow-y: auto;
+  height: calc(100vh - 64px); /* Subtract the height of the NavigationBar */
+}
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

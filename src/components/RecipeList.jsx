@@ -76,6 +76,7 @@ export default function RecipeList() {
         >
           <StarIcon sx={{ marginRight: "8px" }} /> Favorites
         </Typography>
+        <div className="recipe-container">
         {filteredFavorites.length === 0 && (
           <Typography variant="body1" sx={{ color: "#666" }}>
             No favorite recipes found.
@@ -92,6 +93,7 @@ export default function RecipeList() {
                 className="recipe-image"
                 src={recipe.image}
                 alt={recipe.title}
+                style={{ paddingBottom:"10px", width: "100%", height:"200px" }}
               />
               <div style={{ flex: 1 }}>
                 <Typography
@@ -119,8 +121,8 @@ export default function RecipeList() {
               </div>
             </div>
           </Link>
-          
         ))}
+        </div>  
       </Box>
 
       {/* Suggestions Section */}
@@ -137,17 +139,19 @@ export default function RecipeList() {
         >
           Suggestions
         </Typography>
+        <div className="recipe-container">
         {filteredSuggestions.map((recipe) => (
           <Link 
             to={`/recipe/${encodeURIComponent(recipe.title)}`}
             key={recipe.title}
-            style={{ textDecoration: "none", color: "inherit" }}
+            style={{ textDecoration: "none", color: "inherit"}}
           >
             <div className="recipe-card" key={recipe.title}>
               <img
                 className="recipe-image"
                 src={recipe.image}
                 alt={recipe.title}
+                style={{ paddingBottom:"10px", width: "100%", height:"200px"}}
               />
               <div style={{ flex: 1 }}>
                 <Typography
@@ -176,6 +180,7 @@ export default function RecipeList() {
             </div>
           </Link>  
         ))}
+        </div>
       </Box>
     </Box>
   );
