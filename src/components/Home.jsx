@@ -24,7 +24,7 @@ export default function Home() {
                     <IngredientsIcon />
                         <Typography variant="h5" sx={{ fontFamily: "'Patrick Hand SC', cursive", }}>
                             Recipes You Might Like
-                        </Typography>                      
+                        </Typography>
                     </Box>
                     {recipeData.filter((recipe) => !recipe.is_favorite) 
                             .map((recipe) => (

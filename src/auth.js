@@ -1,5 +1,5 @@
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import app from "./firebase";
+import { app } from "./firebase";
 //Use this file to add any other auth methods, such as google Oauth.
 
 const auth = getAuth(app);

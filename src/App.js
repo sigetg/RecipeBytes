@@ -20,6 +20,14 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          }
+        />
+        <Route
           path="/recipes"
           element={
             <PrivateRoute>
@@ -28,18 +36,10 @@ function App() {
           }
         />
         <Route
-          path="/grocery-list"
+          path="/groceryList"
           element={
             <PrivateRoute>
               <GroceryList />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/"
-          element={
-            <PrivateRoute>
-              <Profile />
             </PrivateRoute>
           }
         />
@@ -52,6 +52,14 @@ function App() {
           }
         />
         <Route
+          path="/profile"
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+        />
+        <Route
           path="/recipe/:title"
           element={
             <PrivateRoute>
@@ -60,16 +68,6 @@ function App() {
           }
         />
       </Routes>
-      <div className="content">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/recipes" element={<RecipeList />} />
-          <Route path="/groceryList" element={<GroceryList />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/pantry" element={<PantryList />} />
-          <Route path="/recipe/:title" element={<RecipeDetailView />} />
-        </Routes>
-      </div>
     </Router>
   );
 }

@@ -50,6 +50,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "typescript": "^5.7.2",
     "vite": "^5.4.11"
   }
 }
