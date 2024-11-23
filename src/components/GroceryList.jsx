@@ -1,17 +1,17 @@
 import React from "react";
-import './../styles/GroceryList.css';
+import css from './../styles/GroceryList.module.css';
 import Button from '@mui/material/Button';
 
 const GroceryList = () => {
     return (
       <body>
-    <main className="container">
-      <div className="header">
+    <main className={css.container}>
+      <div className={css.header}>
         <h1>Groceries</h1>
         <ButtonUsage/>
       </div>
-      <section className="grocery">
-        <div className="produce">
+      <section className={css.grocery}>
+        <div className={css.produce}>
           <h2>Produce</h2>
           <ul>
             <li>
@@ -28,7 +28,7 @@ const GroceryList = () => {
             </li>
           </ul>
         </div>
-        <div className="protein">
+        <div className={css.protein}>
           <h2>Protein</h2>
           <ul>
             <li>
@@ -54,7 +54,7 @@ const GroceryList = () => {
             </li>
           </ul>
         </div>
-        <div className="dairy">
+        <div className={css.dairy}>
           <h2>Dairy</h2>
           <ul>
             <li>
@@ -75,8 +75,8 @@ const GroceryList = () => {
             </li>
           </ul>
         </div>
-        <section className="smallColumn">
-          <div className="grains">
+        <section className={css.smallColumn}>
+          <div className={css.grains}>
             <h2>Grains</h2>
             <ul>
               <li>
@@ -89,7 +89,7 @@ const GroceryList = () => {
               </li>
             </ul>
           </div>
-          <div className="other">
+          <div className={css.other}>
             <h2>Other</h2>
           </div>
         </section>
@@ -104,4 +104,8 @@ export function ButtonUsage() {
   return <Button variant="text" href="#outlined-buttons">
     ⨁ New Item
   </Button>;
+}
+
+export function renderColumn() {
+  
 }

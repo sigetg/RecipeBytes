@@ -1,15 +1,15 @@
 import React from "react";
-import './../styles/PantryList.css';
+import css from './../styles/PantryList.module.css';
 
 
 const PantryList = () => {
     return (
         <body>
-        <main class="container">
-          <h1 class="header">Pantry</h1>
-          <button type="button" class="button header">⨁ New Item</button>
-          <section class="pantry">
-            <div class="produce">
+        <main className={css.container}>
+          <h1 className={css.header}>Pantry</h1>
+          <button type="button" className="button header">⨁ New Item</button>
+          <section className="pantry">
+            <div className="produce">
               <h2>Produce</h2>
               <ul>
                 <li>
@@ -26,7 +26,7 @@ const PantryList = () => {
                 </li>
               </ul>
             </div>
-            <div class="protein">
+            <div className="protein">
               <h2>Protein</h2>
               <ul>
                 <li>
@@ -52,14 +52,14 @@ const PantryList = () => {
                 </li>
               </ul>
             </div>
-            <div class="dairy">
+            <div className="dairy">
               <h2>Dairy</h2>
             </div>
             <div>
-              <div class="grains">
+              <div className="grains">
                 <h2>Grains</h2>
               </div>
-              <div class="other">
+              <div className="other">
                 <h2>Other</h2>
               </div>
             </div>

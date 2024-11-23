@@ -1,16 +1,16 @@
 import React from "react";
-import './../styles/Profile.css'
+import css from './../styles/Profile.module.css'
 
 export default function Pantry() {
-    return <main class="container">
-    <section class="profile-avatar">
+    return <main className={css.container}>
+    <section className={css.profileAvatar}>
       <img
         src="https://cdn.glitch.global/cb1713d8-3561-424d-9fd8-837e3fcd405d/avatar.png?v=1732142547096"
         alt="Avatar"
       />
     </section>
-    <section class="account-info">
-      <div class="name">
+    <section className={css.accountInfo}>
+      <div className={css.name}>
         <label for="name">Name:</label><br />
         <input
           type="text"
@@ -20,7 +20,7 @@ export default function Pantry() {
           disabled
         /><br />
       </div>
-      <div class="email">
+      <div className={css.email}>
         <label for="email">Email:</label><br />
         <input
           type="text"
@@ -30,7 +30,7 @@ export default function Pantry() {
           disabled
         /><br /><br />
       </div>
-      <div class="password">
+      <div className={css.password}>
         <label for="pwd">Password:</label><br />
         <input type="password" id="pwd" name="pwd" value="secret" disabled />
       </div>

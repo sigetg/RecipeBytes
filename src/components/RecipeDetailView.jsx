@@ -5,7 +5,7 @@ import { recipeData } from "../data/recipeData";
 import { ingredients } from "../data/ingredients";
 import { Link } from "react-router-dom";
 import { IngredientsIcon, TipsIcon, SubstitutionIcon } from "../assets/icons";
-import "../styles/RecipeDetails.css"
+import "../styles/RecipeDetails.module.css"
 
 export default function RecipeDetailView() {
   const { title } = useParams(); 
