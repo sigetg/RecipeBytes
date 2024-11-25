@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
-import css from "../styles/Home.module.css"
+import css from "../styles/Home.css"
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import StarIcon from "@mui/icons-material/Star";
