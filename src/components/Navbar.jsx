@@ -17,8 +17,8 @@ import { Link } from "react-router-dom";
 const pages = [
     { name: "Recipes", path: "/recipes" },
     { name: "Groceries", path: "/groceryList" },
-    { name: "Profile", path: "/profile" },
     { name: "Pantry", path: "/pantry" },
+    { name: "Profile", path: "/profile" },
 ];
 
 export default function NavigationBar() {

@@ -1,97 +1,98 @@
 * {
-  box-sizing: border-box;
-}
-[hidden] {
-  display: none !important;
-}
-
-body,
-section,
-header,
-div,
-p,
-h1,
-h2,
-h3,
-ul,
-li,
-figure,
-figcaption {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Inter", "Open Sans", "Times New Roman", sans-serif;
-}
-
-.container {
-  grid-template-columns: 25em auto;
-  margin: 2em;
-  grid-gap: 10px;
-  align-items: flex-start;
-  justify-content: space-between;
-  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
-}
-
-.container h1 {
-  padding: 10px 30px 20px 30px;
-}
-
-.button {
-  border: 0px;
-  color: #000000;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  background: #ffffff;
-  font-weight: bold;
-}
-
-.header {
-  display: inline-block;
-  display: flex;
-  justify-content: space-between;
+    box-sizing: border-box;
+  }
+  [hidden] {
+    display: none !important;
+  }
   
-}
-
-.pantry {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-gap: 45px;
-  padding: 20px;
-  justify-content: space-between;
-  border-radius: 20px;
-  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
-}
-
-.pantry h2 {
-  justify-content: center;
-  padding: 1em;
-  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
-
-}
-
-.pantry ul {
-  list-style-type: none;
-}
-
-.pantry ul li {
-  padding: 5px 0px;
-  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
-
-}
-
-.produce,
-.protein,
-.dairy,
-.grains,
-.other {
-  background-color: #d1e6f9;
-  display: flex;
-  flex-direction: column;
-  padding: 1.5em;
-  border-radius: 20px;
-  margin: 1em;
-}
+  body,
+  section,
+  header,
+  div,
+  p,
+  h1,
+  h2,
+  h3,
+  ul,
+  li,
+  figure,
+  figcaption {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", "Open Sans", "Times New Roman", sans-serif;
+  }
+  
+  .container {
+    grid-template-columns: 25em auto;
+    margin: 2em;
+    grid-gap: 10px;
+    align-items: flex-start;
+    justify-content: space-between;
+    font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+  }
+  
+  .container h1 {
+    padding: 10px 30px 20px 30px;
+  }
+  
+  .button {
+    border: 0px;
+    color: #000000;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    background: #ffffff;
+    font-weight: bold;
+  }
+  
+  .header {
+    display: inline-block;
+    display: flex;
+    justify-content: space-between;
+    
+  }
+  
+  .pantry {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 45px;
+    padding: 20px;
+    justify-content: space-between;
+    border-radius: 20px;
+    font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+  }
+  
+  .pantry h2 {
+    justify-content: center;
+    padding: 1em;
+    font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+  
+  }
+  
+  .pantry ul {
+    list-style-type: none;
+  }
+  
+  .pantry ul li {
+    padding: 5px 0px;
+    font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+  
+  }
+  
+  .produce,
+  .protein,
+  .dairy,
+  .grains,
+  .other {
+    background-color: #d1e6f9;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5em;
+    border-radius: 20px;
+    margin: 1em;
+  }
+  

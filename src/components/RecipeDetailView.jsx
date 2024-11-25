@@ -52,7 +52,7 @@ export default function RecipeDetailView() {
           START
         </Link>
       </div>
-      <div className="container-content">
+      <div className="content-container">
         <div id="ingredient-container">
             <Box sx={{ display: "flex", alignItems: "stretch", gap: "10px", justifyContent: "center",  padding: "10px 0", color:"#699FD0" }}>
               <IngredientsIcon />
@@ -62,7 +62,7 @@ export default function RecipeDetailView() {
             </Box>
             <ul style={{ listStyleType: "none"}}>
                 {recipe.ingredients.map((item, index) => (
-                <li key={index}>
+                <li key={index} style={{display:"flex", alignItems: "center", margin: "20px 0", gap: "10px"}}>
                     <input
                     type="checkbox"
                     checked={isInPantry(item.name)}
@@ -72,7 +72,9 @@ export default function RecipeDetailView() {
                         {item.quantity} {item.name.toLowerCase()}
                     </div>
                 </li>
+
                 ))}
+                
             </ul>
         </div>
         <div id="recipe-tips-container">

@@ -7,6 +7,7 @@ body {
     color: black;
     line-height: 1.4;
 }
+
 .time-info {
     margin-bottom: 15px;
 }
@@ -28,25 +29,26 @@ body {
     background-color: rgb(48, 108, 163, .42);
 }
 
-ul li { 
+#ingredient li { 
     margin-bottom: 20px;
     display: flex;
+    flex-direction: row;
     font-size: medium;
     padding: 0 20px; 
     align-items: center;
 }
 
-ul li input {
+#ingredient ul li input {
     margin-right: 20px;
     color: black;
 }
 
-ul p {
+#recipe-tips-container ul p {
     text-align: center;
     font-size: medium;
 }
 
-.container-content {
+.content-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
