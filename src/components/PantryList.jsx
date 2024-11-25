@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { getData, addData } from "../services/firestoreService";
+import { getAuth } from "firebase/auth";
+import { getData, addData, deleteData } from "../services/firestoreService";
 import css from './../styles/PantryList.module.css';
 
 
@@ -8,16 +9,39 @@ const PantryList = () => {
   const [showForm, setShowForm] = useState(false);
   const [title, setTitle] = useState("");
   const [quantity, setQuantity] = useState(0);
-  const [category, setCategory] = useState("produce");
+  const [category, setCategory] = useState("other");
   const [expiration, setExpiration] = useState("");
+  const [selectedItems, setSelectedItems] = useState([]);
+  const auth = getAuth();
+  const user = auth.currentUser;
+
   useEffect(() => {
     const fetchIngredients = async () => {
-      const fetchedIngredients = await getData('ingredients');
+      const fetchedIngredients = await getData(user.uid, 'pantry');
       setIngredients(fetchedIngredients);
     };
 
     fetchIngredients();
   }, []);
+
+  const handleCheckboxChange = (id) => {
+    setSelectedItems((prevSelectedItems) => {
+      if (prevSelectedItems.includes(id)) {
+        return prevSelectedItems.filter(item => item !== id);
+      } else {
+        return [...prevSelectedItems, id];
+      }
+    });
+  };
+
+  const handleDeleteSelected = async () => {
+    for (const id of selectedItems) {
+      await deleteData(user.uid, 'pantry', id);
+    }
+    const updatedIngredients = await getData(user.uid, 'pantry');
+    setIngredients(updatedIngredients);
+    setSelectedItems([]);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,13 +51,13 @@ const PantryList = () => {
       category,
       expiration: new Date(expiration)
     };
-    await addData('ingredients', newIngredient);
+    await addData(user.uid, 'pantry', newIngredient);
     setShowForm(false);
     setTitle("");
     setQuantity(0);
     setCategory("produce");
     setExpiration("");
-    const updatedIngredients = await getData('ingredients');
+    const updatedIngredients = await getData(user.uid, 'pantry');
     setIngredients(updatedIngredients);
   };
   return (
@@ -91,6 +115,8 @@ const PantryList = () => {
             <button type="submit" className="button">Add Ingredient</button>
           </form>
         )}
+
+        <button type="button" className="button" onClick={handleDeleteSelected}>Delete Selected</button>
         <section className="pantry">
           <div className="produce">
             <h2>Produce</h2>
@@ -99,7 +125,13 @@ const PantryList = () => {
                 .filter(ingredient => ingredient.category === 'produce')
                 .map(ingredient => (
                   <li key={ingredient.id}>
-                    <input type="checkbox" name={`produce${ingredient.id}`} value={ingredient.title} />
+                    <input
+                      type="checkbox"
+                      name={`produce${ingredient.id}`}
+                      value={ingredient.title}
+                      checked={selectedItems.includes(ingredient.id)}
+                      onChange={() => handleCheckboxChange(ingredient.id)}
+                    />
                     <label htmlFor={`produce${ingredient.id}`}>{ingredient.title}</label><br />
                   </li>
                 ))}
@@ -112,8 +144,14 @@ const PantryList = () => {
                 .filter(ingredient => ingredient.category === 'protein')
                 .map(ingredient => (
                   <li key={ingredient.id}>
-                    <input type="checkbox" name={`produce${ingredient.id}`} value={ingredient.title} />
-                    <label htmlFor={`produce${ingredient.id}`}>{ingredient.title}</label><br />
+                    <input
+                      type="checkbox"
+                      name={`protein${ingredient.id}`}
+                      value={ingredient.title}
+                      checked={selectedItems.includes(ingredient.id)}
+                      onChange={() => handleCheckboxChange(ingredient.id)}
+                    />
+                    <label htmlFor={`protein${ingredient.id}`}>{ingredient.title}</label><br />
                   </li>
                 ))}
             </ul>
@@ -125,8 +163,14 @@ const PantryList = () => {
                 .filter(ingredient => ingredient.category === 'dairy')
                 .map(ingredient => (
                   <li key={ingredient.id}>
-                    <input type="checkbox" name={`produce${ingredient.id}`} value={ingredient.title} />
-                    <label htmlFor={`produce${ingredient.id}`}>{ingredient.title}</label><br />
+                    <input
+                      type="checkbox"
+                      name={`dairy${ingredient.id}`}
+                      value={ingredient.title}
+                      checked={selectedItems.includes(ingredient.id)}
+                      onChange={() => handleCheckboxChange(ingredient.id)}
+                    />
+                    <label htmlFor={`dairy${ingredient.id}`}>{ingredient.title}</label><br />
                   </li>
                 ))}
             </ul>
@@ -136,11 +180,17 @@ const PantryList = () => {
               <h2>Grains</h2>
               <ul>
               {ingredients
-                .filter(ingredient => ingredient.category === 'grain')
+                .filter(ingredient => ingredient.category === 'grains')
                 .map(ingredient => (
                   <li key={ingredient.id}>
-                    <input type="checkbox" name={`produce${ingredient.id}`} value={ingredient.title} />
-                    <label htmlFor={`produce${ingredient.id}`}>{ingredient.title}</label><br />
+                    <input
+                      type="checkbox"
+                      name={`grains${ingredient.id}`}
+                      value={ingredient.title}
+                      checked={selectedItems.includes(ingredient.id)}
+                      onChange={() => handleCheckboxChange(ingredient.id)}
+                    />
+                    <label htmlFor={`grains${ingredient.id}`}>{ingredient.title}</label><br />
                   </li>
                 ))}
             </ul>
@@ -152,8 +202,14 @@ const PantryList = () => {
                 .filter(ingredient => ingredient.category === 'other')
                 .map(ingredient => (
                   <li key={ingredient.id}>
-                    <input type="checkbox" name={`produce${ingredient.id}`} value={ingredient.title} />
-                    <label htmlFor={`produce${ingredient.id}`}>{ingredient.title}</label><br />
+                    <input
+                      type="checkbox"
+                      name={`other${ingredient.id}`}
+                      value={ingredient.title}
+                      checked={selectedItems.includes(ingredient.id)}
+                      onChange={() => handleCheckboxChange(ingredient.id)}
+                    />
+                    <label htmlFor={`other${ingredient.id}`}>{ingredient.title}</label><br />
                   </li>
                 ))}
             </ul>
