@@ -7,6 +7,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import StarIcon from "@mui/icons-material/Star";
 import { IngredientsIcon } from "../assets/icons";
 import { recipeData } from "../data/recipeData";
+import { profileData } from "../data/profileData";
 import { Link } from "react-router-dom";
 
 export default function Home() {
@@ -15,7 +16,7 @@ export default function Home() {
             <div className="title-container">
                 <AccountCircleIcon sx={{ height: "40px", width: "40px", color: "#306CA3"}} />
                 <Typography variant="h4" sx={{ wordSpacing:"3px", letterSpacing:"3px", fontFamily: "'Patrick Hand SC', cursive", color: "#306CA3" }} >
-                    Welcome Username
+                    Welcome {getFirstWord(profileData[0].value)}!
                 </Typography>
             </div>
             <div className="container-content">
@@ -101,3 +102,11 @@ export default function Home() {
         </Box>
     );
 }
+
+export function getFirstWord(str) {
+    if (str) {
+      return str.split(' ')[0];
+    } else {
+      return ""; // Return an empty string if the input is empty or null
+    }
+  }

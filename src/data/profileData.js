@@ -3,7 +3,7 @@ import Avatar from './../assets/Avatar.png'
 export const profileData = [ 
     {
         "name": "Name",
-        "value": "John Doe",
+        "value": "Jane Doe",
         "type": "text"
     }, 
     {
