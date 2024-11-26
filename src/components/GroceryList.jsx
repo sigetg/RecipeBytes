@@ -3,7 +3,7 @@ import { getAuth } from "firebase/auth";
 import { getData, addData, deleteData } from "../services/firestoreService";
 import css from './../styles/GroceryList.module.css';
 import Button from '@mui/material/Button';
-import { groceries } from "../data/grocery";
+import { catagories } from "../data/catagory";
 
 const GroceryList = () => {
   const [ingredients, setIngredients] = useState([]);
@@ -62,6 +62,24 @@ const GroceryList = () => {
     setIngredients(updatedIngredients);
   };
 
+  const moveSelectedToPantry = async () => {
+    if (user) {
+      for (const id of selectedItems) {
+        // Get the item from the grocery collection
+        const item = await getData(user.uid, `grocery/${id}`);
+        // Add the item to the pantry collection
+        await addData(user.uid, 'pantry', item);
+        // Delete the item from the grocery collection
+        await deleteData(user.uid, 'grocery', id);
+      }
+      const updatedIngredients = await getData(user.uid, 'grocery');
+      setIngredients(updatedIngredients);
+      setSelectedItems([]);
+    }
+  };
+
+
+
   const toggleForm = () => {
     setShowForm(prevShowForm => !prevShowForm);
   };
@@ -113,6 +131,9 @@ const GroceryList = () => {
           <h1>Groceries</h1>
           <Button variant="text" href="#outlined-buttons" onClick={handleDeleteSelected} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18}}>
             Delete Selected
+          </Button>
+          <Button variant="text" href="#outlined-buttons" onClick={moveSelectedToPantry} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18}}>
+            Move Selected to Pantry
           </Button>
           <Button variant="text" href="#outlined-buttons" onClick={toggleForm} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18}}>
             ⨁ New Item
@@ -170,7 +191,7 @@ const GroceryList = () => {
 
         </div>
         <section className={css.grocery}>
-          {groceries.map((category) => (
+          {catagories.map((category) => (
               <GroceryCategory key={category.name} name={category.name} ingredients={ingredients} />
             ))}
         </section>

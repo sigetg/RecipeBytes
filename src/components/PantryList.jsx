@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { getAuth } from "firebase/auth";
 import { getData, addData, deleteData } from "../services/firestoreService";
 import css from './../styles/PantryList.module.css';
+import Button from '@mui/material/Button';
+import { catagories } from "../data/catagory";
 
 
 const PantryList = () => {
@@ -60,11 +62,83 @@ const PantryList = () => {
     const updatedIngredients = await getData(user.uid, 'pantry');
     setIngredients(updatedIngredients);
   };
-  return (
-      <body>
-      <main className={css.container}>
-        <h1 className={css.header}>Pantry</h1>
-        <button type="button" className="button header" onClick={() => setShowForm(true)}>⨁ New Item</button>
+
+  const addSelectedToGrocery = async () => {
+    if (user) {
+      for (const id of selectedItems) {
+        // Get the item from the pantry collection
+        const item = await getData(user.uid, `pantry/${id}`);
+        // Add the item to the pantry collection
+        await addData(user.uid, 'grocery', item);
+        // Delete the item from the pantry collection
+        await deleteData(user.uid, 'pantry', id);
+      }
+      const updatedIngredients = await getData(user.uid, 'pantry');
+      setIngredients(updatedIngredients);
+      setSelectedItems([]);
+    }
+  };
+
+
+
+  const toggleForm = () => {
+    setShowForm(prevShowForm => !prevShowForm);
+  };
+
+// Maybe refactor to implement this later...
+  // const Pantrytem = ({ name }) => (
+  //     <li key={ingredient.id}>
+  //     <input
+  //       type="checkbox"
+  //       name={`${name}${ingredient.id}`}
+  //       value={ingredient.title}
+  //       checked={selectedItems.includes(ingredient.id)}
+  //       onChange={() => handleCheckboxChange(ingredient.id)}
+  //     />
+  //     <label htmlFor={`${name}${ingredient.id}`}>{ingredient.title}</label><br />
+  //   </li>
+  // );
+
+  const PantryCategory = ({ name, ingredients }) => (
+    <div className={`${css[name.toLowerCase()]} ${(name === "grain" || name === "other") ? css.smallColumn : ""}`}>
+      <h2>{name}</h2>
+      {ingredients.filter(ingredient => ingredient.category === name).length > 0 ? (
+        <ul>
+          {ingredients
+            .filter(ingredient => ingredient.category === name)
+            .map(ingredient => (
+              <li key={ingredient.id}>
+                <input
+                  type="checkbox"
+                  name={`${name}${ingredient.id}`}
+                  value={ingredient.title}
+                  checked={selectedItems.includes(ingredient.id)}
+                  onChange={() => handleCheckboxChange(ingredient.id)}
+                />
+                <label htmlFor={`${name}${ingredient.id}`}>{ingredient.title}</label><br />
+              </li>
+            ))}
+          </ul>
+      ) : (
+        <p>No items yet. Click 'New Item' to add one now!</p>
+      )}
+    </div>
+  );
+
+    return (
+      <body className="pantry-body">
+        <main className={css.container}>
+        <div className={css.header}>
+          <h1>Pantry</h1>
+          <Button variant="text" href="#outlined-buttons" onClick={handleDeleteSelected} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18}}>
+            Delete Selected
+          </Button>
+          <Button variant="text" href="#outlined-buttons" onClick={addSelectedToGrocery} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18}}>
+            Add Selected to Grocery List
+          </Button>
+          <Button variant="text" href="#outlined-buttons" onClick={toggleForm} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18}}>
+            ⨁ New Item
+          </Button>
         {showForm && (
           <form onSubmit={handleSubmit}>
             <div>
@@ -98,7 +172,7 @@ const PantryList = () => {
                 <option value="produce">Produce</option>
                 <option value="protein">Protein</option>
                 <option value="dairy">Dairy</option>
-                <option value="grains">Grains</option>
+                <option value="grain">Grains</option>
                 <option value="other">Other</option>
               </select>
             </div>
@@ -116,108 +190,14 @@ const PantryList = () => {
           </form>
         )}
 
-        <button type="button" className="button" onClick={handleDeleteSelected}>Delete Selected</button>
-        <section className="pantry">
-          <div className="produce">
-            <h2>Produce</h2>
-            <ul>
-              {ingredients
-                .filter(ingredient => ingredient.category === 'produce')
-                .map(ingredient => (
-                  <li key={ingredient.id}>
-                    <input
-                      type="checkbox"
-                      name={`produce${ingredient.id}`}
-                      value={ingredient.title}
-                      checked={selectedItems.includes(ingredient.id)}
-                      onChange={() => handleCheckboxChange(ingredient.id)}
-                    />
-                    <label htmlFor={`produce${ingredient.id}`}>{ingredient.title}</label><br />
-                  </li>
-                ))}
-            </ul>
-          </div>
-          <div className="protein">
-            <h2>Protein</h2>
-            <ul>
-              {ingredients
-                .filter(ingredient => ingredient.category === 'protein')
-                .map(ingredient => (
-                  <li key={ingredient.id}>
-                    <input
-                      type="checkbox"
-                      name={`protein${ingredient.id}`}
-                      value={ingredient.title}
-                      checked={selectedItems.includes(ingredient.id)}
-                      onChange={() => handleCheckboxChange(ingredient.id)}
-                    />
-                    <label htmlFor={`protein${ingredient.id}`}>{ingredient.title}</label><br />
-                  </li>
-                ))}
-            </ul>
-          </div>
-          <div className="dairy">
-            <h2>Dairy</h2>
-            <ul>
-              {ingredients
-                .filter(ingredient => ingredient.category === 'dairy')
-                .map(ingredient => (
-                  <li key={ingredient.id}>
-                    <input
-                      type="checkbox"
-                      name={`dairy${ingredient.id}`}
-                      value={ingredient.title}
-                      checked={selectedItems.includes(ingredient.id)}
-                      onChange={() => handleCheckboxChange(ingredient.id)}
-                    />
-                    <label htmlFor={`dairy${ingredient.id}`}>{ingredient.title}</label><br />
-                  </li>
-                ))}
-            </ul>
-          </div>
-          <div>
-            <div className="grains">
-              <h2>Grains</h2>
-              <ul>
-              {ingredients
-                .filter(ingredient => ingredient.category === 'grains')
-                .map(ingredient => (
-                  <li key={ingredient.id}>
-                    <input
-                      type="checkbox"
-                      name={`grains${ingredient.id}`}
-                      value={ingredient.title}
-                      checked={selectedItems.includes(ingredient.id)}
-                      onChange={() => handleCheckboxChange(ingredient.id)}
-                    />
-                    <label htmlFor={`grains${ingredient.id}`}>{ingredient.title}</label><br />
-                  </li>
-                ))}
-            </ul>
-            </div>
-            <div className="other">
-              <h2>Other</h2>
-              <ul>
-              {ingredients
-                .filter(ingredient => ingredient.category === 'other')
-                .map(ingredient => (
-                  <li key={ingredient.id}>
-                    <input
-                      type="checkbox"
-                      name={`other${ingredient.id}`}
-                      value={ingredient.title}
-                      checked={selectedItems.includes(ingredient.id)}
-                      onChange={() => handleCheckboxChange(ingredient.id)}
-                    />
-                    <label htmlFor={`other${ingredient.id}`}>{ingredient.title}</label><br />
-                  </li>
-                ))}
-            </ul>
-            </div>
-          </div>
+        </div>
+        <section className={css.pantry}>
+          {catagories.map((category) => (
+              <PantryCategory key={category.name} name={category.name} ingredients={ingredients} />
+            ))}
         </section>
       </main>
     </body>
-  )
+    )
 }
 export default PantryList;
