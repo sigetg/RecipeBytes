@@ -1,7 +1,19 @@
+import Avatar from './../assets/Avatar.png'
+
 export const profileData = [ 
     {
-        "name": "John Smith",
-        "email": "smith@gmail.com",
-        "password": "secret"
+        "name": "Name",
+        "value": "John Doe",
+        "type": "text"
+    }, 
+    {
+        "name": "Email",
+        "value": "smith@gmail.com",
+        "type": "text"
+    },
+    {
+        "name": "Password",
+        "value": "secret",
+        "type": "password"
     }
 ]

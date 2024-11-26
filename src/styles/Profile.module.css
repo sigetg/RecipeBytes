@@ -49,6 +49,7 @@ figcaption {
   border-radius: 50%;
   background-color: #d9e9f9;
   align-items: center;
+  border: 2px solid #d9e9f9;
 }
 
 .accountInfo {
