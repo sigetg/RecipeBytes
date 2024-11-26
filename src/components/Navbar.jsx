@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getAuth, signOut } from 'firebase/auth';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -22,7 +23,10 @@ const pages = [
 
 export default function NavigationBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const navigate = useNavigate(); // Call useNavigate to get the navigate function
+  const navigate = useNavigate();
+  const auth = getAuth();
+  const user = auth.currentUser;
+
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -32,15 +36,22 @@ export default function NavigationBar() {
     setAnchorElNav(null);
   };
 
-  const handleNavigate = (page) => {
-    const path = page.toLowerCase();
-    navigate(`/${path}`);
+
+  const handleLogout = async () => {
+    const auth = getAuth();
+    try {
+      await signOut(auth);
+      navigate('/login');
+    } catch (error) {
+      console.error('Logout failed:', error.message);
+    }
   };
+
 
   return (
     <AppBar position="static" sx={{ backgroundColor: '#306CA3', opacity: 0.52, height: "64px" }}>
       <Container maxWidth="100vw">
-        <Toolbar 
+        <Toolbar
           disableGutters
           sx={{
             display: "flex",
@@ -68,6 +79,14 @@ export default function NavigationBar() {
               Recipe Bytes
             </Typography>
             <RecipeIcon />
+            {user && (
+              <Button
+                onClick={handleLogout}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                Logout
+              </Button>
+            )}
           </Box>
 
           {/* Menu Icon for Small Screens */}
