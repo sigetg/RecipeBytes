@@ -54,12 +54,12 @@ figcaption {
 .grocery {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto auto;
   grid-gap: 45px;
   padding: 20px;
   justify-content: space-between;
   border-radius: 20px;
   font-family: "Inter", "Open Sans", "Times New Roman", sans-serif;
-  height: 30em;
 }
 
 .grocery h2 {
@@ -88,16 +88,53 @@ figcaption {
 .produce,
 .protein,
 .dairy,
-.grains,
+.grain,
 .other {
   background-color: #d1e6f9;
   display: flex;
   flex-direction: column;
   padding: 3em;
   border-radius: 20px;
+  height: 100%;
+  grid-row: 1 / span 2;
+}
+
+.grain {
+  grid-row: 1;
+} 
+.other {
+  grid-row: 2;
+}
+
+.smallColumn {
+  display: flex;
+  height: 23em;
 }
 
 .smallColumn div {
   height: 15em;
   margin: 0px 0px 20px 0px;
+}
+
+@media (max-width: 950px) {
+  .grocery {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .produce,
+  .protein,
+  .dairy,
+  .grain,
+  .other {
+    padding: 3em;
+    height: 100%;
+    grid-row: auto;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .grocery {
+    grid-template-columns: 1fr;
+  }
 }
