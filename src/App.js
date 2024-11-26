@@ -6,6 +6,7 @@ import GroceryList from "./components/GroceryList";
 import Profile from "./components/Profile";
 import PantryList from "./components/PantryList";
 import RecipeDetailView from "./components/RecipeDetailView";
+import CurrentWalkthrough from "./components/CurrentWalkthrough";
 import Home from "./components/Home";
 import "./App.css";
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="/pantry" element={<PantryList />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/recipe/:title" element={<RecipeDetailView />} />
+          <Route path="/recipe/:title/start" element={<CurrentWalkthrough />} />
         </Routes>
       </div>
     </Router>
