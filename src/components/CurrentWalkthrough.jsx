@@ -20,33 +20,73 @@ export default function CurrentWalkthrough() {
     }
 
     const totalInstructions = recipe.instructions.length;
-   
+
     const handlePrevClick = () => {
         if (currentIndex > 0) {
-            const newIndex = currentIndex -1;
-            setCurrentIndex(newIndex);      
-            navigate(`/recipe/${encodeURIComponent(recipe.title)}/${newIndex + 1}`); 
+            const newIndex = currentIndex - 1;
+            setCurrentIndex(newIndex);
+            navigate(`/recipe/${encodeURIComponent(recipe.title)}/step${newIndex + 1}`);
         }
     };
 
     const handleNextClick = () => {
-        if (currentIndex < 10) {
-            const newIndex = currentIndex + 1; 
-            setCurrentIndex(newIndex);      
-            navigate(`/recipe/${encodeURIComponent(recipe.title)}/${newIndex + 1}`);
+        if (currentIndex < totalInstructions - 1) {
+            const newIndex = currentIndex + 1;
+            setCurrentIndex(newIndex);
+            navigate(`/recipe/${encodeURIComponent(recipe.title)}/step${newIndex + 1}`);
         }
+    };
+
+    const highlightIngredients = (instruction, ingredients) => {
+        if (!ingredients?.length) return instruction;
+
+        // Create regex patterns for ingredients
+        const ingredientPatterns = ingredients.map((ingredient) => {
+            const normalized = ingredient.name.toLowerCase();
+            return {
+                ...ingredient,
+                pattern: new RegExp(
+                    `\\b(${normalized.replace(/white|ground|powdered/g, "").trim()})\\b`,
+                    "gi"
+                ),
+            };
+        });
+
+        // Split the instruction into words and highlight matches
+        return instruction.split(/\b/).map((word, index) => {
+            const matchedIngredient = ingredientPatterns.find(({ pattern }) =>
+                word.match(pattern)
+            );
+
+            if (matchedIngredient) {
+                return (
+                    <span
+                        key={index}
+                        style={{ fontWeight: "bold", cursor: "pointer", color: "#306CA3" }}
+                        title={`${matchedIngredient.quantity} ${matchedIngredient.name}`}
+                    >
+                        {word}
+                    </span>
+                );
+            }
+
+            return <span key={index}>{word}</span>;
+        });
     };
 
     return (
         <Box sx={{ padding: "20px" }}>
-            <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+            <Typography
+                variant="h4"
+                sx={{ fontFamily: "'Patrick Hand SC', cursive", marginBottom: "20px" }}
+            >
                 {recipe.title}
             </Typography>
             <Typography variant="h6" sx={{ marginBottom: "10px" }}>
                 Step {currentIndex + 1} of {totalInstructions}
             </Typography>
             <Typography variant="body1" sx={{ marginBottom: "20px" }}>
-                {recipe.instructions[currentIndex]}
+                {highlightIngredients(recipe.instructions[currentIndex], recipe.ingredients)}
             </Typography>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                 <Button
@@ -65,6 +105,5 @@ export default function CurrentWalkthrough() {
                 </Button>
             </Box>
         </Box>
-      );
-      
+    );
 }
