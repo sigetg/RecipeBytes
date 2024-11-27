@@ -22,7 +22,7 @@ function App() {
           <Route path="/pantry" element={<PantryList />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/recipe/:title" element={<RecipeDetailView />} />
-          <Route path="/recipe/:title/start" element={<CurrentWalkthrough />} />
+          <Route path="/recipe/:title/:stepIndex" element={<CurrentWalkthrough />} />
         </Routes>
       </div>
     </Router>

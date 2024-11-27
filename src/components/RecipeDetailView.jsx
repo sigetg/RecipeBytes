@@ -46,8 +46,8 @@ export default function RecipeDetailView() {
         </div>
         <Link
           className="navigation"
-          to={`/recipe/${encodeURIComponent(recipe.title)}/start`}
-          aria-label="Start the recipe"
+          to={`/recipe/${encodeURIComponent(recipe.title)}/1`}
+          aria-label={`Start the walkthrough for ${recipe.title}`}
         >
           START
         </Link>
