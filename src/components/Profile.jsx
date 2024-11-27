@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from 'react';
 import css from './../styles/Profile.module.css'
 import Avatar from './../assets/Avatar.png'
-import { getAuth, signOut } from 'firebase/auth';
+import { getAuth, signOut, updateProfile } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
@@ -11,6 +11,9 @@ export default function Pantry() {
   const auth = getAuth();
   const user = auth.currentUser;
   const userId = user.uid;
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [showForm, setShowForm] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -21,6 +24,19 @@ export default function Pantry() {
     } catch (error) {
       console.error('Logout failed:', error.message);
     }
+  };
+
+  const toggleForm = () => {
+    setShowForm(prevShowForm => !prevShowForm);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    await updateProfile(auth.currentUser, {
+      displayName: firstName && lastName ? `${firstName} ${lastName}` : user.displayName
+    })
+    navigate('/')
+    setShowForm(false)
   };
 
   return <main className={css.container}>
@@ -50,9 +66,29 @@ export default function Pantry() {
         />
       </div>
     </section>
+    {showForm && (
+          <form onSubmit={handleSubmit} className={css.form}>
+            <h2>Update Profile</h2>
+             <TextField
+              label="First Name"
+              variant="outlined"
+              margin="normal"
+              onChange={(e) => setFirstName(e.target.value)}
+              type="text"
+            />
+          <TextField
+              label="Last Name"
+              variant="outlined"
+              margin="normal"
+              onChange={(e) => setLastName(e.target.value)}
+              type="text"
+          />
+          <button type="submit" className={css.profileUpdateButton}>Save</button>
+          </form>
+        )}
     <section className={css.options}>
       <Stack direction="row" spacing={2}>
-        <Button variant="text" sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18, border: 1}}>
+        <Button variant="text" onClick={toggleForm} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18, border: 1}}>
           Update Profile
         </Button>
         {user && ( <Button variant="text" onClick={handleLogout} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18, border: 1}}>

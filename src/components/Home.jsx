@@ -19,7 +19,7 @@ export default function Home() {
             <div className="title-container">
                 <AccountCircleIcon sx={{ height: "40px", width: "40px", color: "#306CA3"}} />
                 <Typography variant="h4" sx={{ wordSpacing:"3px", letterSpacing:"3px", fontFamily: "'Patrick Hand SC', cursive", color: "#306CA3" }} >
-                    Welcome {user.displayName.split(' ')[0]}!
+                    Welcome {user.displayName ? user.displayName.split(' ')[0] : ""}!
                 </Typography>
             </div>
             <div className="container-content">
@@ -105,11 +105,3 @@ export default function Home() {
         </Box>
     );
 }
-
-export function getFirstWord(str) {
-    if (str) {
-      return str.split(' ')[0];
-    } else {
-      return ""; // Return an empty string if the input is empty or null
-    }
-  }

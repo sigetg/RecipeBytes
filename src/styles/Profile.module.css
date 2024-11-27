@@ -89,3 +89,32 @@ figcaption {
   align-items: center;
   border-radius: 55px;
 }
+
+.form {
+  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin: 20px 0px; 
+  justify-content: center;
+  border: 1px solid black;
+}
+
+.profileUpdateButton {
+  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+  display: flex;
+  background: #d9e9f9;
+  border-radius: 10px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.profileUpdateButton:hover {
+  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+  display: flex;
+  font-weight: medium;
+  background: #e3effb;
+  border-radius: 10px;
+  font-size: 20px;
+  text-align: center;
+}
