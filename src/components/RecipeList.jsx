@@ -1,13 +1,12 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import Box from "@mui/material/Box";
 import StarIcon from "@mui/icons-material/Star";
-import { Typography } from "@mui/material";
-import { recipeData } from "../data/recipeData";
+import { Typography, CircularProgress } from "@mui/material";
 import { Link } from "react-router-dom";
 import "../styles/RecipeList.css";
-
+import axios from "axios";
 
 const SearchBar = styled("div")(({ theme }) => ({
   display: "flex",
@@ -31,27 +30,61 @@ const SearchInput = styled("input")({
 });
 
 export default function RecipeList() {
-  const [searchQuery, setSearchQuery] = React.useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [favorites, setFavorites] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const API_URL = "https://api.spoonacular.com/recipes/complexSearch";
+  const API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
+
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(API_URL, {
+          params: {
+            apiKey: API_KEY,
+            number: 10, 
+            addRecipeInformation: true,
+            sort: "popularity",
+          },
+        });
+        setFavorites(response.data.results || []);
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to fetch favorites");
+        setLoading(false);
+      }
+    };
+
+    const fetchSuggestions = async () => {
+      try {
+        const response = await axios.get(API_URL, {
+          params: {
+            apiKey: API_KEY,
+            query: searchQuery, // Use search query to fetch suggestions
+            number: 20, // Limit the number of suggestions
+            addRecipeInformation: true,
+          },
+        });
+        setSuggestions(response.data.results || []);
+      } catch (err) {
+        setError("Failed to fetch suggestions");
+      }
+    };
+
+    fetchFavorites(); // Load favorites initially
+    if (searchQuery) fetchSuggestions(); // Fetch suggestions only on search
+  }, [searchQuery]);
 
   const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value.toLowerCase());
+    setSearchQuery(e.target.value);
   };
 
-
-  const filteredFavorites = recipeData.filter(
-    (recipe) =>
-      recipe.is_favorite &&
-      recipe.title.toLowerCase().includes(searchQuery)
-  );
-
-  const filteredSuggestions = recipeData.filter(
-    (recipe) =>
-      !recipe.is_favorite &&
-      recipe.title.toLowerCase().includes(searchQuery)
-  );
-
   return (
-    <Box sx={{ padding: "30px", height:"auto", alignContent:"center", display: "block", marginTop: "5vh" }}>
+    <Box sx={{ padding: "30px", height: "auto", alignContent: "center", display: "block", marginTop: "5vh" }}>
       <SearchBar>
         <SearchInput
           type="text"
@@ -77,52 +110,43 @@ export default function RecipeList() {
           <StarIcon sx={{ marginRight: "8px" }} /> Favorites
         </Typography>
         <div className="recipe-container">
-        {filteredFavorites.length === 0 && (
-          <Typography variant="body1" sx={{ color: "#666" }}>
-            No favorite recipes found.
-          </Typography>
-        )}
-        {filteredFavorites.map((recipe) => (
-          <Link 
-            to={`/recipe/${encodeURIComponent(recipe.title)}`}
-            key={recipe.title}
-            style={{ textDecoration: "none", color: "inherit" }}
-          >
-            <div className="recipe-card" key={recipe.title}>
-              <img
-                className="recipe-image"
-                src={recipe.image}
-                alt={recipe.title}
-                style={{ paddingBottom:"10px", width: "100%", height:"200px" }}
-              />
-              <div style={{ flex: 1 }}>
-                <Typography
-                  variant="h5"
-                  sx={{
-                    fontWeight: "bold",
-                    fontFamily: "'Patrick Hand SC', cursive",
-                    textAlign: "left",
-                    paddingBottom: "15px",
-                  }}
-                >
-                  {recipe.title}
-                </Typography>
-                <Typography
-                  variant="body1"
-                  sx={{ color: "#666", textAlign: "left" }}
-                >
-                  <strong>Ingredients:</strong>{" "}
-                  {recipe.ingredients
-                    .map((item) => `${item.quantity} ${item.name}`)
-                    .slice(0, 5)
-                    .join(", ")}{" "}
-                  ...
-                </Typography>
+          {loading && <CircularProgress />}
+          {error && <Typography color="error">{error}</Typography>}
+          {!loading && favorites.length === 0 && (
+            <Typography variant="body1" sx={{ color: "#666" }}>
+              No favorite recipes found.
+            </Typography>
+          )}
+          {favorites.map((recipe) => (
+            <Link
+              to={`/recipe/${encodeURIComponent(recipe.title)}`}
+              key={recipe.id}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <div className="recipe-card">
+                <img
+                  className="recipe-image"
+                  src={recipe.image}
+                  alt={recipe.title}
+                  style={{ paddingBottom: "10px", width: "100%", height: "200px" }}
+                />
+                <div style={{ flex: 1 }}>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      fontWeight: "bold",
+                      fontFamily: "'Patrick Hand SC', cursive",
+                      textAlign: "left",
+                      paddingBottom: "15px",
+                    }}
+                  >
+                    {recipe.title}
+                  </Typography>
+                </div>
               </div>
-            </div>
-          </Link>
-        ))}
-        </div>  
+            </Link>
+          ))}
+        </div>
       </Box>
 
       {/* Suggestions Section */}
@@ -140,46 +164,35 @@ export default function RecipeList() {
           Suggestions
         </Typography>
         <div className="recipe-container">
-        {filteredSuggestions.map((recipe) => (
-          <Link 
-            to={`/recipe/${encodeURIComponent(recipe.title)}`}
-            key={recipe.title}
-            style={{ textDecoration: "none", color: "inherit"}}
-          >
-            <div className="recipe-card" key={recipe.title}>
-              <img
-                className="recipe-image"
-                src={recipe.image}
-                alt={recipe.title}
-                style={{ paddingBottom:"10px", width: "100%", height:"200px"}}
-              />
-              <div style={{ flex: 1 }}>
-                <Typography
-                  variant="h5"
-                  sx={{
-                    fontWeight: "bold",
-                    fontFamily: "'Patrick Hand SC', cursive",
-                    textAlign: "left",
-                    paddingBottom: "15px",
-                  }}
-                >
-                  {recipe.title}
-                </Typography>
-                <Typography
-                  variant="body1"
-                  sx={{ color: "#666", textAlign: "left" }}
-                >
-                  <strong>Ingredients:</strong>{" "}
-                  {recipe.ingredients
-                    .map((item) => `${item.quantity} ${item.name}`)
-                    .slice(0, 5)
-                    .join(", ")}{" "}
-                  ...
-                </Typography>
+          {suggestions.map((recipe) => (
+            <Link
+              to={`/recipe/${encodeURIComponent(recipe.title)}`}
+              key={recipe.id}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <div className="recipe-card">
+                <img
+                  className="recipe-image"
+                  src={recipe.image}
+                  alt={recipe.title}
+                  style={{ paddingBottom: "10px", width: "100%", height: "200px" }}
+                />
+                <div style={{ flex: 1 }}>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      fontWeight: "bold",
+                      fontFamily: "'Patrick Hand SC', cursive",
+                      textAlign: "left",
+                      paddingBottom: "15px",
+                    }}
+                  >
+                    {recipe.title}
+                  </Typography>
+                </div>
               </div>
-            </div>
-          </Link>  
-        ))}
+            </Link>
+          ))}
         </div>
       </Box>
     </Box>
