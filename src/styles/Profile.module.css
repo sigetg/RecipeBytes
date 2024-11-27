@@ -58,6 +58,7 @@ figcaption {
   padding: 10px;
   margin: 20px 0px; 
   width: 100%;
+  justify-content: center;
 }
 
 .accountInfo input {
@@ -80,11 +81,11 @@ figcaption {
 }
 
 .name,
-.email,
-.password {
+.email {
   display: flex;
   padding: 10px;
   justify-content: center;
+  justify-items: center;
   align-items: center;
   border-radius: 55px;
 }

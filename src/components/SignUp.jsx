@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { css } from '@emotion/react';
 import style from '../styles/SignUp.module.css';
 import Button from '@mui/material/Button';
@@ -13,6 +13,8 @@ import VisibilityRoundedIcon from '@mui/icons-material/Visibility';
 const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const navigate = useNavigate();
   const auth = getAuth();
   const [showPassword, setShowPassword] = useState(false)
@@ -24,6 +26,7 @@ const SignUp = () => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
+      await updateProfile(user, { displayName: `${firstName} ${lastName}` });
       console.log('Signed up:', user);
       navigate('/');
     } catch (error) {
@@ -35,6 +38,20 @@ const SignUp = () => {
     <div className={style.container}>
       <div className={style.signup}>
         <h1>Sign Up</h1>
+        <TextField
+          label="First Name"
+          variant="outlined"
+          margin="normal"
+          onChange={(e) => setFirstName(e.target.value)}
+          type="text"
+        />
+        <TextField
+          label="Last Name"
+          variant="outlined"
+          margin="normal"
+          onChange={(e) => setLastName(e.target.value)}
+          type="text"
+        />
         <TextField
           label="Email"
           variant="outlined"

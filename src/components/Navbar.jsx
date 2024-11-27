@@ -36,18 +36,6 @@ export default function NavigationBar() {
     setAnchorElNav(null);
   };
 
-
-  const handleLogout = async () => {
-    const auth = getAuth();
-    try {
-      await signOut(auth);
-      navigate('/login');
-    } catch (error) {
-      console.error('Logout failed:', error.message);
-    }
-  };
-
-
   return (
     <AppBar position="static" sx={{ backgroundColor: '#306CA3', opacity: 0.52, height: "64px" }}>
       <Container maxWidth="100vw">
@@ -79,14 +67,6 @@ export default function NavigationBar() {
               Recipe Bytes
             </Typography>
             <RecipeIcon />
-            {user && (
-              <Button
-                onClick={handleLogout}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                Logout
-              </Button>
-            )}
           </Box>
 
           {/* Menu Icon for Small Screens */}

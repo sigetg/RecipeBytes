@@ -7,16 +7,19 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import StarIcon from "@mui/icons-material/Star";
 import { IngredientsIcon } from "../assets/icons";
 import { recipeData } from "../data/recipeData";
-import { profileData } from "../data/profileData";
 import { Link } from "react-router-dom";
+import { getAuth } from 'firebase/auth';
+
 
 export default function Home() {
+    const auth = getAuth();
+    const user = auth.currentUser;
     return (
         <Box sx={{ padding: "30px" }}>
             <div className="title-container">
                 <AccountCircleIcon sx={{ height: "40px", width: "40px", color: "#306CA3"}} />
                 <Typography variant="h4" sx={{ wordSpacing:"3px", letterSpacing:"3px", fontFamily: "'Patrick Hand SC', cursive", color: "#306CA3" }} >
-                    Welcome {getFirstWord(profileData[0].value)}!
+                    Welcome {user.displayName.split(' ')[0]}!
                 </Typography>
             </div>
             <div className="container-content">
