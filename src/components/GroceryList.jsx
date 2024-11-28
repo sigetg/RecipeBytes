@@ -114,7 +114,7 @@ const GroceryList = () => {
                   checked={selectedItems.includes(ingredient.id)}
                   onChange={() => handleCheckboxChange(ingredient.id)}
                 />
-                <label htmlFor={`${name}${ingredient.id}`}>{ingredient.title}</label><br />
+                <label htmlFor={`${name}${ingredient.id}`}>{ingredient.quantity > 1 ? `${ingredient.title} (${ingredient.quantity})` : `${ingredient.title}`}</label><br />
               </li>
             ))}
           </ul>
