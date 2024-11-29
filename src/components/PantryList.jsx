@@ -10,12 +10,14 @@ const PantryList = () => {
   const [ingredients, setIngredients] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [title, setTitle] = useState("");
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState();
   const [category, setCategory] = useState("other");
-  const [expiration, setExpiration] = useState("");
+  const [expiration, setExpiration] = useState(new Date());
   const [selectedItems, setSelectedItems] = useState([]);
   const auth = getAuth();
   const user = auth.currentUser;
+  const [currentDate, setCurrentDate] = useState(new Date());
+  // const [spanColor, setSpanColor] = useState();
 
   useEffect(() => {
     const fetchIngredients = async () => {
@@ -23,6 +25,15 @@ const PantryList = () => {
       setIngredients(fetchedIngredients);
     };
 
+    const setDate = () => {
+      const intervalId = setInterval(() => {
+        setCurrentDate(new Date()); // Update current date every hour
+      }, 3600000); // Update every hour
+
+      return () => clearInterval(intervalId); // Cleanup on unmount
+    };
+
+    setDate();
     fetchIngredients();
   }, []);
 
@@ -61,6 +72,7 @@ const PantryList = () => {
     setExpiration("");
     const updatedIngredients = await getData(user.uid, 'pantry');
     setIngredients(updatedIngredients);
+    // setSpanLabelColor("#b3ccff");
   };
 
   const addSelectedToGrocery = async () => {
@@ -99,6 +111,26 @@ const PantryList = () => {
   //   </li>
   // );
 
+  // const calculateDaysLeft = () => {
+  //   const differenceInMs = expiration - currentDate;
+  //   const differenceInDays = Math.ceil((ingredient.expiration.seconds - currentDate.getMilliseconds()) / (1000 * 60 * 60 * 24));
+  //   setDaysLeft(differenceInDays);
+  // }
+
+
+  // a failed attempt to change label color based on value
+  // const setSpanLabelColor = ({ingredient}) => {
+  //   console.log("hi");
+  //   const expirationSpan = document.getElementByClassName('expirationLabel');
+  //   console.log("expiration span" + expirationSpan);
+  //   const date_diff = Math.ceil((ingredient.expiration.toDate().valueOf() - currentDate.valueOf())/(1000 * 60 * 60 * 24));
+  //   if (date_diff === 1) {
+  //     ingredient.expirationSpan.style.backgroundColor = 'red';
+  //   } 
+  //   setSpanColor()
+  // }
+
+
   const PantryCategory = ({ name, ingredients }) => (
     <div className={`${css[name.toLowerCase()]} ${(name === "grain" || name === "other") ? css.smallColumn : ""}`}>
       <h2>{name}</h2>
@@ -108,14 +140,17 @@ const PantryList = () => {
             .filter(ingredient => ingredient.category === name)
             .map(ingredient => (
               <li key={ingredient.id}>
-                <input
+                <div><input
                   type="checkbox"
                   name={`${name}${ingredient.id}`}
                   value={ingredient.title}
                   checked={selectedItems.includes(ingredient.id)}
                   onChange={() => handleCheckboxChange(ingredient.id)}
                 />
-                <label htmlFor={`${name}${ingredient.id}`}>{ingredient.title}</label><br />
+                <label htmlFor={`${name}${ingredient.id}`}>{ingredient.title}</label>
+                </div>
+                <span className = "expirationLabel">expires in {Math.ceil((ingredient.expiration.toDate().valueOf() - currentDate.valueOf())/(1000 * 60 * 60 * 24))} days</span>  
+                <br />
               </li>
             ))}
           </ul>

@@ -85,6 +85,27 @@ figcaption {
   font-size: 16px;
 }
 
+.produce ul li span,
+.protein ul li span, 
+.dairy ul li span,
+.grain ul li span,
+.other ul li span {
+  background-color: #b3ccff;
+  border-radius: 15px;
+  padding: 0px 10px;
+}
+
+.produce ul li,
+.protein ul li, 
+.dairy ul li,
+.grain ul li,
+.other ul li  {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
 .produce,
 .protein,
 .dairy,
