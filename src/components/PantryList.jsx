@@ -164,7 +164,7 @@ const PantryList = () => {
       <body className="pantry-body">
         <main className={css.container}>
         <div className={css.header}>
-          <h1>Pantry</h1>
+          <h1>Pantry Tracker</h1>
           <Button variant="text" href="#outlined-buttons" onClick={handleDeleteSelected} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18}}>
             Delete Selected
           </Button>
@@ -175,9 +175,10 @@ const PantryList = () => {
             ⨁ New Item
           </Button>
         {showForm && (
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className={css.form}>
             <div>
-              <label htmlFor="title">Title:</label>
+              <h2>Add Item</h2>
+              <label htmlFor="title">Item: </label>
               <input
                 type="text"
                 id="title"
@@ -187,7 +188,7 @@ const PantryList = () => {
               />
             </div>
             <div>
-              <label htmlFor="quantity">Quantity:</label>
+              <label htmlFor="quantity">Quantity: </label>
             <input
                 type="number"
                 id="quantity"
@@ -197,7 +198,7 @@ const PantryList = () => {
               />
             </div>
             <div>
-              <label htmlFor="category">Category:</label>
+              <label htmlFor="category">Category: </label>
               <select
                 id="category"
                 value={category}
@@ -212,7 +213,7 @@ const PantryList = () => {
               </select>
             </div>
             <div>
-              <label htmlFor="expiration">Expiration Date:</label>
+              <label htmlFor="expiration">Expiration Date: </label>
               <input
                 type="date"
                 id="expiration"
@@ -221,7 +222,7 @@ const PantryList = () => {
                 required
               />
             </div>
-            <button type="submit" className="button">Add Ingredient</button>
+            <button type="submit" className="button">Add Pantry Item</button>
           </form>
         )}
 
