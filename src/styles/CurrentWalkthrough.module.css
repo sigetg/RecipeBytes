@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Patrick+Hand+SC&family=Shadows+Into+Light&display=swap');
+
+:global(body, html, #root) {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+:global(body) {
+    font-family: 'inter', serif;
+    box-sizing: border-box;
+    margin: 10px 20px;
+}
+
+.container {
+    padding: 20px;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.instruction {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.stepTitle {
+    font-family: "Patrick Hand SC", cursive;
+    margin-bottom: 20px;
+}
+
+.stepDescription {
+    margin-bottom: 20px;
+}
+
+.ingredientsList {
+    margin-bottom: 20px;
+}
+
+.ingredientsTitle {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.ingredientsItem {
+    list-style-type: none;
+    padding: 0;
+}
+
+.navigationButtons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.errorText {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+}
+
+.loadingContainer {
+    padding: 20px;
+    text-align: center;
+}
+
+.animationContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    position: relative;
+}
+  
+.stepAnimation {
+    max-width: 95%; 
+    border-radius: 10px;
+    top: 0;
+}

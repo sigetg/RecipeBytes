@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Patrick+Hand+SC&family=Shadows+Into+Light&display=swap');
+
+:global(body, html, #root) {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+:global(body) {
+    font-family: 'inter', serif;
+    box-sizing: border-box;
+    margin: 10px 20px;
+}
+
+.recipeContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    gap: 20px; /* Space between items */
+    margin-top: 20px;
+}
+
+.recipeCard {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 440px;
+}
+
+.recipeImage {
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 20px;
+    width: 100%;
+    height: 200px;
+}
+
+.recipeCard:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+}
+
+.favoriteButton {
+    background-color: rgba(48, 108, 163, 0.72);
+    color: white;
+    border: white;
+    padding: 8px;
+    margin: 10px 0;
+    border-radius: 20px;
+}
+
+.favoriteButton:hover {
+    background-color: rgba(48, 108, 163, 0.52);
+}
+
+@media (max-width: 600px) {
+    .recipeCard {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .recipeImage {
+        margin-bottom: 15px;
+    }
+}

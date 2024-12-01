@@ -17,7 +17,6 @@ const PantryList = () => {
   const auth = getAuth();
   const user = auth.currentUser;
   const [currentDate, setCurrentDate] = useState(new Date());
-  // const [spanColor, setSpanColor] = useState();
 
   useEffect(() => {
     const fetchIngredients = async () => {
@@ -72,7 +71,6 @@ const PantryList = () => {
     setExpiration("");
     const updatedIngredients = await getData(user.uid, 'pantry');
     setIngredients(updatedIngredients);
-    // setSpanLabelColor("#b3ccff");
   };
 
   const addSelectedToGrocery = async () => {
@@ -91,7 +89,10 @@ const PantryList = () => {
     }
   };
 
-
+  function getDaysLeft(expiration, current) {
+    const answer = Math.ceil((expiration - current)/(1000 * 60 * 60 * 24));
+    return answer;
+  }
 
   const toggleForm = () => {
     setShowForm(prevShowForm => !prevShowForm);
@@ -130,6 +131,22 @@ const PantryList = () => {
   //   setSpanColor()
   // }
 
+  function generateItemWithLabel(ingredient) {
+    if (getDaysLeft(ingredient.expiration.toDate().valueOf(),currentDate.valueOf()) <= 0) {
+      return <>
+        <span className={`${css.expirationLabel} ${css.expired}`}>EXPIRED</span>
+      </>
+    }
+    else if (getDaysLeft(ingredient.expiration.toDate().valueOf(),currentDate.valueOf()) <= 4) {
+      return <>
+        <span className={`${css.expirationLabel} ${css.soonToExpire}`}>expires in {getDaysLeft(ingredient.expiration.toDate().valueOf(),currentDate.valueOf())} days</span>
+      </>
+    }
+    else {
+      return <><span className={css.expirationLabel}>expires in {getDaysLeft(ingredient.expiration.toDate().valueOf(),currentDate.valueOf())} days</span></>
+    } 
+  }
+
 
   const PantryCategory = ({ name, ingredients }) => (
     <div className={`${css[name.toLowerCase()]} ${(name === "grain" || name === "other") ? css.smallColumn : ""}`}>
@@ -147,9 +164,12 @@ const PantryList = () => {
                   checked={selectedItems.includes(ingredient.id)}
                   onChange={() => handleCheckboxChange(ingredient.id)}
                 />
-                <label htmlFor={`${name}${ingredient.id}`}>{ingredient.title}</label>
+                <label htmlFor={`${name}${ingredient.id}`}>{ingredient.title} ({ingredient.quantity})</label>
                 </div>
-                <span className = "expirationLabel">expires in {Math.ceil((ingredient.expiration.toDate().valueOf() - currentDate.valueOf())/(1000 * 60 * 60 * 24))} days</span>  
+                {generateItemWithLabel(ingredient)}  
+
+                {/* try to turn this into a function that sets item with <= 0 days left as expired and change the tag based on how many days are left */}
+
                 <br />
               </li>
             ))}
@@ -164,7 +184,7 @@ const PantryList = () => {
       <body className="pantry-body">
         <main className={css.container}>
         <div className={css.header}>
-          <h1>Pantry</h1>
+          <h1>Pantry Tracker</h1>
           <Button variant="text" href="#outlined-buttons" onClick={handleDeleteSelected} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18}}>
             Delete Selected
           </Button>
@@ -175,9 +195,10 @@ const PantryList = () => {
             ⨁ New Item
           </Button>
         {showForm && (
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className={css.form}>
             <div>
-              <label htmlFor="title">Title:</label>
+              <h2>Add Item</h2>
+              <label htmlFor="title">Item: </label>
               <input
                 type="text"
                 id="title"
@@ -187,7 +208,7 @@ const PantryList = () => {
               />
             </div>
             <div>
-              <label htmlFor="quantity">Quantity:</label>
+              <label htmlFor="quantity">Quantity: </label>
             <input
                 type="number"
                 id="quantity"
@@ -197,7 +218,7 @@ const PantryList = () => {
               />
             </div>
             <div>
-              <label htmlFor="category">Category:</label>
+              <label htmlFor="category">Category: </label>
               <select
                 id="category"
                 value={category}
@@ -212,7 +233,7 @@ const PantryList = () => {
               </select>
             </div>
             <div>
-              <label htmlFor="expiration">Expiration Date:</label>
+              <label htmlFor="expiration">Expiration Date: </label>
               <input
                 type="date"
                 id="expiration"
@@ -221,7 +242,7 @@ const PantryList = () => {
                 required
               />
             </div>
-            <button type="submit" className="button">Add Ingredient</button>
+            <button type="submit" className="button">Add Pantry Item</button>
           </form>
         )}
 

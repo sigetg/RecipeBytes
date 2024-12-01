@@ -62,6 +62,33 @@ figcaption {
   font-family: "Inter", "Open Sans", "Times New Roman", sans-serif;
 }
 
+.form {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  padding: 2px;
+  border: 1px solid black;
+}
+
+.form h2 {
+  padding: 5px 0px;
+  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+  text-align: center;
+}
+
+.form button {
+  padding: 5px;
+  margin: 5px;
+  border-radius: 10px;
+  background: #d1e6f9;
+  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+}
+
+.form button:hover {
+  background: #e3effb;
+  font-weight: medium;
+}
+
 .pantry h2 {
   padding: 10px 0px;
   font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
@@ -85,26 +112,20 @@ figcaption {
   font-size: 16px;
 }
 
-.produce ul li span,
-.protein ul li span, 
-.dairy ul li span,
-.grain ul li span,
-.other ul li span {
+.expirationLabel {
   background-color: #b3ccff;
   border-radius: 15px;
+  margin-left:21px;
   padding: 0px 10px;
 }
 
-.produce ul li,
-.protein ul li, 
-.dairy ul li,
-.grain ul li,
-.other ul li  {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+.expired {
+  background-color: #ff8080;
 }
 
+.soonToExpire {
+  background-color: #ffff80;
+}
 
 .produce,
 .protein,

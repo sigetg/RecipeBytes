@@ -1,13 +1,12 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import Box from "@mui/material/Box";
 import StarIcon from "@mui/icons-material/Star";
-import { Typography } from "@mui/material";
-import { recipeData } from "../data/recipeData";
+import { Typography, CircularProgress } from "@mui/material";
 import { Link } from "react-router-dom";
-import "../styles/RecipeList.css";
-
+import css from "../styles/RecipeList.module.css";
+import axios from "axios";
 
 const SearchBar = styled("div")(({ theme }) => ({
   display: "flex",
@@ -31,33 +30,89 @@ const SearchInput = styled("input")({
 });
 
 export default function RecipeList() {
-  const [searchQuery, setSearchQuery] = React.useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [favorites, setFavorites] = useState(() => {
+    try {
+      const storedFavorites = localStorage.getItem("favorites");
+      return Array.isArray(JSON.parse(storedFavorites))
+        ? JSON.parse(storedFavorites)
+        : [];
+    } catch (e) {
+      console.error("Failed to parse favorites from localStorage:", e);
+      return [];
+    }
+  });
+  const [suggestions, setSuggestions] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const API_URL = "https://api.spoonacular.com/recipes/complexSearch";
+  const API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
+
+  useEffect(() => {
+    const fetchSuggestions = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(API_URL, {
+          params: {
+            apiKey: API_KEY,
+            number: 20,
+            query: searchQuery, // Use the search query to filter results
+            addRecipeInformation: true,
+          },
+        });
+
+        // Filter suggestions to exclude favorites
+        const filteredSuggestions = response.data.results.filter(
+          (recipe) => !favorites.some((fav) => fav.id === recipe.id)
+        );
+
+        setSuggestions(filteredSuggestions || []);
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to fetch suggestions");
+        setLoading(false);
+      }
+    };
+
+    // Fetch recipes whenever the search query changes
+    fetchSuggestions();
+  }, [favorites, searchQuery]);
 
   const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value.toLowerCase());
+    setSearchQuery(e.target.value); // Update search query state on input change
   };
 
+  const saveToFavorites = (recipe) => {
+    const updatedFavorites = [...favorites, recipe];
+    setFavorites(updatedFavorites);
+    localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+  };
 
-  const filteredFavorites = recipeData.filter(
-    (recipe) =>
-      recipe.is_favorite &&
-      recipe.title.toLowerCase().includes(searchQuery)
-  );
+  const removeFromFavorites = (recipeId) => {
+    const updatedFavorites = favorites.filter((fav) => fav.id !== recipeId);
+    setFavorites(updatedFavorites);
+    localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+  };
 
-  const filteredSuggestions = recipeData.filter(
-    (recipe) =>
-      !recipe.is_favorite &&
-      recipe.title.toLowerCase().includes(searchQuery)
-  );
+  const isFavorite = (recipeId) => favorites.some((fav) => fav.id === recipeId);
 
   return (
-    <Box sx={{ padding: "30px", height:"auto", alignContent:"center", display: "block", marginTop: "5vh" }}>
+    <Box
+      sx={{
+        padding: "30px",
+        height: "auto",
+        alignContent: "center",
+        display: "block",
+        marginTop: "5vh",
+      }}
+    >
       <SearchBar>
         <SearchInput
           type="text"
           placeholder="Search…"
           value={searchQuery}
-          onChange={handleSearchChange}
+          onChange={handleSearchChange} // Update search query on input change
         />
         <SearchIcon />
       </SearchBar>
@@ -65,121 +120,113 @@ export default function RecipeList() {
       {/* Favorites Section */}
       <Box>
         <Typography
+          className={css.heading}
           variant="h4"
           sx={{
             margin: "3vh 0 10px 0",
-            color: "#4a90e2",
-            fontFamily: "'Patrick Hand SC', cursive",
-            textAlign: "left",
-            padding: "10px 0 0 0",
+            fontFamily: "'Patrick Hand SC'",
+            color: "rgba(48, 108, 163, 0.52)",
           }}
         >
-          <StarIcon sx={{ marginRight: "8px" }} /> Favorites
+          <StarIcon className={css.headingIcon} />
+          Favorites
         </Typography>
-        <div className="recipe-container">
-        {filteredFavorites.length === 0 && (
-          <Typography variant="body1" sx={{ color: "#666" }}>
-            No favorite recipes found.
-          </Typography>
-        )}
-        {filteredFavorites.map((recipe) => (
-          <Link 
-            to={`/recipe/${encodeURIComponent(recipe.title)}`}
-            key={recipe.title}
-            style={{ textDecoration: "none", color: "inherit" }}
-          >
-            <div className="recipe-card" key={recipe.title}>
-              <img
-                className="recipe-image"
-                src={recipe.image}
-                alt={recipe.title}
-                style={{ paddingBottom:"10px", width: "100%", height:"200px" }}
-              />
-              <div style={{ flex: 1 }}>
+        <div className={css.recipeContainer}>
+          {!favorites.length && (
+            <Typography className={css.noResults} variant="body1">
+              No favorite recipes found.
+            </Typography>
+          )}
+          {favorites.map((recipe) => (
+            <div className={css.recipeCard} key={recipe.id}>
+              <Link
+                to={`/recipe/${recipe.id}`}
+                className={css.recipeLink}
+                style={{ width: "100%" }}
+              >
+                <img
+                  className={css.recipeImage}
+                  src={recipe.image}
+                  alt={recipe.title}
+                />
+              </Link>
+              <div className={css.recipeInfo}>
                 <Typography
+                  className={css.recipeTitle}
                   variant="h5"
-                  sx={{
-                    fontWeight: "bold",
-                    fontFamily: "'Patrick Hand SC', cursive",
-                    textAlign: "left",
-                    paddingBottom: "15px",
-                  }}
+                  sx={{ fontFamily: "'Patrick Hand SC', cursive" }}
                 >
                   {recipe.title}
                 </Typography>
-                <Typography
-                  variant="body1"
-                  sx={{ color: "#666", textAlign: "left" }}
+                <button
+                  className={css.favoriteButton}
+                  onClick={() => removeFromFavorites(recipe.id)}
                 >
-                  <strong>Ingredients:</strong>{" "}
-                  {recipe.ingredients
-                    .map((item) => `${item.quantity} ${item.name}`)
-                    .slice(0, 5)
-                    .join(", ")}{" "}
-                  ...
-                </Typography>
+                  Remove from Favorites
+                </button>
               </div>
             </div>
-          </Link>
-        ))}
-        </div>  
+          ))}
+        </div>
       </Box>
 
       {/* Suggestions Section */}
       <Box>
         <Typography
+          className={css.heading}
           variant="h4"
           sx={{
             margin: "3vh 0 10px 0",
-            color: "#4a90e2",
-            fontFamily: "'Patrick Hand SC', cursive",
-            textAlign: "left",
-            padding: "10px 0 0 0",
+            fontFamily: "'Patrick Hand SC'",
+            color: "rgba(48, 108, 163, 0.52)",
           }}
         >
           Suggestions
         </Typography>
-        <div className="recipe-container">
-        {filteredSuggestions.map((recipe) => (
-          <Link 
-            to={`/recipe/${encodeURIComponent(recipe.title)}`}
-            key={recipe.title}
-            style={{ textDecoration: "none", color: "inherit"}}
-          >
-            <div className="recipe-card" key={recipe.title}>
-              <img
-                className="recipe-image"
-                src={recipe.image}
-                alt={recipe.title}
-                style={{ paddingBottom:"10px", width: "100%", height:"200px"}}
-              />
-              <div style={{ flex: 1 }}>
+        <div className={css.recipeContainer}>
+          {loading && <CircularProgress />}
+          {error && (
+            <Typography className={css.errorMessage}>{error}</Typography>
+          )}
+          {suggestions.map((recipe) => (
+            <div className={css.recipeCard} key={recipe.id}>
+              <Link
+                to={`/recipe/${recipe.id}`}
+                className={css.recipeLink}
+                style={{ width: "100%" }}
+              >
+                <img
+                  className={css.recipeImage}
+                  src={recipe.image}
+                  alt={recipe.title}
+                />
+              </Link>
+              <div className={css.recipeInfo}>
                 <Typography
+                  className={css.recipeTitle}
                   variant="h5"
-                  sx={{
-                    fontWeight: "bold",
-                    fontFamily: "'Patrick Hand SC', cursive",
-                    textAlign: "left",
-                    paddingBottom: "15px",
-                  }}
+                  sx={{ fontFamily: "'Patrick Hand SC', cursive" }}
                 >
                   {recipe.title}
                 </Typography>
-                <Typography
-                  variant="body1"
-                  sx={{ color: "#666", textAlign: "left" }}
-                >
-                  <strong>Ingredients:</strong>{" "}
-                  {recipe.ingredients
-                    .map((item) => `${item.quantity} ${item.name}`)
-                    .slice(0, 5)
-                    .join(", ")}{" "}
-                  ...
-                </Typography>
+                {isFavorite(recipe.id) ? (
+                  <button
+                    className={css.favoriteButton}
+                    onClick={() => removeFromFavorites(recipe.id)}
+                  >
+                    Remove from Favorites
+                  </button>
+                ) : (
+                  <button
+                    className={css.favoriteButton}
+                    onClick={() => saveToFavorites(recipe)}
+                  >
+                    Add to Favorites
+                  </button>
+                )}
               </div>
             </div>
-          </Link>  
-        ))}
+          ))}
         </div>
       </Box>
     </Box>
