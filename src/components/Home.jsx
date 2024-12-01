@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect} from "react";
 import { useParams } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
 import css from "../styles/Home.module.css";
@@ -9,9 +9,67 @@ import { IngredientsIcon } from "../assets/icons";
 import { recipeData } from "../data/recipeData";
 import { Link } from "react-router-dom";
 import { getAuth } from 'firebase/auth';
-
+import PantryList from './PantryList';
+import { getData } from "../services/firestoreService";
 
 export default function Home() {
+    const [ingredients, setIngredients] = useState([]);
+    const [currentDate, setCurrentDate] = useState(new Date());
+    useEffect(() => {
+        const setDate = () => {
+          const intervalId = setInterval(() => {
+            setCurrentDate(new Date()); // Update current date every hour
+          }, 3600000); // Update every hour
+    
+          return () => clearInterval(intervalId); // Cleanup on unmount
+        };
+    
+        setDate();
+      }, []);
+
+    function getDaysLeft(expiration, current) {
+        const answer = Math.ceil((expiration - current)/(1000 * 60 * 60 * 24));
+        return answer;
+    }
+
+
+    function get_expiring_items() {
+        get_ingredients();
+        let expiring_ingredients = [];
+        let expired_ingredients = []
+
+        for (let ingredient of ingredients) {
+            // console.log(ingredient);
+            if (getDaysLeft(ingredient.expiration.toDate().valueOf(),currentDate.valueOf()) <= 0) {
+                expired_ingredients.push(ingredient);
+            }
+            else if (getDaysLeft(ingredient.expiration.toDate().valueOf(),currentDate.valueOf()) <= 4) {
+                expiring_ingredients.push(ingredient);
+            }
+        }
+        
+        const expiring = () => expiring_ingredients.map((ingredient) => <>
+            <div className = {css.expiringItem}>
+            <li>{ingredient.title} ({ingredient.quantity})</li>
+            <span className={`${css.expirationLabel} ${css.soonToExpire}`}>expires in {getDaysLeft(ingredient.expiration.toDate().valueOf(),currentDate.valueOf())} days</span>
+            </div>
+            </>);
+
+        const expired = () => expired_ingredients.map((ingredient) => <>
+            <div className = {css.expiringItem}>
+            <li>{ingredient.title} ({ingredient.quantity})</li>
+            <span className={`${css.expirationLabel} ${css.expired}`}>EXPIRED</span>
+            </div>
+            </>);
+
+        return <>{expired()} {expiring()}</>
+    }    
+    
+    async function get_ingredients() {
+        const ingredients = await getData(user.uid, 'pantry');
+        setIngredients(ingredients);
+    }
+
     const auth = getAuth();
     const user = auth.currentUser;
     return (
@@ -88,6 +146,9 @@ export default function Home() {
                         <Typography className={css.sectionTitle} variant="h5">
                             Expiration Coming Up
                         </Typography>
+                        <ul>
+                            {get_expiring_items()}
+                        </ul>
                     </Box>
                 </div>
             </div>

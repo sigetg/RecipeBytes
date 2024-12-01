@@ -17,7 +17,6 @@ const PantryList = () => {
   const auth = getAuth();
   const user = auth.currentUser;
   const [currentDate, setCurrentDate] = useState(new Date());
-  // const [spanColor, setSpanColor] = useState();
 
   useEffect(() => {
     const fetchIngredients = async () => {
@@ -72,7 +71,6 @@ const PantryList = () => {
     setExpiration("");
     const updatedIngredients = await getData(user.uid, 'pantry');
     setIngredients(updatedIngredients);
-    // setSpanLabelColor("#b3ccff");
   };
 
   const addSelectedToGrocery = async () => {
@@ -91,7 +89,10 @@ const PantryList = () => {
     }
   };
 
-
+  function getDaysLeft(expiration, current) {
+    const answer = Math.ceil((expiration - current)/(1000 * 60 * 60 * 24));
+    return answer;
+  }
 
   const toggleForm = () => {
     setShowForm(prevShowForm => !prevShowForm);
@@ -130,6 +131,22 @@ const PantryList = () => {
   //   setSpanColor()
   // }
 
+  function generateItemWithLabel(ingredient) {
+    if (getDaysLeft(ingredient.expiration.toDate().valueOf(),currentDate.valueOf()) <= 0) {
+      return <>
+        <span className={`${css.expirationLabel} ${css.expired}`}>EXPIRED</span>
+      </>
+    }
+    else if (getDaysLeft(ingredient.expiration.toDate().valueOf(),currentDate.valueOf()) <= 4) {
+      return <>
+        <span className={`${css.expirationLabel} ${css.soonToExpire}`}>expires in {getDaysLeft(ingredient.expiration.toDate().valueOf(),currentDate.valueOf())} days</span>
+      </>
+    }
+    else {
+      return <><span className={css.expirationLabel}>expires in {getDaysLeft(ingredient.expiration.toDate().valueOf(),currentDate.valueOf())} days</span></>
+    } 
+  }
+
 
   const PantryCategory = ({ name, ingredients }) => (
     <div className={`${css[name.toLowerCase()]} ${(name === "grain" || name === "other") ? css.smallColumn : ""}`}>
@@ -147,9 +164,12 @@ const PantryList = () => {
                   checked={selectedItems.includes(ingredient.id)}
                   onChange={() => handleCheckboxChange(ingredient.id)}
                 />
-                <label htmlFor={`${name}${ingredient.id}`}>{ingredient.title}</label>
+                <label htmlFor={`${name}${ingredient.id}`}>{ingredient.title} ({ingredient.quantity})</label>
                 </div>
-                <span className = "expirationLabel">expires in {Math.ceil((ingredient.expiration.toDate().valueOf() - currentDate.valueOf())/(1000 * 60 * 60 * 24))} days</span>  
+                {generateItemWithLabel(ingredient)}  
+
+                {/* try to turn this into a function that sets item with <= 0 days left as expired and change the tag based on how many days are left */}
+
                 <br />
               </li>
             ))}

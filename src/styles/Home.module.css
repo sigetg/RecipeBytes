@@ -45,6 +45,32 @@ body {
     background-color: rgb(226, 240, 252, 0.5);
 }
 
+.expirationContainer li {
+    list-style: none;
+}
+
+.expiringItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 7px 0px
+}
+
+.expirationLabel {
+    background-color: #b3ccff;
+    border-radius: 15px;
+    margin-left:21px;
+    padding: 0px 10px;
+}
+
+.expired {
+background-color: #ff8080;
+}
+
+.soonToExpire {
+background-color: #ffff80;
+}
+
 .recipeSuggestionContainer,
 .favoritesContainer,
 .expirationContainer {
