@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getAuth } from "firebase/auth";
-import { getData, addData, deleteData, getSingleData, updateData } from "../services/firestoreService";
+import { getData, addData, deleteData, getSingleData } from "../services/firestoreService";
 import css from './../styles/GroceryList.module.css';
 import Button from '@mui/material/Button';
 import { catagories } from "../data/catagory";
@@ -12,6 +12,8 @@ const GroceryList = () => {
   const [quantity, setQuantity] = useState(0);
   const [category, setCategory] = useState("other");
   const [expiration, setExpiration] = useState("");
+  const [customUnit, setCustomUnit] = useState("");
+  const [unit, setUnit] = useState("unit");
   const [selectedItems, setSelectedItems] = useState([]);
   const auth = getAuth();
   const user = auth.currentUser;
@@ -50,7 +52,8 @@ const GroceryList = () => {
       title,
       quantity,
       category,
-      expiration: new Date(expiration)
+      expiration: new Date(expiration),
+      unit: unit === "other" ? customUnit : unit
     };
     await addData(user.uid, 'grocery', newIngredient);
     setShowForm(false);
@@ -58,6 +61,7 @@ const GroceryList = () => {
     setQuantity(0);
     setCategory("produce");
     setExpiration("");
+    setUnit("unit");
     const updatedIngredients = await getData(user.uid, 'grocery');
     setIngredients(updatedIngredients);
   };
@@ -116,7 +120,7 @@ const GroceryList = () => {
                   checked={selectedItems.includes(ingredient.id)}
                   onChange={() => handleCheckboxChange(ingredient.id)}
                 />
-                <label htmlFor={`${name}${ingredient.id}`}>{ingredient.quantity > 1 ? `${ingredient.title} (${ingredient.quantity})` : `${ingredient.title}`}</label><br />
+                <label htmlFor={`${name}${ingredient.id}`}>{ingredient.quantity > 1 ? `${ingredient.title} (${ingredient.quantity} ${ingredient.unit})` : `${ingredient.title} (${ingredient.quantity} ${ingredient.unit})`}</label><br />
               </li>
             ))}
           </ul>
@@ -162,6 +166,47 @@ const GroceryList = () => {
                 onChange={(e) => setQuantity(Number(e.target.value))}
                 required
               />
+            </div>
+            <div>
+              <label htmlFor="unit">Quantity Unit:</label>
+              <select
+                id="unit"
+                value={unit}
+                onChange={(e) => setUnit(e.target.value)}
+                required
+              >
+                <option value="">None</option>
+                <option value="cup">Cup</option>
+                <option value="tablespoon">Tablespoon</option>
+                <option value="teaspoon">Teaspoon</option>
+                <option value="kg">Kg</option>
+                <option value="g">g</option>
+                <option value="lb">lb</option>
+                <option value="oz">oz</option>
+                <option value="ml">ml</option>
+                <option value="l">l</option>
+                <option value="other">Other</option>
+                {unit === "other" && (
+                <input
+                  type="text"
+                  id="customUnit"
+                  value={customUnit}
+                  onChange={(e) => setCustomUnit(e.target.value)}
+                  placeholder="Enter custom unit"
+                  required
+                />
+              )}
+              </select>
+              {unit === "other" && (
+                <input
+                  type="text"
+                  id="customUnit"
+                  value={customUnit}
+                  onChange={(e) => setCustomUnit(e.target.value)}
+                  placeholder="Enter custom unit"
+                  required
+                />
+              )}
             </div>
             <div>
               <label htmlFor="category">Category: </label>

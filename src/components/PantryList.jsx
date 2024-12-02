@@ -12,6 +12,8 @@ const PantryList = () => {
   const [title, setTitle] = useState("");
   const [quantity, setQuantity] = useState();
   const [category, setCategory] = useState("other");
+  const [unit, setUnit] = useState("");
+  const [customUnit, setCustomUnit] = useState("");
   const [expiration, setExpiration] = useState(new Date());
   const [selectedItems, setSelectedItems] = useState([]);
   const auth = getAuth();
@@ -61,14 +63,16 @@ const PantryList = () => {
       title,
       quantity,
       category,
-      expiration: new Date(expiration)
-    };
+      expiration: new Date(expiration),
+      unit: unit === "other" ? customUnit : unit
+      };
     await addData(user.uid, 'pantry', newIngredient);
     setShowForm(false);
     setTitle("");
     setQuantity(0);
     setCategory("produce");
     setExpiration("");
+    setUnit("");
     const updatedIngredients = await getData(user.uid, 'pantry');
     setIngredients(updatedIngredients);
   };
@@ -166,7 +170,7 @@ const PantryList = () => {
                   checked={selectedItems.includes(ingredient.id)}
                   onChange={() => handleCheckboxChange(ingredient.id)}
                 />
-                <label htmlFor={`${name}${ingredient.id}`}>{ingredient.title} ({ingredient.quantity})</label>
+                <label htmlFor={`${name}${ingredient.id}`}>{ingredient.quantity > 1 ? `${ingredient.title} (${ingredient.quantity} ${ingredient.unit})` : `${ingredient.title} (${ingredient.quantity} ${ingredient.unit})`}</label><br />
                 </div>
                 {generateItemWithLabel(ingredient)}  
 
@@ -233,6 +237,37 @@ const PantryList = () => {
                 <option value="grain">Grains</option>
                 <option value="other">Other</option>
               </select>
+            </div>
+            <div>
+              <label htmlFor="unit">Unit:</label>
+              <select
+                id="unit"
+                value={unit}
+                onChange={(e) => setUnit(e.target.value)}
+                required
+              >
+                <option value="">None</option>
+                <option value="cup">Cup</option>
+                <option value="tablespoon">Tablespoon</option>
+                <option value="teaspoon">Teaspoon</option>
+                <option value="kg">Kg</option>
+                <option value="g">g</option>
+                <option value="lb">lb</option>
+                <option value="oz">oz</option>
+                <option value="ml">ml</option>
+                <option value="l">l</option>
+                <option value="other">Other</option>
+              </select>
+              {unit === "other" && (
+                <input
+                  type="text"
+                  id="customUnit"
+                  value={customUnit}
+                  onChange={(e) => setCustomUnit(e.target.value)}
+                  placeholder="Enter custom unit"
+                  required
+                />
+              )}
             </div>
             <div>
               <label htmlFor="expiration">Expiration Date: </label>

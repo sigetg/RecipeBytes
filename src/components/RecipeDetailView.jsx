@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography, Button } from "@mui/material";
 import { IngredientsIcon, TipsIcon, SubstitutionIcon } from "../assets/icons";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Favorite } from "@mui/icons-material";
 import axios from "axios";
 import css from "../styles/RecipeDetails.module.css";
 import { getAuth } from "firebase/auth";
-import { getData } from "../services/firestoreService";
+import { getData, addData } from "../services/firestoreService";
 
 export default function RecipeDetailView() {
   const { id } = useParams();
@@ -131,6 +131,45 @@ export default function RecipeDetailView() {
     );
   }
 
+
+  const addIngredientsToGrocery = async () => {
+    if (!user) {
+      console.error("User not authenticated");
+      return;
+    }
+
+    try {
+      const today = new Date();
+      const expirationDate = new Date(today);
+      expirationDate.setDate(today.getDate() + 14);
+
+      for (const ingredient of recipe.extendedIngredients) {
+        const newIngredient = {
+          title: ingredient.name,
+          quantity: parseInt(ingredient.amount, 10),
+          category: "other",
+          expiration: expirationDate,
+          unit: ingredient.unit
+        };
+
+        // Check for valid quantity
+        if (isNaN(newIngredient.quantity)) {
+          newIngredient.quantity = 1;
+          continue;
+        }
+
+        await addData(user.uid, 'grocery', newIngredient);
+      }
+
+      alert("Ingredients added to grocery list successfully!");
+    } catch (error) {
+      console.error("Error adding ingredients to grocery list:", error);
+      alert("Failed to add ingredients to grocery list. Please try again.");
+    }
+  };
+
+
+
   return (
     <Box className={css.pageContainer}>
       <div className={css.title}>
@@ -201,6 +240,9 @@ export default function RecipeDetailView() {
               </li>
             ))}
           </ul>
+          <Button variant="text" href="#outlined-buttons" onClick={addIngredientsToGrocery} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18}}>
+            Add to Grocery List
+          </Button>
         </div>
 
         <div className={css.tipsContainer}>
