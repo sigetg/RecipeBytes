@@ -5,8 +5,9 @@ import Box from "@mui/material/Box";
 import StarIcon from "@mui/icons-material/Star";
 import { Typography, CircularProgress } from "@mui/material";
 import { Link } from "react-router-dom";
-import "../styles/RecipeList.css";
+import css from "../styles/RecipeList.module.css";
 import axios from "axios";
+import { Widgets } from "@mui/icons-material";
 
 const SearchBar = styled("div")(({ theme }) => ({
   display: "flex",
@@ -31,7 +32,17 @@ const SearchInput = styled("input")({
 
 export default function RecipeList() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState(() => {
+    try {
+      const storedFavorites = localStorage.getItem("favorites");
+      return Array.isArray(JSON.parse(storedFavorites))
+        ? JSON.parse(storedFavorites)
+        : [];
+    } catch (e) {
+      console.error("Failed to parse favorites from localStorage:", e);
+      return [];
+    }
+  });
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -40,51 +51,61 @@ export default function RecipeList() {
   const API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
 
   useEffect(() => {
-    const fetchFavorites = async () => {
+    const fetchSuggestions = async () => {
       try {
         setLoading(true);
         const response = await axios.get(API_URL, {
           params: {
             apiKey: API_KEY,
-            number: 10, 
+            number: 20,
             addRecipeInformation: true,
-            sort: "popularity",
           },
         });
-        setFavorites(response.data.results || []);
-        setLoading(false);
-      } catch (err) {
-        setError("Failed to fetch favorites");
-        setLoading(false);
-      }
-    };
 
-    const fetchSuggestions = async () => {
-      try {
-        const response = await axios.get(API_URL, {
-          params: {
-            apiKey: API_KEY,
-            query: searchQuery, // Use search query to fetch suggestions
-            number: 20, // Limit the number of suggestions
-            addRecipeInformation: true,
-          },
-        });
-        setSuggestions(response.data.results || []);
+        // Filter suggestions to exclude favorites
+        const filteredSuggestions = response.data.results.filter(
+          (recipe) => !favorites.some((fav) => fav.id === recipe.id)
+        );
+
+        setSuggestions(filteredSuggestions || []);
+        setLoading(false);
       } catch (err) {
         setError("Failed to fetch suggestions");
+        setLoading(false);
       }
     };
 
-    fetchFavorites(); // Load favorites initially
-    if (searchQuery) fetchSuggestions(); // Fetch suggestions only on search
-  }, [searchQuery]);
+    fetchSuggestions();
+  }, [favorites]); // Re-fetch suggestions when favorites change
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
 
+  const saveToFavorites = (recipe) => {
+    const updatedFavorites = [...favorites, recipe];
+    setFavorites(updatedFavorites);
+    localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+  };
+
+  const removeFromFavorites = (recipeId) => {
+    const updatedFavorites = favorites.filter((fav) => fav.id !== recipeId);
+    setFavorites(updatedFavorites);
+    localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+  };
+
+  const isFavorite = (recipeId) => favorites.some((fav) => fav.id === recipeId);
+
   return (
-    <Box sx={{ padding: "30px", height: "auto", alignContent: "center", display: "block", marginTop: "5vh" }}>
+    <Box
+      sx={{
+        padding: "30px",
+        height: "auto",
+        alignContent: "center",
+        display: "block",
+        marginTop: "5vh",
+      }}
+    >
       <SearchBar>
         <SearchInput
           type="text"
@@ -93,58 +114,57 @@ export default function RecipeList() {
           onChange={handleSearchChange}
         />
         <SearchIcon />
-      </SearchBar>
+      </SearchBar> 
 
       {/* Favorites Section */}
       <Box>
         <Typography
+          className={css.heading}
           variant="h4"
           sx={{
             margin: "3vh 0 10px 0",
-            color: "#4a90e2",
-            fontFamily: "'Patrick Hand SC', cursive",
-            textAlign: "left",
-            padding: "10px 0 0 0",
+            fontFamily:"'Patrick Hand SC'",
+            color: "rgba(48, 108, 163, 0.52)",
           }}
         >
-          <StarIcon sx={{ marginRight: "8px" }} /> Favorites
+          <StarIcon className={css.headingIcon} />
+          Favorites
         </Typography>
-        <div className="recipe-container">
-          {loading && <CircularProgress />}
-          {error && <Typography color="error">{error}</Typography>}
-          {!loading && favorites.length === 0 && (
-            <Typography variant="body1" sx={{ color: "#666" }}>
+        <div className={css.recipeContainer}>
+          {!favorites.length && (
+            <Typography className={css.noResults} variant="body1">
               No favorite recipes found.
             </Typography>
           )}
           {favorites.map((recipe) => (
-            <Link
-              to={`/recipe/${encodeURIComponent(recipe.title)}`}
-              key={recipe.id}
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              <div className="recipe-card">
+            <div className={css.recipeCard} key={recipe.id}>
+              <Link
+                to={`/recipe/${recipe.id}`}
+                className={css.recipeLink}
+                style={{width:"100%"}}
+              >
                 <img
-                  className="recipe-image"
+                  className={css.recipeImage}
                   src={recipe.image}
                   alt={recipe.title}
-                  style={{ paddingBottom: "10px", width: "100%", height: "200px" }}
                 />
-                <div style={{ flex: 1 }}>
-                  <Typography
-                    variant="h5"
-                    sx={{
-                      fontWeight: "bold",
-                      fontFamily: "'Patrick Hand SC', cursive",
-                      textAlign: "left",
-                      paddingBottom: "15px",
-                    }}
-                  >
-                    {recipe.title}
-                  </Typography>
-                </div>
+              </Link>
+              <div className={css.recipeInfo}>
+                <Typography
+                  className={css.recipeTitle}
+                  variant="h4"
+                  sx={{fontFamily:"'Patrick Hand SC', cursive"}}
+                >
+                  {recipe.title}
+                </Typography>
+                <button
+                  className={css.favoriteButton}
+                  onClick={() => removeFromFavorites(recipe.id)}
+                >
+                  Remove from Favorites
+                </button>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </Box>
@@ -152,46 +172,57 @@ export default function RecipeList() {
       {/* Suggestions Section */}
       <Box>
         <Typography
+          className={css.heading}
           variant="h4"
           sx={{
             margin: "3vh 0 10px 0",
-            color: "#4a90e2",
-            fontFamily: "'Patrick Hand SC', cursive",
-            textAlign: "left",
-            padding: "10px 0 0 0",
+            fontFamily:"'Patrick Hand SC'",
+            color: "rgba(48, 108, 163, 0.52)",
           }}
         >
           Suggestions
         </Typography>
-        <div className="recipe-container">
+        <div className={css.recipeContainer}>
+          {loading && <CircularProgress />}
+          {error && <Typography className={css.errorMessage}>{error}</Typography>}
           {suggestions.map((recipe) => (
-            <Link
-              to={`/recipe/${encodeURIComponent(recipe.title)}`}
-              key={recipe.id}
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              <div className="recipe-card">
+            <div className={css.recipeCard} key={recipe.id}>
+              <Link
+                to={`/recipe/${recipe.id}`}
+                className={css.recipeLink}
+                style={{width:"100%"}}
+              >
                 <img
-                  className="recipe-image"
+                  className={css.recipeImage}
                   src={recipe.image}
                   alt={recipe.title}
-                  style={{ paddingBottom: "10px", width: "100%", height: "200px" }}
                 />
-                <div style={{ flex: 1 }}>
-                  <Typography
-                    variant="h5"
-                    sx={{
-                      fontWeight: "bold",
-                      fontFamily: "'Patrick Hand SC', cursive",
-                      textAlign: "left",
-                      paddingBottom: "15px",
-                    }}
+              </Link>
+              <div className={css.recipeInfo}>
+                <Typography
+                  className={css.recipeTitle}
+                  variant="h4"
+                  sx={{fontFamily:"'Patrick Hand SC', cursive"}}
+                >
+                  {recipe.title}
+                </Typography>
+                {isFavorite(recipe.id) ? (
+                  <button
+                    className={css.favoriteButton}
+                    onClick={() => removeFromFavorites(recipe.id)}
                   >
-                    {recipe.title}
-                  </Typography>
-                </div>
+                    Remove from Favorites
+                  </button>
+                ) : (
+                  <button
+                    className={css.favoriteButton}
+                    onClick={() => saveToFavorites(recipe)}
+                  >
+                    Add to Favorites
+                  </button>
+                )}
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </Box>

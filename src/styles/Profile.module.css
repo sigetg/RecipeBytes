@@ -1,27 +1,4 @@
-* {
-  box-sizing: border-box;
-}
-[hidden] {
-  display: none !important;
-}
 
-body,
-section,
-header,
-div,
-p,
-h1,
-h2,
-h3,
-ul,
-li,
-figure,
-figcaption {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Inter", "Open Sans", "Times New Roman", sans-serif;
-}
 
 .container {
   margin: 1em;

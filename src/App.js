@@ -21,7 +21,7 @@ function App() {
           <Route path="/groceryList" element={<GroceryList />} />
           <Route path="/pantry" element={<PantryList />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/recipe/:title" element={<RecipeDetailView />} />
+          <Route path="/recipe/:id" element={<RecipeDetailView />} />
           <Route path="/recipe/:title/:stepIndex" element={<CurrentWalkthrough />} />
         </Routes>
       </div>

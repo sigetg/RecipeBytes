@@ -1,114 +1,228 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import { Box, Typography } from "@mui/material";
-import { recipeData } from "../data/recipeData";
-import { ingredients } from "../data/ingredients";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import { IngredientsIcon, TipsIcon, SubstitutionIcon } from "../assets/icons";
-import "../styles/RecipeDetails.css"
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { Favorite } from "@mui/icons-material";
+import axios from "axios";
+import css from "../styles/RecipeDetails.module.css";
 
 export default function RecipeDetailView() {
-  const { title } = useParams(); 
-  const recipe = recipeData.find(
-    (r) => r.title === decodeURIComponent(title)
-  );
+  const { id } = useParams();
+  const [recipe, setRecipe] = useState(null);
+  const [summary, setSummary] = useState(null);
+  const [substitutes, setSubstitutes] = useState({});
+  const [favorites, setFavorites] = useState(() => {
+    try {
+      const storedFavorites = localStorage.getItem("favorites");
+      return storedFavorites ? JSON.parse(storedFavorites) : [];
+    } catch {
+      return [];
+    }
+  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  if (!recipe) {
+  const API_URL = `https://api.spoonacular.com/recipes/${id}/information`;
+  const SUBSTITUTES_URL = `https://api.spoonacular.com/food/ingredients/substitutes`;
+  const API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
+
+  useEffect(() => {
+    const fetchRecipeDetails = async () => {
+      try {
+        setLoading(true);
+
+        const recipeResponse = await axios.get(API_URL, {
+          params: { apiKey: API_KEY },
+        });
+        setRecipe(recipeResponse.data);
+        setSummary(recipeResponse.data.summary);
+
+        const ingredientSubstitutes = {};
+        const ingredientFetches = recipeResponse.data.extendedIngredients
+          .filter((ingredient) => !isInPantry(ingredient.name))
+          .map(async (ingredient) => {
+            try {
+              const substituteResponse = await axios.get(SUBSTITUTES_URL, {
+                params: {
+                  apiKey: API_KEY,
+                  ingredientName: ingredient.name,
+                },
+              });
+              if (substituteResponse.data.substitutes?.length) {
+                ingredientSubstitutes[ingredient.name] =
+                  substituteResponse.data.substitutes;
+              }
+            } catch {
+              // Handle errors silently
+            }
+          });
+
+        await Promise.all(ingredientFetches);
+        setSubstitutes(ingredientSubstitutes);
+      } catch (err) {
+        setError("Failed to fetch recipe details");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRecipeDetails();
+  }, [id]);
+
+  const isFavorite = (recipeId) => favorites.some((fav) => fav.id === recipeId);
+
+  const toggleFavorite = () => {
+    if (isFavorite(recipe.id)) {
+      const updatedFavorites = favorites.filter((fav) => fav.id !== recipe.id);
+      setFavorites(updatedFavorites);
+      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+    } else {
+      const updatedFavorites = [...favorites, recipe];
+      setFavorites(updatedFavorites);
+      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+    }
+  };
+
+  const isInPantry = (ingredientName) => {
+    const pantry = ["flour", "sugar", "eggs", "butter"];
+    return pantry.includes(ingredientName.toLowerCase());
+  };
+
+  const cleanSummary = (summary) => {
+    if (!summary) return "No summary available.";
+    const plainText = summary.replace(/<[^>]*>/g, "").trim();
+    const sentences = plainText.split(".").slice(0, -2).join(". ") + ".";
+    return sentences || "Summary not available.";
+  };
+
+  if (loading) {
     return (
-      <Box sx={{ padding: "30px" }}>
-        <Typography variant="h4">Recipe Not Found</Typography>
+      <Box className={css.loadingContainer}>
+        <CircularProgress />
       </Box>
     );
   }
 
-  const isInPantry = (ingredientName) => {
-    return ingredients.some((pantryItem) =>
-      pantryItem.name.toLowerCase() === ingredientName.toLowerCase()
+  if (error) {
+    return (
+      <Box className={css.errorContainer}>
+        <Typography variant="h4" className={css.errorText}>
+          {error}
+        </Typography>
+      </Box>
     );
-  };
+  }
 
   return (
-    <Box sx={{ margin: "3%" }}>
-      <div className="title">
-        <Typography variant="h4" sx={{ wordSpacing:"3px", letterSpacing:"3px", fontFamily: "'Patrick Hand SC', cursive", color:"#699FD0" }} >
-            {recipe.title}
+    <Box className={css.pageContainer}>
+      <div className={css.title}>
+        <Typography variant="h4" className={css.recipeTitle} sx={{ fontFamily:"'Patrick Hand SC', cursive" }}>
+          {recipe.title}
         </Typography>
-        <div className="time-info">
-          <span className="recipe-time">
-            Prep Time: {recipe.additional_info.prep_time}
-          </span>
-          <span className="recipe-time">
-            Cook Time: {recipe.additional_info.cook_time}
-          </span>
-          <span className="recipe-time">
-            Total Time: {recipe.additional_info.total_time}
-          </span>
+        <div className={css.favoriteContainer}>
+          {isFavorite(recipe.id) ? (
+            <button
+              className={css.removeFavoriteButton}
+              onClick={toggleFavorite}
+            >
+              <Favorite /> Remove from Favorites
+            </button>
+          ) : (
+            <button className={css.addFavoriteButton} onClick={toggleFavorite}>
+              <AddCircleIcon /> Add to Favorites
+            </button>
+          )}
         </div>
-        <Link
-          className="navigation"
-          to={`/recipe/${encodeURIComponent(recipe.title)}/1`}
-          aria-label={`Start the walkthrough for ${recipe.title}`}
-        >
+      </div>
+      <img src={recipe.image} alt={recipe.title} className={css.recipeImage} />
+      <div className={css.timeInfo}>
+        {recipe.preparationMinutes && (
+          <span className={css.recipeTime}>
+            <strong>Prep Time:</strong> {recipe.preparationMinutes} mins
+          </span>
+        )}
+        {recipe.cookingMinutes && (
+          <span className={css.recipeTime}>
+            <strong>Cook Time:</strong> {recipe.cookingMinutes} mins
+          </span>
+        )}
+        {recipe.readyInMinutes && (
+          <span className={css.recipeTime}>
+            <strong>Total Time:</strong> {recipe.readyInMinutes} mins
+          </span>
+        )}
+        <Link className={css.navigation} to={`/recipe/${id}/1`}>
           START
         </Link>
       </div>
-      <div className="content-container">
-        <div id="ingredient-container">
-            <Box sx={{ display: "flex", alignItems: "stretch", gap: "10px", justifyContent: "center",  padding: "10px 0", color:"#699FD0" }}>
-              <IngredientsIcon />
-              <Typography variant="h5" sx={{ marginBottom: "10px", fontFamily: "'Patrick Hand SC', cursive", }}>
-                Ingredients
-              </Typography>
-            </Box>
-            <ul style={{ listStyleType: "none"}}>
-                {recipe.ingredients.map((item, index) => (
-                <li key={index} style={{display:"flex", alignItems: "center", margin: "20px 0", gap: "10px"}}>
-                    <input
-                    type="checkbox"
-                    checked={isInPantry(item.name)}
-                    disabled
-                    />
-                    <div>
-                        {item.quantity} {item.name.toLowerCase()}
-                    </div>
-                </li>
 
-                ))}
-                
-            </ul>
+      <div className={css.contentContainer}>
+        <div className={css.ingredientsContainer}>
+          <Box className={css.sectionHeader}>
+            <IngredientsIcon />
+            <Typography variant="h5" className={css.sectionTitle}>
+              Ingredients
+            </Typography>
+          </Box>
+          <ul className={css.ingredientsList}>
+            {recipe.extendedIngredients.map((item, index) => (
+              <li key={index} className={css.ingredientItem}>
+                <input
+                  type="checkbox"
+                  checked={isInPantry(item.name)}
+                  disabled
+                  className={css.ingredientCheckbox}
+                />
+                <div className={css.ingredientNeeded}>
+                  {item.amount} {item.unit} {item.name}
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
-        <div id="recipe-tips-container">
-          <Box sx={{ display: "flex", alignItems: "stretch", gap: "10px", justifyContent: "center",  padding: "10px 0", color:"#699FD0" }}>
+
+        <div className={css.tipsContainer}>
+          <Box className={css.sectionHeader}>
             <TipsIcon />
-            <Typography variant="h5" sx={{ marginBottom: "10px", fontFamily: "'Patrick Hand SC', cursive", }}>
+            <Typography variant="h5" className={css.sectionTitle}>
               Recipe Tips
             </Typography>
           </Box>
-          <ul style={{ SlistStyleType: 'none' }}>
-              {recipe.additional_info?.tips?.map((item, index) => (
-                  <p>{item}</p>
-              ))}
-          </ul>
+          <Typography variant="body1" className={css.tipsText}>
+            {cleanSummary(summary)}
+          </Typography>
+        </div>
 
-        </div>
-        <div id="substitutes-container">
-          <Box sx={{ display: "flex", alignItems: "stretch", gap: "10px", justifyContent: "center",  padding: "10px 0" }}>
-            <SubstitutionIcon />
-            <Typography variant="h5" sx={{ marginBottom: "10px", fontFamily: "'Patrick Hand SC', cursive", }}>
-              Substitutes
-            </Typography>
-          </Box>
-        </div>
+        {Object.keys(substitutes).length > 0 && (
+          <div className={css.substitutesContainer}>
+            <Box className={css.sectionHeader}>
+              <SubstitutionIcon />
+              <Typography
+                variant="h5"
+                sx={{ fontFamily: "'Patrick Hand SC', cursive" }}
+              >
+                Substitutes
+              </Typography>
+            </Box>
+            <ul className={css.substitutesList} style={{ listStyleType: "none" }}>
+              {Object.entries(substitutes).map(([ingredient, subs], index) => (
+                <li key={index} className={css.substituteItem}
+                  style={{
+                    marginBottom: "10px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "10px",
+                  }}
+                >
+                  <strong>{ingredient}:</strong>
+                  <span>{subs.join(", ")}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
-      
-      {/* <Typography variant="h6" sx={{ marginTop: "20px", marginBottom: "10px" }}>
-        Instructions:
-      </Typography>
-      <ol>
-        {recipe.instructions.map((step, index) => (
-          <li key={index}>{step}</li>
-        ))}
-      </ol> */}
     </Box>
   );
 }

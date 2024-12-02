@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
-import css from "../styles/Home.css"
+import css from "../styles/Home.module.css";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import StarIcon from "@mui/icons-material/Star";
@@ -11,92 +11,81 @@ import { Link } from "react-router-dom";
 
 export default function Home() {
     return (
-        <Box sx={{ padding: "30px" }}>
-            <div className="title-container">
-                <AccountCircleIcon sx={{ height: "40px", width: "40px", color: "#306CA3"}} />
-                <Typography variant="h4" sx={{ wordSpacing:"3px", letterSpacing:"3px", fontFamily: "'Patrick Hand SC', cursive", color: "#306CA3" }} >
+        <Box className={css.pageContainer}>
+            <div className={css.titleContainer}>
+                <AccountCircleIcon className={css.icon} />
+                <Typography className={css.welcomeText} variant="h4">
                     Welcome Username
                 </Typography>
             </div>
-            <div className="container-content">
-                <div id="recipe-suggestion-container">
-                    <Box sx={{ display: "flex", alignItems: "center", gap: "10px", justifyContent: "center",  padding: "10px 0", color:"#699FD0" }}>
-                    <IngredientsIcon />
-                        <Typography variant="h5" sx={{ fontFamily: "'Patrick Hand SC', cursive", }}>
+            <div className={css.containerContent}>
+                <div className={css.recipeSuggestionContainer}>
+                    <Box className={css.sectionHeader}>
+                        <IngredientsIcon />
+                        <Typography className={css.sectionTitle} variant="h5">
                             Recipes You Might Like
-                        </Typography>                      
+                        </Typography>
                     </Box>
                     {recipeData.filter((recipe) => !recipe.is_favorite) 
-                            .map((recipe) => (
-                                <Link
+                        .map((recipe) => (
+                            <Link
                                 to={`/recipe/${encodeURIComponent(recipe.title)}`}
                                 key={recipe.title}
-                                style={{ textDecoration: "none", color: "inherit" }}
-                                >
-                                <div className="recipe-card-home" key={recipe.title}>
+                                className={css.recipeLink}
+                            >
+                                <div className={css.recipeCardHome} key={recipe.title}>
                                     <img
-                                    className="recipe-image"
-                                    src={recipe.image}
-                                    alt={recipe.title}
-                                    style={{ paddingBottom:"10px", width:"100%" }}
+                                        className={css.recipeImage}
+                                        src={recipe.image}
+                                        alt={recipe.title}
                                     />
-                                    <div style={{ flex: 1 }}>
-                                    <Typography
-                                        variant="h5"
-                                        sx={{
-                                        fontFamily: "'Patrick Hand SC', cursive",
-                                        textAlign: "left",
-                                        paddingBottom: "15px",
-                                        }}
-                                    >
-                                        {recipe.title}
-                                    </Typography>
+                                    <div className={css.recipeInfo}>
+                                        <Typography
+                                            className={css.recipeTitle}
+                                            variant="h5"
+                                        >
+                                            {recipe.title}
+                                        </Typography>
                                     </div>
                                 </div>
-                                </Link>
-                            ))}
+                            </Link>
+                        ))}
                 </div>
-                <div id="favorites-container">
-                    <Box sx={{ display: "flex", alignItems: "center", gap: "10px", justifyContent: "center",  padding: "10px 0", color:"#699FD0" }}>
+                <div className={css.favoritesContainer}>
+                    <Box className={css.sectionHeader}>
                         <StarIcon /> 
-                        <Typography variant="h5" sx={{ fontFamily: "'Patrick Hand SC', cursive", }}>
+                        <Typography className={css.sectionTitle} variant="h5">
                             Favorites
                         </Typography>
                     </Box>
                     {recipeData.filter((recipe) => recipe.is_favorite) 
-                            .map((recipe) => (
-                                <Link
+                        .map((recipe) => (
+                            <Link
                                 to={`/recipe/${encodeURIComponent(recipe.title)}`}
                                 key={recipe.title}
-                                style={{ textDecoration: "none", color: "inherit" }}
-                                >
-                                <div className="favorite-card" key={recipe.title}>
-                                    <div style={{ flex: 1 }}>
-                                    <Typography
-                                        variant="h6"
-                                        sx={{
-                                        textAlign: "left",
-                                        paddingBottom: "15px",
-                                        fontSize: "15px",
-                                        }}
-                                    >
-                                        {recipe.title}
-                                    </Typography>
+                                className={css.recipeLink}
+                            >
+                                <div className={css.favoriteCard} key={recipe.title}>
+                                    <div className={css.favoriteInfo}>
+                                        <Typography
+                                            className={css.favoriteTitle}
+                                            variant="h6"
+                                        >
+                                            {recipe.title}
+                                        </Typography>
                                     </div>
                                 </div>
-                                </Link>
-                            ))}
+                            </Link>
+                        ))}
                 </div>
-                <div id="expiration-container">
-                    <Box sx={{ display: "flex", alignItems: "center", gap: "10px", justifyContent: "center",  padding: "10px 0", color:"#699FD0" }}>
+                <div className={css.expirationContainer}>
+                    <Box className={css.sectionHeader}>
                         <AccessTimeIcon /> 
-                        <Typography variant="h5" sx={{ fontFamily: "'Patrick Hand SC', cursive", }}>
+                        <Typography className={css.sectionTitle} variant="h5">
                             Expiration Coming Up
                         </Typography>
                     </Box>
                 </div>
-
-
             </div>
         </Box>
     );
