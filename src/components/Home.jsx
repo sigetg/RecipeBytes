@@ -19,7 +19,7 @@ export default function Home() {
             <div className={css.titleContainer}>
                 <AccountCircleIcon className={css.icon} />
                 <Typography className={css.welcomeText} variant="h4">
-                    Welcome Username
+                    Welcome {user.displayName ? user.displayName.split(' ')[0] : ""}!
                 </Typography>
             </div>
             <div className={css.containerContent}>
