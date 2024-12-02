@@ -6,6 +6,8 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Favorite } from "@mui/icons-material";
 import axios from "axios";
 import css from "../styles/RecipeDetails.module.css";
+import { getAuth } from "firebase/auth";
+import { getData } from "../services/firestoreService";
 
 export default function RecipeDetailView() {
   const { id } = useParams();
@@ -22,12 +24,28 @@ export default function RecipeDetailView() {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [pantryItems, setPantryItems] = useState([]);
 
   const API_URL = `https://api.spoonacular.com/recipes/${id}/information`;
   const SUBSTITUTES_URL = `https://api.spoonacular.com/food/ingredients/substitutes`;
   const API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
 
+  const auth = getAuth();
+  const user = auth.currentUser;
+
   useEffect(() => {
+    const fetchPantryItems = async () => {
+      if (user) {
+        try {
+          const pantryData = await getData(user.uid, "pantry");
+          const pantryNames = pantryData.map((item) => item.title.toLowerCase());
+          setPantryItems(pantryNames);
+        } catch (err) {
+          console.error("Failed to fetch pantry items:", err);
+        }
+      }
+    };
+
     const fetchRecipeDetails = async () => {
       try {
         setLoading(true);
@@ -67,8 +85,9 @@ export default function RecipeDetailView() {
       }
     };
 
+    fetchPantryItems();
     fetchRecipeDetails();
-  }, [id]);
+  }, [id, user]);
 
   const isFavorite = (recipeId) => favorites.some((fav) => fav.id === recipeId);
 
@@ -84,10 +103,8 @@ export default function RecipeDetailView() {
     }
   };
 
-  const isInPantry = (ingredientName) => {
-    const pantry = ["flour", "sugar", "eggs", "butter"];
-    return pantry.includes(ingredientName.toLowerCase());
-  };
+  const isInPantry = (ingredientName) =>
+    pantryItems.includes(ingredientName.toLowerCase());
 
   const cleanSummary = (summary) => {
     if (!summary) return "No summary available.";
@@ -117,7 +134,11 @@ export default function RecipeDetailView() {
   return (
     <Box className={css.pageContainer}>
       <div className={css.title}>
-        <Typography variant="h4" className={css.recipeTitle} sx={{ fontFamily:"'Patrick Hand SC', cursive" }}>
+        <Typography
+          variant="h4"
+          className={css.recipeTitle}
+          sx={{ fontFamily: "'Patrick Hand SC', cursive" }}
+        >
           {recipe.title}
         </Typography>
         <div className={css.favoriteContainer}>
@@ -152,7 +173,7 @@ export default function RecipeDetailView() {
             <strong>Total Time:</strong> {recipe.readyInMinutes} mins
           </span>
         )}
-        <Link className={css.navigation} to={`/recipe/${id}/step${1}`}>
+        <Link to={`/recipe/${id}/step1`} className={css.navigation}>
           START
         </Link>
       </div>
@@ -198,16 +219,15 @@ export default function RecipeDetailView() {
           <div className={css.substitutesContainer}>
             <Box className={css.sectionHeader}>
               <SubstitutionIcon />
-              <Typography
-                variant="h5"
-                sx={{ fontFamily: "'Patrick Hand SC', cursive" }}
-              >
+              <Typography variant="h5" className={css.sectionTitle}>
                 Substitutes
               </Typography>
             </Box>
             <ul className={css.substitutesList} style={{ listStyleType: "none" }}>
               {Object.entries(substitutes).map(([ingredient, subs], index) => (
-                <li key={index} className={css.substituteItem}
+                <li
+                  key={index}
+                  className={css.substituteItem}
                   style={{
                     marginBottom: "10px",
                     display: "flex",

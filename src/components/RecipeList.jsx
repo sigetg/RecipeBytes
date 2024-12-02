@@ -7,7 +7,6 @@ import { Typography, CircularProgress } from "@mui/material";
 import { Link } from "react-router-dom";
 import css from "../styles/RecipeList.module.css";
 import axios from "axios";
-import { Widgets } from "@mui/icons-material";
 
 const SearchBar = styled("div")(({ theme }) => ({
   display: "flex",
@@ -58,6 +57,7 @@ export default function RecipeList() {
           params: {
             apiKey: API_KEY,
             number: 20,
+            query: searchQuery, // Use the search query to filter results
             addRecipeInformation: true,
           },
         });
@@ -75,11 +75,12 @@ export default function RecipeList() {
       }
     };
 
+    // Fetch recipes whenever the search query changes
     fetchSuggestions();
-  }, [favorites]); // Re-fetch suggestions when favorites change
+  }, [favorites, searchQuery]);
 
   const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
+    setSearchQuery(e.target.value); // Update search query state on input change
   };
 
   const saveToFavorites = (recipe) => {
@@ -111,10 +112,10 @@ export default function RecipeList() {
           type="text"
           placeholder="Search…"
           value={searchQuery}
-          onChange={handleSearchChange}
+          onChange={handleSearchChange} // Update search query on input change
         />
         <SearchIcon />
-      </SearchBar> 
+      </SearchBar>
 
       {/* Favorites Section */}
       <Box>
@@ -123,7 +124,7 @@ export default function RecipeList() {
           variant="h4"
           sx={{
             margin: "3vh 0 10px 0",
-            fontFamily:"'Patrick Hand SC'",
+            fontFamily: "'Patrick Hand SC'",
             color: "rgba(48, 108, 163, 0.52)",
           }}
         >
@@ -141,7 +142,7 @@ export default function RecipeList() {
               <Link
                 to={`/recipe/${recipe.id}`}
                 className={css.recipeLink}
-                style={{width:"100%"}}
+                style={{ width: "100%" }}
               >
                 <img
                   className={css.recipeImage}
@@ -153,7 +154,7 @@ export default function RecipeList() {
                 <Typography
                   className={css.recipeTitle}
                   variant="h4"
-                  sx={{fontFamily:"'Patrick Hand SC', cursive"}}
+                  sx={{ fontFamily: "'Patrick Hand SC', cursive" }}
                 >
                   {recipe.title}
                 </Typography>
@@ -176,7 +177,7 @@ export default function RecipeList() {
           variant="h4"
           sx={{
             margin: "3vh 0 10px 0",
-            fontFamily:"'Patrick Hand SC'",
+            fontFamily: "'Patrick Hand SC'",
             color: "rgba(48, 108, 163, 0.52)",
           }}
         >
@@ -184,13 +185,15 @@ export default function RecipeList() {
         </Typography>
         <div className={css.recipeContainer}>
           {loading && <CircularProgress />}
-          {error && <Typography className={css.errorMessage}>{error}</Typography>}
+          {error && (
+            <Typography className={css.errorMessage}>{error}</Typography>
+          )}
           {suggestions.map((recipe) => (
             <div className={css.recipeCard} key={recipe.id}>
               <Link
                 to={`/recipe/${recipe.id}`}
                 className={css.recipeLink}
-                style={{width:"100%"}}
+                style={{ width: "100%" }}
               >
                 <img
                   className={css.recipeImage}
@@ -202,7 +205,7 @@ export default function RecipeList() {
                 <Typography
                   className={css.recipeTitle}
                   variant="h4"
-                  sx={{fontFamily:"'Patrick Hand SC', cursive"}}
+                  sx={{ fontFamily: "'Patrick Hand SC', cursive" }}
                 >
                   {recipe.title}
                 </Typography>

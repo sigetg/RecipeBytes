@@ -43,6 +43,18 @@
     transition: 0.3s;
 }
 
+.favoriteButton {
+    background-color: rgba(48, 108, 163, 0.72);
+    color: white;
+    border: white;
+    padding: 8px;
+    margin: 10px 0;
+    border-radius: 20px;
+}
+
+.favoriteButton:hover {
+    background-color: rgba(48, 108, 163, 0.52);
+}
 
 @media (max-width: 600px) {
     .recipeCard {
