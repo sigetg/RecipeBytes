@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getAuth } from "firebase/auth";
-import { getData, addData, deleteData } from "../services/firestoreService";
+import { getData, addData, deleteData, getSingleData, updateData } from "../services/firestoreService";
 import css from './../styles/GroceryList.module.css';
 import Button from '@mui/material/Button';
 import { catagories } from "../data/catagory";
@@ -66,9 +66,11 @@ const GroceryList = () => {
     if (user) {
       for (const id of selectedItems) {
         // Get the item from the grocery collection
-        const item = await getData(user.uid, `grocery/${id}`);
+        const item = await getSingleData(user.uid, 'grocery', id);
+        // Create a new ingredient without the id field
+        const { id: _, ...newIngredient } = item;
         // Add the item to the pantry collection
-        await addData(user.uid, 'pantry', item);
+        await addData(user.uid, 'pantry', newIngredient);
         // Delete the item from the grocery collection
         await deleteData(user.uid, 'grocery', id);
       }

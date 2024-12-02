@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getAuth } from "firebase/auth";
-import { getData, addData, deleteData } from "../services/firestoreService";
+import { getData, addData, deleteData, getSingleData } from "../services/firestoreService";
 import css from './../styles/PantryList.module.css';
 import Button from '@mui/material/Button';
 import { catagories } from "../data/catagory";
@@ -77,14 +77,16 @@ const PantryList = () => {
     if (user) {
       for (const id of selectedItems) {
         // Get the item from the pantry collection
-        const item = await getData(user.uid, `pantry/${id}`);
-        // Add the item to the pantry collection
-        await addData(user.uid, 'grocery', item);
-        // Delete the item from the pantry collection
-        await deleteData(user.uid, 'pantry', id);
+        const item = await getSingleData(user.uid, 'pantry', id);
+        // Add the item to the grocery collection
+        const newIngredient = {
+          title: item.title,
+          quantity: item.quantity,
+          category: item.category,
+          expiration: item.expiration
+        };
+        await addData(user.uid, 'grocery', newIngredient);
       }
-      const updatedIngredients = await getData(user.uid, 'pantry');
-      setIngredients(updatedIngredients);
       setSelectedItems([]);
     }
   };
