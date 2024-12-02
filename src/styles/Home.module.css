@@ -10,6 +10,7 @@ body {
 
 .pageContainer {
     margin: 3%;
+    height: 80%;
 }
 
 .titleContainer {
@@ -27,6 +28,15 @@ body {
     gap: 40px;
     margin-top: 20px;   
     padding: 10px;
+    height: 100%;
+}
+
+.sectionHeader {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .recipeSuggestionContainer {
@@ -45,6 +55,14 @@ body {
     background-color: rgb(226, 240, 252, 0.5);
 }
 
+.recipeLink {
+    text-decoration: none;
+}
+
+.favoritesTitle:hover {
+    color: rgba(48, 108, 163, 0.52);
+}
+
 .recipeSuggestionContainer,
 .favoritesContainer,
 .expirationContainer {
@@ -55,6 +73,8 @@ body {
     justify-content: flex-start;
     gap: 20px;
     font-weight: 200;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .recipeCardHome {
