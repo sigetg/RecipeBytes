@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/RecipeBytes/static/css/main.f5a3a298.css",
-    "main.js": "/RecipeBytes/static/js/main.85b1d74b.js",
+    "main.css": "/RecipeBytes/static/css/main.e4237108.css",
+    "main.js": "/RecipeBytes/static/js/main.32770c28.js",
     "static/js/453.430cf63b.chunk.js": "/RecipeBytes/static/js/453.430cf63b.chunk.js",
     "static/media/Mix.gif": "/RecipeBytes/static/media/Mix.4b1eefce2857d4aeaa4c.gif",
     "static/media/Baking.gif": "/RecipeBytes/static/media/Baking.02b9994ed56645eb5b74.gif",
@@ -9,12 +9,12 @@
     "static/media/Saute.gif": "/RecipeBytes/static/media/Saute.978ee2a3f9827757ad02.gif",
     "static/media/Avatar.png": "/RecipeBytes/static/media/Avatar.b58b3419a4a311864eff.png",
     "index.html": "/RecipeBytes/index.html",
-    "main.f5a3a298.css.map": "/RecipeBytes/static/css/main.f5a3a298.css.map",
-    "main.85b1d74b.js.map": "/RecipeBytes/static/js/main.85b1d74b.js.map",
+    "main.e4237108.css.map": "/RecipeBytes/static/css/main.e4237108.css.map",
+    "main.32770c28.js.map": "/RecipeBytes/static/js/main.32770c28.js.map",
     "453.430cf63b.chunk.js.map": "/RecipeBytes/static/js/453.430cf63b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f5a3a298.css",
-    "static/js/main.85b1d74b.js"
+    "static/css/main.e4237108.css",
+    "static/js/main.32770c28.js"
   ]
 }
