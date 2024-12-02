@@ -137,10 +137,15 @@ const PantryList = () => {
   //   setSpanColor()
   // }
 
-  function generateItemWithLabel(ingredient) {
-    if (getDaysLeft(ingredient.expiration.toDate().valueOf(),currentDate.valueOf()) <= 0) {
+  function generateLabel(ingredient) {
+    if (getDaysLeft(ingredient.expiration.toDate().valueOf(),currentDate.valueOf()) < 0) {
       return <>
         <span className={`${css.expirationLabel} ${css.expired}`}>EXPIRED</span>
+      </>
+    }
+    else if (getDaysLeft(ingredient.expiration.toDate().valueOf(),currentDate.valueOf()) == 0) {
+      return <>
+        <span className={`${css.expirationLabel} ${css.expired}`}>EXPIRES TODAY</span>
       </>
     }
     else if (getDaysLeft(ingredient.expiration.toDate().valueOf(),currentDate.valueOf()) <= 4) {
@@ -172,16 +177,13 @@ const PantryList = () => {
                 />
                 <label htmlFor={`${name}${ingredient.id}`}>{ingredient.quantity > 1 ? `${ingredient.title} (${ingredient.quantity} ${ingredient.unit})` : `${ingredient.title} (${ingredient.quantity} ${ingredient.unit})`}</label><br />
                 </div>
-                {generateItemWithLabel(ingredient)}  
-
-                {/* try to turn this into a function that sets item with <= 0 days left as expired and change the tag based on how many days are left */}
-
+                {generateLabel(ingredient)}  
                 <br />
               </li>
             ))}
           </ul>
       ) : (
-        <p>No items yet. Click 'New Item' to add one now!</p>
+        <p className = {css.noItem}>No items yet. Click 'New Item' to add one now!</p>
       )}
     </div>
   );
@@ -191,13 +193,13 @@ const PantryList = () => {
         <main className={css.container}>
         <div className={css.header}>
           <h1>Pantry Tracker</h1>
-          <Button variant="text" href="#outlined-buttons" onClick={handleDeleteSelected} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18}}>
+          <Button variant="text" onClick={handleDeleteSelected} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18}}>
             Delete Selected
           </Button>
-          <Button variant="text" href="#outlined-buttons" onClick={addSelectedToGrocery} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18}}>
+          <Button variant="text" onClick={addSelectedToGrocery} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18}}>
             Add Selected to Grocery List
           </Button>
-          <Button variant="text" href="#outlined-buttons" onClick={toggleForm} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18}}>
+          <Button variant="text" onClick={toggleForm} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18}}>
             ⨁ New Item
           </Button>
         {showForm && (
@@ -218,6 +220,7 @@ const PantryList = () => {
             <input
                 type="number"
                 id="quantity"
+                min="0"
                 value={quantity}
                 onChange={(e) => setQuantity(Number(e.target.value))}
                 required

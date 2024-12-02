@@ -125,7 +125,7 @@ const GroceryList = () => {
             ))}
           </ul>
       ) : (
-        <p>No items yet. Click 'New Item' to add one now!</p>
+        <p className = {css.noItem}>No items yet. Click 'New Item' to add one now!</p>
       )}
     </div>
   );
@@ -135,13 +135,13 @@ const GroceryList = () => {
         <main className={css.container}>
         <div className={css.header}>
           <h1>Grocery List</h1>
-          <Button variant="text" href="#outlined-buttons" onClick={handleDeleteSelected} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18}}>
+          <Button variant="text" onClick={handleDeleteSelected} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18}}>
             Delete Selected
           </Button>
-          <Button variant="text" href="#outlined-buttons" onClick={moveSelectedToPantry} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18}}>
+          <Button variant="text" onClick={moveSelectedToPantry} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18}}>
             Move Selected to Pantry
           </Button>
-          <Button variant="text" href="#outlined-buttons" onClick={toggleForm} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18}}>
+          <Button variant="text" onClick={toggleForm} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18}}>
             ⨁ New Item
           </Button>
         {showForm && (
@@ -213,6 +213,7 @@ const GroceryList = () => {
               <select
                 id="category"
                 value={category}
+                min="0"
                 onChange={(e) => setCategory(e.target.value)}
                 required
               >

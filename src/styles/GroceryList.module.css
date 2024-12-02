@@ -101,6 +101,10 @@
   grid-row: 1 / span 2;
 }
 
+.noItem {
+  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+}
+
 .grain {
   grid-row: 1;
 } 
@@ -109,13 +113,7 @@
 }
 
 .smallColumn {
-  display: flex;
-  height: 23em;
-}
-
-.smallColumn div {
-  height: 15em;
-  margin: 0px 0px 20px 0px;
+  min-height: 23em;
 }
 
 @media (max-width: 950px) {
@@ -129,7 +127,7 @@
   .grain,
   .other {
     padding: 3em;
-    height: 100%;
+    min-height: 100%;
     grid-row: auto;
   }
 }
