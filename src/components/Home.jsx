@@ -8,8 +8,12 @@ import StarIcon from "@mui/icons-material/Star";
 import { IngredientsIcon } from "../assets/icons";
 import { recipeData } from "../data/recipeData";
 import { Link } from "react-router-dom";
+import { getAuth } from 'firebase/auth';
+
 
 export default function Home() {
+    const auth = getAuth();
+    const user = auth.currentUser;
     return (
         <Box className={css.pageContainer}>
             <div className={css.titleContainer}>

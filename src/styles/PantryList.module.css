@@ -1,73 +1,188 @@
-  .container {
-    grid-template-columns: 25em auto;
-    margin: 2em;
-    grid-gap: 10px;
-    align-items: flex-start;
-    justify-content: space-between;
-    font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
-  }
-  
-  .container h1 {
-    padding: 10px 30px 20px 30px;
-  }
-  
-  .button {
-    border: 0px;
-    color: #000000;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    background: #ffffff;
-    font-weight: bold;
-  }
-  
-  .header {
-    display: inline-block;
-    display: flex;
-    justify-content: space-between;
-    
-  }
-  
+* {
+  box-sizing: border-box;
+}
+[hidden] {
+  display: none !important;
+}
+
+body,
+section,
+header,
+div,
+p,
+h1,
+h2,
+h3,
+ul,
+li,
+figure,
+figcaption {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+}
+
+.pantry-body {
+  overflow-y:hidden;
+  height:100%;
+}
+
+.container {
+  margin: 2em;
+  grid-gap: 10px;
+  height: 100%;
+  align-items: flex-start;
+  justify-content: space-between;
+  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+}
+
+.container h1 {
+  padding: 10px 30px 20px 30px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.header h1 {
+  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+}
+
+.pantry {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  grid-gap: 45px;
+  padding: 20px;
+  justify-content: space-between;
+  border-radius: 20px;
+  font-family: "Inter", "Open Sans", "Times New Roman", sans-serif;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  padding: 2px;
+  border: 1px solid black;
+}
+
+.form h2 {
+  padding: 5px 0px;
+  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+  text-align: center;
+}
+
+.form button {
+  padding: 5px;
+  margin: 5px;
+  border-radius: 10px;
+  background: #d1e6f9;
+  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+}
+
+.form button:hover {
+  background: #e3effb;
+  font-weight: medium;
+}
+
+.pantry h2 {
+  padding: 10px 0px;
+  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+}
+
+.pantry ul {
+  padding: 5px 0px;
+}
+
+.pantry ul li {
+  list-style: none;
+  padding: 7px 0px;
+}
+
+.pantry input {
+  padding: 10px;
+}
+
+.pantry label {
+  padding: 10px;
+  font-size: 16px;
+}
+
+.produce ul li span,
+.protein ul li span, 
+.dairy ul li span,
+.grain ul li span,
+.other ul li span {
+  background-color: #b3ccff;
+  border-radius: 15px;
+  padding: 0px 10px;
+}
+
+.produce ul li,
+.protein ul li, 
+.dairy ul li,
+.grain ul li,
+.other ul li  {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
+.produce,
+.protein,
+.dairy,
+.grain,
+.other {
+  background-color: #d1e6f9;
+  display: flex;
+  flex-direction: column;
+  padding: 3em;
+  border-radius: 20px;
+  height: 100%;
+  grid-row: 1 / span 2;
+}
+
+.grain {
+  grid-row: 1;
+} 
+.other {
+  grid-row: 2;
+}
+
+.smallColumn {
+  display: flex;
+  height: 23em;
+}
+
+.smallColumn div {
+  height: 15em;
+  margin: 0px 0px 20px 0px;
+}
+
+@media (max-width: 950px) {
   .pantry {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-gap: 45px;
-    padding: 20px;
-    justify-content: space-between;
-    border-radius: 20px;
-    font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+    grid-template-columns: 1fr 1fr;
   }
-  
-  .pantry h2 {
-    justify-content: center;
-    padding: 1em;
-    font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
-  
-  }
-  
-  .pantry ul {
-    list-style-type: none;
-  }
-  
-  .pantry ul li {
-    padding: 5px 0px;
-    font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
-  
-  }
-  
+
   .produce,
   .protein,
   .dairy,
-  .grains,
+  .grain,
   .other {
-    background-color: #d1e6f9;
-    display: flex;
-    flex-direction: column;
-    padding: 1.5em;
-    border-radius: 20px;
-    margin: 1em;
+    padding: 3em;
+    height: 100%;
+    grid-row: auto;
   }
-  
+}
+
+
+@media (max-width: 600px) {
+  .pantry {
+    grid-template-columns: 1fr;
+  }
+}

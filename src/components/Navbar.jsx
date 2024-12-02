@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getAuth, signOut } from 'firebase/auth';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -21,6 +23,10 @@ const pages = [
 
 export default function NavigationBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const navigate = useNavigate();
+  const auth = getAuth();
+  const user = auth.currentUser;
+
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -30,12 +36,10 @@ export default function NavigationBar() {
     setAnchorElNav(null);
   };
 
-
-
   return (
     <AppBar position="static" sx={{ backgroundColor: '#306CA3', opacity: 0.52, height: "64px" }}>
       <Container maxWidth="100vw">
-        <Toolbar 
+        <Toolbar
           disableGutters
           sx={{
             display: "flex",
