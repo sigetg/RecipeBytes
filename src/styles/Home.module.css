@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Patrick+Hand+SC&family=Shadows+Into+Light&display=swap');
 
-body {
+body{
     font-family: "Inter", serif;
     font-size: 18px;
     font-weight: 400;
@@ -42,17 +42,20 @@ body {
 .recipeSuggestionContainer {
     background-color: rgb(226, 240, 252, 0.5);
     grid-row: span 2;
+    min-height:100%;
 }
 
 .favoritesContainer {
     grid-column: 2 / 3;
     background-color: rgb(226, 240, 252);
+    min-height:100%;
 }
 
 .expirationContainer {
     grid-column-start: 2;
     grid-column: 2 / 3;
     background-color: rgb(226, 240, 252, 0.5);
+    min-height:100%;
 }
 
 .expirationContainer li {
@@ -63,7 +66,19 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    padding: 7px 0px
+    padding: 7px 0px;
+}
+
+.expiringItem li {
+    font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+    /* font-size: 1.5rem; */
+    padding: 7px 0px;
+}
+
+.expiringItem li {
+    font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+    /* font-size: 1.5rem; */
+    padding: 7px 0px;
 }
 
 .expirationLabel {

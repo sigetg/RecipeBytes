@@ -40,33 +40,9 @@ export default function Pantry() {
     await updateProfile(auth.currentUser, {
       displayName: firstName && lastName ? `${firstName} ${lastName}` : user.displayName
     })
-    // if (photo) {
-    //   const url = await upload(photo, userId, setLoading)
-    //   await updateProfile(auth.currentUser, {
-    //     photoURL: url
-    //   })
-    // }
     navigate('/')
     setShowForm(false)
   };
-
-  // const handleChange = async (e) => {
-  //   if (e.target.files[0]) {
-  //     setPhoto(e.target.files[0]);
-  //   }
-  //   uploadProfileImage(photo, setLoading).then((url) => {
-  //     setPhotoURL(url);
-  //   });
-  // };
-
-//   // storage for user's profile image
-//  async function uploadProfileImage(file, userId, setLoading) {
-//   const storageRef = ref(storage, `profileImages/${userId}`);
-//   setLoading(true);
-//   await uploadBytes(storageRef, file);
-//   setLoading(false);
-//   return getDownloadURL(storageRef);
-// }
 
   return <main className={css.container}>
     <section className={css.profileAvatar}>

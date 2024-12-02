@@ -16,6 +16,8 @@ h3,
 ul,
 li,
 figure,
+label,
+span,
 figcaption {
   margin: 0;
   padding: 0;
@@ -101,9 +103,6 @@ figcaption {
 .pantry ul li {
   list-style: none;
   padding: 7px 0px;
-  /* display: flex;
-  flex-direction: row;
-  justify-content: space-between; */
 }
 
 .pantry input {
@@ -120,7 +119,6 @@ figcaption {
   border-radius: 15px;
   margin-left:21px;
   padding: 0px 10px;
-  /* height: auto; */
 }
 
 .expired {
@@ -145,6 +143,10 @@ figcaption {
   grid-row: 1 / span 2;
 }
 
+.noItem {
+  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+}
+
 .grain {
   grid-row: 1;
 } 
@@ -153,13 +155,7 @@ figcaption {
 }
 
 .smallColumn {
-  display: flex;
-  height: 23em;
-}
-
-.smallColumn div {
-  height: 15em;
-  margin: 0px 0px 20px 0px;
+  min-height: 23em;
 }
 
 @media (max-width: 950px) {
@@ -173,7 +169,7 @@ figcaption {
   .grain,
   .other {
     padding: 3em;
-    height: 100%;
+    min-height: 100%;
     grid-row: auto;
   }
 }

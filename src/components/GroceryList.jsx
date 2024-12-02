@@ -121,7 +121,7 @@ const GroceryList = () => {
             ))}
           </ul>
       ) : (
-        <p>No items yet. Click 'New Item' to add one now!</p>
+        <p className = {css.noItem}>No items yet. Click 'New Item' to add one now!</p>
       )}
     </div>
   );

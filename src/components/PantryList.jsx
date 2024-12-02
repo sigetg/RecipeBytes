@@ -133,7 +133,7 @@ const PantryList = () => {
   //   setSpanColor()
   // }
 
-  function generateItemWithLabel(ingredient) {
+  function generateLabel(ingredient) {
     if (getDaysLeft(ingredient.expiration.toDate().valueOf(),currentDate.valueOf()) < 0) {
       return <>
         <span className={`${css.expirationLabel} ${css.expired}`}>EXPIRED</span>
@@ -171,17 +171,15 @@ const PantryList = () => {
                   checked={selectedItems.includes(ingredient.id)}
                   onChange={() => handleCheckboxChange(ingredient.id)}
                 />
-                <label htmlFor={`${name}${ingredient.id}`}>{ingredient.title} ({ingredient.quantity})</label>
-                {generateItemWithLabel(ingredient)}  
-                <br />
+                <label htmlFor={`${name}${ingredient.id}`}>{ingredient.quantity > 1 ? `${ingredient.title} (${ingredient.quantity})` : `${ingredient.title}`}</label>
                 </div>
-
-                {/* try to turn this into a function that sets item with <= 0 days left as expired and change the tag based on how many days are left */}
+                {generateLabel(ingredient)}  
+                <br />
               </li>
             ))}
           </ul>
       ) : (
-        <p>No items yet. Click 'New Item' to add one now!</p>
+        <p className = {css.noItem}>No items yet. Click 'New Item' to add one now!</p>
       )}
     </div>
   );
