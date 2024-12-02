@@ -1,5 +1,6 @@
 {
   "name": "my-first-react-app",
+  "homepage": "https://sigetg.github.io/RecipeBytes",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -28,6 +29,8 @@
     "postcss": "^8.4.31"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -53,6 +56,8 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "gh-pages": "^6.2.0",
+    "typescript": "^5.7.2",
     "vite": "^5.4.11"
   }
 }

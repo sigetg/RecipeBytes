@@ -144,10 +144,23 @@ export default function CurrentWalkthrough() {
 
       {/* Timer Section */}
       {stepTime && (
-        <StepTimer
-          defaultTimeInSeconds={stepTime}
-          onTimerComplete={() => alert("Time's up for this step!")}
-        />
+        <Box
+          sx={{
+            position: "fixed",
+            top: "30px", 
+            right: "10px",  
+            zIndex: 1000, 
+            padding: "10px 20px",  
+            borderRadius: "8px",  
+            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          <StepTimer
+            defaultTimeInSeconds={stepTime}
+            onTimerComplete={() => alert("Time's up for this step!")}
+            className={css.timer}
+          />
+        </Box>
       )}
 
       <Box className={css.navigationButtons}>
