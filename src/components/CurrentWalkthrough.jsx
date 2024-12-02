@@ -3,6 +3,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Typography, Button, Box, CircularProgress } from "@mui/material";
 import axios from "axios";
 import css from "./../styles/CurrentWalkthrough.module.css";
+import bakingGif from "./../assets/Baking.gif";
+import mixGif from "./../assets/Mix.gif";
+import sauteGif from "./../assets/Saute.gif";
+import dicingGif from "./../assets/Dicing.gif";
 
 export default function CurrentWalkthrough() {
   const { id, stepIndex } = useParams();
@@ -71,6 +75,14 @@ export default function CurrentWalkthrough() {
     });
   };
 
+  const getAnimationForStep = (instruction) => {
+    if (/bake|roast|oven/i.test(instruction)) return bakingGif;
+    if (/mix|stir|whisk|beat/i.test(instruction)) return mixGif;
+    if (/saute|fry|heat/i.test(instruction)) return sauteGif;
+    if (/dice|chop|slice/i.test(instruction)) return dicingGif;
+    return null; // No matching animation
+  };
+
   if (loading) {
     return (
       <Box className={css.loadingContainer}>
@@ -103,32 +115,64 @@ export default function CurrentWalkthrough() {
   };
 
   const matchedIngredients = findIngredientAmount(currentStep.ingredients);
+  const animation = getAnimationForStep(currentStep.step);
 
   return (
     <Box className={css.container}>
       <div className={css.sectionHeader}>
-        <Typography variant="h4" sx={{ fontFamily: "'Patrick Hand SC', cursive", marginBottom: "10px;"}}>
-            Step {currentIndex + 1} of {instructions.length}
+        <Typography
+          variant="h4"
+          sx={{
+            fontFamily: "'Patrick Hand SC', cursive",
+            marginBottom: "10px;",
+          }}
+        >
+          Step {currentIndex + 1} of {instructions.length}
         </Typography>
-      
+
         {matchedIngredients.filter(Boolean).length > 0 && (
-            <Box className={css.ingredientsList}>
-            <Typography variant="h6" className={css.ingredientsTitle}  sx={{ fontFamily: "'inter', serif"}}>
-                Ingredients in this step:
+          <Box className={css.ingredientsList}>
+            <Typography
+              variant="h6"
+              className={css.ingredientsTitle}
+              sx={{ fontFamily: "'inter', serif" }}
+            >
+              Ingredients in this step:
             </Typography>
             <ul>
-                {matchedIngredients.filter(Boolean).map((ingredient, index) => (
-                <li key={index} className={css.ingredientsItem} sx={{ fontFamily: "'inter', serif"}}>
+              {matchedIngredients
+                .filter(Boolean)
+                .map((ingredient, index) => (
+                  <li
+                    key={index}
+                    className={css.ingredientsItem}
+                    sx={{ fontFamily: "'inter', serif" }}
+                  >
                     {ingredient}
-                </li>
+                  </li>
                 ))}
             </ul>
-            </Box>
+          </Box>
         )}
       </div>
+
+      {/* Animation for Step */}
+      {animation && (
+        <Box className={css.animationContainer}>
+          <img
+            src={animation}
+            alt="Step Animation"
+            className={css.stepAnimation}
+          />
+        </Box>
+      )}
+
       <div className={css.instruction}>
-        <Typography variant="h4" sx={{ fontFamily: "'Patrick Hand SC', cursive", padding: "10px 0" }}>
-            {currentStep.step}
+        <Typography
+          variant="h4"
+          sx={{ fontFamily: "'Patrick Hand SC', cursive", padding: "10px 0" }}
+        >
+          {currentStep.step}
         </Typography>
       </div>
 
