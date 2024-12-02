@@ -112,26 +112,20 @@ figcaption {
   font-size: 16px;
 }
 
-.produce ul li span,
-.protein ul li span, 
-.dairy ul li span,
-.grain ul li span,
-.other ul li span {
+.expirationLabel {
   background-color: #b3ccff;
   border-radius: 15px;
+  margin-left:21px;
   padding: 0px 10px;
 }
 
-.produce ul li,
-.protein ul li, 
-.dairy ul li,
-.grain ul li,
-.other ul li  {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+.expired {
+  background-color: #ff8080;
 }
 
+.soonToExpire {
+  background-color: #ffff80;
+}
 
 .produce,
 .protein,

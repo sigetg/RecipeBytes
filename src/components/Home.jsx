@@ -7,6 +7,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import axios from "axios";
 import css from "../styles/Home.module.css";
 import { getAuth } from "firebase/auth";
+import { getData } from "../services/firestoreService";
 
 export default function Home() {
   const auth = getAuth();
@@ -26,6 +27,8 @@ export default function Home() {
   });
 
   const [suggestions, setSuggestions] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
+  const [currentDate, setCurrentDate] = useState(new Date());
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -33,6 +36,7 @@ export default function Home() {
   const API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
 
   useEffect(() => {
+    // Fetch recipes
     const fetchSuggestions = async () => {
       try {
         setLoading(true);
@@ -56,8 +60,76 @@ export default function Home() {
       }
     };
 
+    // Fetch pantry items
+    const fetchIngredients = async () => {
+      if (user) {
+        const pantryItems = await getData(user.uid, "pantry");
+        setIngredients(pantryItems);
+      }
+    };
+
     fetchSuggestions();
-  }, [favorites]);
+    fetchIngredients();
+
+    const intervalId = setInterval(() => {
+      setCurrentDate(new Date());
+    }, 3600000); // Update every hour
+
+    return () => clearInterval(intervalId);
+  }, [favorites, user]);
+
+  const getDaysLeft = (expiration, current) => {
+    return Math.ceil((expiration - current) / (1000 * 60 * 60 * 24));
+  };
+
+  const getExpiringItems = () => {
+    const expiringIngredients = [];
+    const expiredIngredients = [];
+
+    ingredients.forEach((ingredient) => {
+      const daysLeft = getDaysLeft(
+        ingredient.expiration.toDate().valueOf(),
+        currentDate.valueOf()
+      );
+
+      if (daysLeft <= 0) {
+        expiredIngredients.push(ingredient);
+      } else if (daysLeft <= 4) {
+        expiringIngredients.push(ingredient);
+      }
+    });
+
+    const expired = () =>
+      expiredIngredients.map((ingredient) => (
+        <div key={ingredient.id} className={css.expiringItem}>
+          <li>
+            {ingredient.title} ({ingredient.quantity})
+          </li>
+          <span className={`${css.expirationLabel} ${css.expired}`}>
+            EXPIRED
+          </span>
+        </div>
+      ));
+
+    const expiring = () =>
+      expiringIngredients.map((ingredient) => (
+        <div key={ingredient.id} className={css.expiringItem}>
+          <li>
+            {ingredient.title} ({ingredient.quantity})
+          </li>
+          <span className={`${css.expirationLabel} ${css.soonToExpire}`}>
+            Expires in {getDaysLeft(ingredient.expiration.toDate().valueOf(), currentDate.valueOf())} days
+          </span>
+        </div>
+      ));
+
+    return (
+      <>
+        {expired()}
+        {expiring()}
+      </>
+    );
+  };
 
   return (
     <Box className={css.pageContainer}>
@@ -72,7 +144,14 @@ export default function Home() {
         {/* Suggestions Section */}
         <div className={css.recipeSuggestionContainer}>
           <Box className={css.sectionHeader}>
-            <Typography className={css.sectionTitle} variant="h5" sx={{fontFamily:"'Patrick Hand SC', cursive", color:"black"}}>
+            <Typography
+              className={css.sectionTitle}
+              variant="h5"
+              sx={{
+                fontFamily: "'Patrick Hand SC', cursive",
+                color: "black",
+              }}
+            >
               Recipes You Might Like
             </Typography>
           </Box>
@@ -94,10 +173,10 @@ export default function Home() {
                     alt={recipe.title}
                   />
                   <div className={css.recipeInfo}>
-                    <Typography 
-                      className={css.recipeTitle} 
+                    <Typography
+                      className={css.recipeTitle}
                       variant="h5"
-                      sx={{fontFamily:"'Patrick Hand SC', cursive", color:"black"}}
+                      sx={{ fontFamily: "'Patrick Hand SC', cursive", color: "black" }}
                     >
                       {recipe.title}
                     </Typography>
@@ -109,7 +188,11 @@ export default function Home() {
           <Button
             variant="contained"
             onClick={() => navigate("/recipes")}
-            sx={{ marginTop: "20px", backgroundColor: "rgba(48, 108, 163, 0.52)", width: "200px" }}
+            sx={{
+              marginTop: "20px",
+              backgroundColor: "rgba(48, 108, 163, 0.52)",
+              width: "200px",
+            }}
           >
             See More Recipes
           </Button>
@@ -119,7 +202,11 @@ export default function Home() {
         <div className={css.favoritesContainer}>
           <Box className={css.sectionHeader}>
             <StarIcon />
-            <Typography className={css.sectionTitle} variant="h5" sx={{fontFamily:"'Patrick Hand SC', cursive", color:"black"}}>
+            <Typography
+              className={css.sectionTitle}
+              variant="h5"
+              sx={{ fontFamily: "'Patrick Hand SC', cursive", color: "black" }}
+            >
               Favorites
             </Typography>
           </Box>
@@ -135,28 +222,34 @@ export default function Home() {
               className={css.recipeLink}
             >
               <div className={css.favoriteCard}>
-                <div className={css.favoriteInfo}>
-                  <Typography 
-                    className={css.favoritesTitle} 
-                    variant="h5"
-                    sx={{fontFamily:"'Patrick Hand SC', cursive", color:"rgba(48, 108, 163, 0.82)"}}
-                  >
-                    {recipe.title}
-                  </Typography>
-                </div>
+                <Typography
+                  className={css.favoritesTitle}
+                  variant="h5"
+                  sx={{
+                    fontFamily: "'Patrick Hand SC', cursive",
+                    color: "rgba(48, 108, 163, 0.82)",
+                  }}
+                >
+                  {recipe.title}
+                </Typography>
               </div>
             </Link>
           ))}
         </div>
 
-        {/* Expiration Section */}
+        {/* Expiring Items Section */}
         <div className={css.expirationContainer}>
           <Box className={css.sectionHeader}>
             <AccessTimeIcon />
-            <Typography className={css.sectionTitle} variant="h5"  sx={{fontFamily:"'Patrick Hand SC', cursive", color:"black"}}>
+            <Typography
+              className={css.sectionTitle}
+              variant="h5"
+              sx={{ fontFamily: "'Patrick Hand SC', cursive" }}
+            >
               Expiration Coming Up
             </Typography>
           </Box>
+          <ul>{getExpiringItems()}</ul>
         </div>
       </div>
     </Box>

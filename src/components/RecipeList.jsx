@@ -153,7 +153,7 @@ export default function RecipeList() {
               <div className={css.recipeInfo}>
                 <Typography
                   className={css.recipeTitle}
-                  variant="h4"
+                  variant="h5"
                   sx={{ fontFamily: "'Patrick Hand SC', cursive" }}
                 >
                   {recipe.title}
@@ -204,7 +204,7 @@ export default function RecipeList() {
               <div className={css.recipeInfo}>
                 <Typography
                   className={css.recipeTitle}
-                  variant="h4"
+                  variant="h5"
                   sx={{ fontFamily: "'Patrick Hand SC', cursive" }}
                 >
                   {recipe.title}

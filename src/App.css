@@ -22,6 +22,7 @@ figcaption {
   padding: 0;
   box-sizing: border-box;
   font-family: 'inter', serif ;
+  overflow: hidden;
 }
 .App {
   text-align: center;
@@ -37,6 +38,7 @@ figcaption {
   overflow-y: auto;
   height: calc(100vh - 64px); /* Subtract the height of the NavigationBar */
   padding: 20px;
+  margin: 20px;
 }
 
 
