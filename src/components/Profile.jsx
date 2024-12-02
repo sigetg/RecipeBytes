@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import css from './../styles/Profile.module.css'
 import Avatar from './../assets/Avatar.png'
 import { getAuth, signOut, updateProfile } from 'firebase/auth';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
@@ -13,8 +14,12 @@ export default function Pantry() {
   const userId = user.uid;
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [photo, setPhoto] = useState(null);
+  const [photoURL, setPhotoURL] = useState(Avatar);
   const [showForm, setShowForm] = useState(false);
   const navigate = useNavigate();
+  const storage = getStorage();
 
   const handleLogout = async () => {
     const auth = getAuth();
@@ -35,14 +40,38 @@ export default function Pantry() {
     await updateProfile(auth.currentUser, {
       displayName: firstName && lastName ? `${firstName} ${lastName}` : user.displayName
     })
+    // if (photo) {
+    //   const url = await upload(photo, userId, setLoading)
+    //   await updateProfile(auth.currentUser, {
+    //     photoURL: url
+    //   })
+    // }
     navigate('/')
     setShowForm(false)
   };
 
+  // const handleChange = async (e) => {
+  //   if (e.target.files[0]) {
+  //     setPhoto(e.target.files[0]);
+  //   }
+  //   uploadProfileImage(photo, setLoading).then((url) => {
+  //     setPhotoURL(url);
+  //   });
+  // };
+
+//   // storage for user's profile image
+//  async function uploadProfileImage(file, userId, setLoading) {
+//   const storageRef = ref(storage, `profileImages/${userId}`);
+//   setLoading(true);
+//   await uploadBytes(storageRef, file);
+//   setLoading(false);
+//   return getDownloadURL(storageRef);
+// }
+
   return <main className={css.container}>
     <section className={css.profileAvatar}>
       <img
-        src={Avatar}
+        src={photoURL}
         alt="Avatar"
       />
     </section>
@@ -66,35 +95,44 @@ export default function Pantry() {
         />
       </div>
     </section>
-    {showForm && (
-          <form onSubmit={handleSubmit} className={css.form}>
-            <h2>Update Profile</h2>
-             <TextField
-              label="First Name"
-              variant="outlined"
-              margin="normal"
-              onChange={(e) => setFirstName(e.target.value)}
-              type="text"
+    <section>
+      {showForm && (
+            <form onSubmit={handleSubmit} className={css.form}>
+              <h2>Update Profile</h2>
+              <TextField
+                label="First Name"
+                variant="outlined"
+                margin="normal"
+                onChange={(e) => setFirstName(e.target.value)}
+                type="text"
+              />
+            <TextField
+                label="Last Name"
+                variant="outlined"
+                margin="normal"
+                onChange={(e) => setLastName(e.target.value)}
+                type="text"
             />
-          <TextField
-              label="Last Name"
-              variant="outlined"
-              margin="normal"
-              onChange={(e) => setLastName(e.target.value)}
-              type="text"
-          />
-          <button type="submit" className={css.profileUpdateButton}>Save</button>
-          </form>
-        )}
-    <section className={css.options}>
-      <Stack direction="row" spacing={2}>
-        <Button variant="text" onClick={toggleForm} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18, border: 1}}>
-          Update Profile
-        </Button>
-        {user && ( <Button variant="text" onClick={handleLogout} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18, border: 1}}>
-          Logout
-        </Button> )}
-      </Stack>
+            <TextField
+                variant="outlined"
+                margin="normal"
+                onChange={(e) => setPhotoURL(e.target.value)}
+                // onClick={handleChange}
+                type="file"
+            />
+            <button type="submit" className={css.profileUpdateButton}>Save</button>
+            </form>
+          )}
+      <section className={css.options}>
+        <Stack direction="row" spacing={2}>
+          <Button variant="text" onClick={toggleForm} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18, border: 1}}>
+            Update Profile
+          </Button>
+          {user && ( <Button variant="text" onClick={handleLogout} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18, border: 1}}>
+            Logout
+          </Button> )}
+        </Stack>
+      </section>
     </section>
   </main>
 }

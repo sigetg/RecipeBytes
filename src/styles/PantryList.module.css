@@ -101,6 +101,9 @@ figcaption {
 .pantry ul li {
   list-style: none;
   padding: 7px 0px;
+  /* display: flex;
+  flex-direction: row;
+  justify-content: space-between; */
 }
 
 .pantry input {
@@ -117,6 +120,7 @@ figcaption {
   border-radius: 15px;
   margin-left:21px;
   padding: 0px 10px;
+  /* height: auto; */
 }
 
 .expired {
