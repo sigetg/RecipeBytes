@@ -1,109 +1,153 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Typography, Button, Box } from "@mui/material";
-import { recipeData } from "../data/recipeData";
+import { Typography, Button, Box, CircularProgress } from "@mui/material";
+import axios from "axios";
+import css from "./../styles/CurrentWalkthrough.module.css";
 
 export default function CurrentWalkthrough() {
-    const { title, stepIndex } = useParams();
-    const [currentIndex, setCurrentIndex] = useState(parseInt(stepIndex, 10) - 1);
-    const navigate = useNavigate();
-    const recipe = recipeData.find((r) => r.title === decodeURIComponent(title));
+  const { id, stepIndex } = useParams();
+  const [currentIndex, setCurrentIndex] = useState(() => {
+    const index = parseInt(stepIndex, 10);
+    return isNaN(index) ? 0 : index - 1;
+  });
+  const [instructions, setInstructions] = useState([]);
+  const [ingredientDetails, setIngredientDetails] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
-    if (!recipe) {
-        return (
-            <Box sx={{ padding: "20px" }}>
-                <Typography variant="h6" color="error">
-                    Recipe not found.
-                </Typography>
-            </Box>
-        );
+  const INSTRUCTIONS_API_URL = `https://api.spoonacular.com/recipes/${id}/analyzedInstructions`;
+  const INGREDIENTS_API_URL = `https://api.spoonacular.com/recipes/${id}/information`;
+
+  useEffect(() => {
+    const fetchRecipeData = async () => {
+      try {
+        setLoading(true);
+
+        // Fetch step instructions
+        const instructionsResponse = await axios.get(INSTRUCTIONS_API_URL, {
+          params: { apiKey: process.env.REACT_APP_SPOONACULAR_API_KEY },
+        });
+        setInstructions(instructionsResponse.data[0]?.steps || []);
+
+        // Fetch full ingredient details
+        const ingredientsResponse = await axios.get(INGREDIENTS_API_URL, {
+          params: { apiKey: process.env.REACT_APP_SPOONACULAR_API_KEY },
+        });
+        setIngredientDetails(ingredientsResponse.data.extendedIngredients || []);
+        setError(null);
+      } catch (err) {
+        setError("Failed to fetch recipe data.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRecipeData();
+  }, [id]);
+
+  const handlePrevClick = () => {
+    if (currentIndex > 0) {
+      const newIndex = currentIndex - 1;
+      setCurrentIndex(newIndex);
+      navigate(`/recipe/${id}/step${newIndex + 1}`);
     }
+  };
 
-    const totalInstructions = recipe.instructions.length;
+  const handleNextClick = () => {
+    if (currentIndex < instructions.length - 1) {
+      const newIndex = currentIndex + 1;
+      setCurrentIndex(newIndex);
+      navigate(`/recipe/${id}/step${newIndex + 1}`);
+    }
+  };
 
-    const handlePrevClick = () => {
-        if (currentIndex > 0) {
-            const newIndex = currentIndex - 1;
-            setCurrentIndex(newIndex);
-            navigate(`/recipe/${encodeURIComponent(recipe.title)}/step${newIndex + 1}`);
-        }
-    };
+  const findIngredientAmount = (stepIngredients) => {
+    return stepIngredients.map((stepIngredient) => {
+      const match = ingredientDetails.find((ingredient) =>
+        ingredient.name.toLowerCase().includes(stepIngredient.name.toLowerCase())
+      );
+      return match ? match.original : null;
+    });
+  };
 
-    const handleNextClick = () => {
-        if (currentIndex < totalInstructions - 1) {
-            const newIndex = currentIndex + 1;
-            setCurrentIndex(newIndex);
-            navigate(`/recipe/${encodeURIComponent(recipe.title)}/step${newIndex + 1}`);
-        }
-    };
-
-    const highlightIngredients = (instruction, ingredients) => {
-        if (!ingredients?.length) return instruction;
-
-        // Create regex patterns for ingredients
-        const ingredientPatterns = ingredients.map((ingredient) => {
-            const normalized = ingredient.name.toLowerCase();
-            return {
-                ...ingredient,
-                pattern: new RegExp(
-                    `\\b(${normalized.replace(/white|ground|powdered/g, "").trim()})\\b`,
-                    "gi"
-                ),
-            };
-        });
-
-        // Split the instruction into words and highlight matches
-        return instruction.split(/\b/).map((word, index) => {
-            const matchedIngredient = ingredientPatterns.find(({ pattern }) =>
-                word.match(pattern)
-            );
-
-            if (matchedIngredient) {
-                return (
-                    <span
-                        key={index}
-                        style={{ fontWeight: "bold", cursor: "pointer", color: "#306CA3" }}
-                        title={`${matchedIngredient.quantity} ${matchedIngredient.name}`}
-                    >
-                        {word}
-                    </span>
-                );
-            }
-
-            return <span key={index}>{word}</span>;
-        });
-    };
-
+  if (loading) {
     return (
-        <Box sx={{ padding: "20px" }}>
-            <Typography
-                variant="h4"
-                sx={{ fontFamily: "'Patrick Hand SC', cursive", marginBottom: "20px" }}
-            >
-                {recipe.title}
-            </Typography>
-            <Typography variant="h6" sx={{ marginBottom: "10px" }}>
-                Step {currentIndex + 1} of {totalInstructions}
-            </Typography>
-            <Typography variant="body1" sx={{ marginBottom: "20px" }}>
-                {highlightIngredients(recipe.instructions[currentIndex], recipe.ingredients)}
-            </Typography>
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <Button
-                    variant="contained"
-                    onClick={handlePrevClick}
-                    disabled={currentIndex === 0}
-                >
-                    Previous
-                </Button>
-                <Button
-                    variant="contained"
-                    onClick={handleNextClick}
-                    disabled={currentIndex === totalInstructions - 1}
-                >
-                    Next
-                </Button>
-            </Box>
-        </Box>
+      <Box className={css.loadingContainer}>
+        <CircularProgress />
+      </Box>
     );
+  }
+
+  if (error) {
+    return (
+      <Box className={css.container}>
+        <Typography className={css.errorText}>{error}</Typography>
+      </Box>
+    );
+  }
+
+  if (!instructions.length) {
+    return (
+      <Box className={css.container}>
+        <Typography variant="h6" color="textSecondary">
+          No instructions available for this recipe.
+        </Typography>
+      </Box>
+    );
+  }
+
+  const currentStep = instructions[currentIndex] || {
+    step: "No step information available.",
+    ingredients: [],
+  };
+
+  const matchedIngredients = findIngredientAmount(currentStep.ingredients);
+
+  return (
+    <Box className={css.container}>
+      <div className={css.sectionHeader}>
+        <Typography variant="h4" sx={{ fontFamily: "'Patrick Hand SC', cursive", marginBottom: "10px;"}}>
+            Step {currentIndex + 1} of {instructions.length}
+        </Typography>
+      
+        {matchedIngredients.filter(Boolean).length > 0 && (
+            <Box className={css.ingredientsList}>
+            <Typography variant="h6" className={css.ingredientsTitle}  sx={{ fontFamily: "'inter', serif"}}>
+                Ingredients in this step:
+            </Typography>
+            <ul>
+                {matchedIngredients.filter(Boolean).map((ingredient, index) => (
+                <li key={index} className={css.ingredientsItem} sx={{ fontFamily: "'inter', serif"}}>
+                    {ingredient}
+                </li>
+                ))}
+            </ul>
+            </Box>
+        )}
+      </div>
+      <div className={css.instruction}>
+        <Typography variant="h4" sx={{ fontFamily: "'Patrick Hand SC', cursive", padding: "10px 0" }}>
+            {currentStep.step}
+        </Typography>
+      </div>
+
+      <Box className={css.navigationButtons}>
+        <Button
+          variant="contained"
+          onClick={handlePrevClick}
+          disabled={currentIndex === 0}
+        >
+          Previous
+        </Button>
+        <Button
+          variant="contained"
+          onClick={handleNextClick}
+          disabled={currentIndex === instructions.length - 1}
+        >
+          Next
+        </Button>
+      </Box>
+    </Box>
+  );
 }

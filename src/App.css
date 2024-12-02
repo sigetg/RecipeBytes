@@ -21,7 +21,7 @@ figcaption {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+  font-family: "Patrick Hand SC", sans-serif;
 }
 .App {
   text-align: center;

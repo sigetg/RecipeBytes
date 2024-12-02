@@ -152,7 +152,7 @@ export default function RecipeDetailView() {
             <strong>Total Time:</strong> {recipe.readyInMinutes} mins
           </span>
         )}
-        <Link className={css.navigation} to={`/recipe/${id}/1`}>
+        <Link className={css.navigation} to={`/recipe/${id}/step${1}`}>
           START
         </Link>
       </div>

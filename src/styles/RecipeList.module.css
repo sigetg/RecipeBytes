@@ -7,7 +7,7 @@
 }
 
 :global(body) {
-    font-family: 'Patrick Hand SC', cursive;
+    font-family: 'inter', serif;
     box-sizing: border-box;
     margin: 10px 20px;
 }
