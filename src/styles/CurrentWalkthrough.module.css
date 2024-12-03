@@ -73,7 +73,6 @@
 }
   
 .stepAnimation {
-    max-width: 95%; 
+    max-width: 75%; 
     border-radius: 10px;
-    top: 0;
 }
