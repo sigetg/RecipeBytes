@@ -9,7 +9,8 @@ body {
 }
 
 .pageContainer {
-    height: 80%;
+    height: 100%;
+    overflow-y: auto;
 }
 
 .titleContainer {
@@ -27,7 +28,7 @@ body {
     gap: 40px;
     margin-top: 20px;   
     padding: 10px;
-    height: 100%;
+    height: 80%;
 }
 
 .sectionHeader {
