@@ -23,7 +23,7 @@ const Login = () => {
     try {
       const user = await signInUser(email, password);
       console.log("Logged in:", user);
-      navigate('/');
+      navigate('/home');
     } catch (error) {
       console.error("Login failed:", error.message);
     }

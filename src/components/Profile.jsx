@@ -25,7 +25,7 @@ export default function Pantry() {
     const auth = getAuth();
     try {
       await signOut(auth);
-      navigate('/login');
+      navigate('/');
     } catch (error) {
       console.error('Logout failed:', error.message);
     }

@@ -19,10 +19,10 @@ function App() {
       <NavigationBar />
       <div className="content">
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route
-            path="/"
+            path="/home"
             element={
               <PrivateRoute>
                 <Home />
