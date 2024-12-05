@@ -6,7 +6,7 @@ const PrivateRoute = ({ children }) => {
   const auth = getAuth();
   const user = auth.currentUser;
 
-  return user ? children : <Navigate to="/home" />;
+  return user ? children : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;
