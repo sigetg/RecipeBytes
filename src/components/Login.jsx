@@ -6,18 +6,18 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import VisibilityRoundedOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityRoundedIcon from '@mui/icons-material/Visibility';
-import { TextField, IconButton, InputAdornment } from '@mui/material';
-
-
+import { TextField, IconButton, InputAdornment, Typography } from '@mui/material';
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); // Add state for error message
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false)
-  const handleTogglePassword = (id) => {
-      setShowPassword(!showPassword)
-  }
+
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleLogin = async () => {
     try {
@@ -26,6 +26,11 @@ const Login = () => {
       navigate('/home');
     } catch (error) {
       console.error("Login failed:", error.message);
+      if (error.message === "Password incorrect") {
+        setErrorMessage("Incorrect password. Please try again.");
+      } else {
+        setErrorMessage("Login failed. Please check your credentials.");
+      }
     }
   };
 
@@ -58,7 +63,12 @@ const Login = () => {
             ),
           }}
         />
-        <Stack direction="row" spacing={2}>
+        {errorMessage && ( // Conditionally render error message
+          <Typography color="error" sx={{ marginTop: 2, fontSize: 14 }}>
+            {errorMessage}
+          </Typography>
+        )}
+        <Stack direction="row" spacing={2} sx={{ marginTop: 2 }}>
           <Button variant="text" onClick={handleLogin} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18, border: 1}}>
             Login
           </Button>

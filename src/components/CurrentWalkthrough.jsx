@@ -126,6 +126,23 @@ export default function CurrentWalkthrough() {
         </Typography>
       </div>
 
+      {/* Ingredients Section */}
+      {currentStep.ingredients.length > 0 && (
+        <Box className={css.ingredientsSection}>
+          <Typography variant="h6" sx={{ fontFamily: "'Patrick Hand SC', cursive" }}>
+            Ingredients for this step:
+          </Typography>
+          <ul className={css.ingredientList}>
+            {currentStep.ingredients.map((ingredient, index) => (
+              <li key={index} className={css.ingredientItem}>
+                {ingredient.name} {/* Display the ingredient name */}
+              </li>
+            ))}
+          </ul>
+        </Box>
+      )}
+
+
       {/* Animation for Step */}
       {animation && (
         <Box className={css.animationContainer}>
