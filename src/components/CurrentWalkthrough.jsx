@@ -110,13 +110,26 @@ export default function CurrentWalkthrough() {
     );
   }
 
+  const findIngredientAmount = (stepIngredients) => {
+    return stepIngredients.map((stepIngredient) => {
+      const match = ingredientDetails.find((ingredient) =>
+        ingredient.name.toLowerCase().includes(stepIngredient.name.toLowerCase())
+      );
+      return match ? match.original : null;
+    });
+  };
+
   const currentStep = instructions[currentIndex] || {
     step: "No step information available.",
     ingredients: [],
   };
 
+  const matchedIngredients = findIngredientAmount(currentStep.ingredients);
+
   const animation = getAnimationForStep(currentStep.step);
   const stepTime = getTimeFromStep(currentStep.step);
+
+  
 
   return (
     <Box className={css.container}>
@@ -127,20 +140,20 @@ export default function CurrentWalkthrough() {
       </div>
 
       {/* Ingredients Section */}
-      {currentStep.ingredients.length > 0 && (
-        <Box className={css.ingredientsSection}>
-          <Typography variant="h6" sx={{ fontFamily: "'Patrick Hand SC', cursive" }}>
-            Ingredients for this step:
-          </Typography>
-          <ul className={css.ingredientList}>
-            {currentStep.ingredients.map((ingredient, index) => (
-              <li key={index} className={css.ingredientItem}>
-                {ingredient.name} {/* Display the ingredient name */}
-              </li>
-            ))}
-          </ul>
-        </Box>
-      )}
+      {matchedIngredients.filter(Boolean).length > 0 && (
+            <Box className={css.ingredientsList}>
+            <Typography variant="h6" className={css.ingredientsTitle}  sx={{ fontFamily: "'inter', serif"}}>
+                Ingredients in this step:
+            </Typography>
+            <ul>
+                {matchedIngredients.filter(Boolean).map((ingredient, index) => (
+                <li key={index} className={css.ingredientsItem} sx={{ fontFamily: "'inter', serif"}}>
+                    {ingredient}
+                </li>
+                ))}
+            </ul>
+            </Box>
+        )}
 
 
       {/* Animation for Step */}

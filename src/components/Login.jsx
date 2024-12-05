@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { signInUser } from "../auth";
 import css from "./../styles/Login.module.css";
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import VisibilityRoundedOffIcon from '@mui/icons-material/VisibilityOff';
-import VisibilityRoundedIcon from '@mui/icons-material/Visibility';
-import { TextField, IconButton, InputAdornment, Typography } from '@mui/material';
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import VisibilityRoundedOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityRoundedIcon from "@mui/icons-material/Visibility";
+import { TextField, IconButton, InputAdornment, Typography, Link } from "@mui/material";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -23,7 +23,7 @@ const Login = () => {
     try {
       const user = await signInUser(email, password);
       console.log("Logged in:", user);
-      navigate('/home');
+      navigate("/home");
     } catch (error) {
       console.error("Login failed:", error.message);
       if (error.message === "Password incorrect") {
@@ -48,7 +48,7 @@ const Login = () => {
         />
         <TextField
           label="Password"
-          type={showPassword ? 'text' : 'password'}
+          type={showPassword ? "text" : "password"}
           variant="outlined"
           margin="normal"
           placeholder="Password"
@@ -57,22 +57,41 @@ const Login = () => {
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton onClick={handleTogglePassword} edge="end">
-                  {showPassword ? <VisibilityRoundedIcon sx={{cursor: "pointer"}} /> :  <VisibilityRoundedOffIcon sx={{cursor: "pointer", outline: false}} />}
+                  {showPassword ? (
+                    <VisibilityRoundedIcon sx={{ cursor: "pointer" }} />
+                  ) : (
+                    <VisibilityRoundedOffIcon sx={{ cursor: "pointer", outline: false }} />
+                  )}
                 </IconButton>
               </InputAdornment>
             ),
           }}
         />
-        {errorMessage && ( // Conditionally render error message
+        {errorMessage && (
           <Typography color="error" sx={{ marginTop: 2, fontSize: 14 }}>
             {errorMessage}
           </Typography>
         )}
+        <Link
+          href="#"
+          onClick={() => navigate("/forgot-password")}
+          sx={{ marginTop: 1, fontSize: 14, display: "block", cursor: "pointer", textAlign: "right" }}
+        >
+          Forgot Password?
+        </Link>
         <Stack direction="row" spacing={2} sx={{ marginTop: 2 }}>
-          <Button variant="text" onClick={handleLogin} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18, border: 1}}>
+          <Button
+            variant="text"
+            onClick={handleLogin}
+            sx={{ fontFamily: "'Patrick Hand SC', cursive", fontSize: 18, border: 1 }}
+          >
             Login
           </Button>
-          <Button variant="text" onClick={() => navigate('/signup')} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18, border: 1}}>
+          <Button
+            variant="text"
+            onClick={() => navigate("/signup")}
+            sx={{ fontFamily: "'Patrick Hand SC', cursive", fontSize: 18, border: 1 }}
+          >
             Go to Sign Up
           </Button>
         </Stack>
