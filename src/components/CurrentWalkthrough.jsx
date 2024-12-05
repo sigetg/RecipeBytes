@@ -177,7 +177,7 @@ export default function CurrentWalkthrough() {
         <Box
           sx={{
             position: "fixed",
-            top: "30px", 
+            top: "100px", 
             right: "10px",  
             zIndex: 1000, 
             padding: "10px 20px",  

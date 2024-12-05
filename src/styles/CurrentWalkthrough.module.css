@@ -34,13 +34,13 @@
     margin-bottom: 20px;
 }
 
-.ingredientsSection {
-    margin-top: 20px;
-  }
-  
+
 
 .ingredientsList {
     margin-bottom: 20px;
+    position: absolute;
+    top: 220px;
+    z-index: 100;
 }
 
 .ingredientsTitle {
