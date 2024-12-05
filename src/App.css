@@ -37,8 +37,7 @@ figcaption {
 .content {
   overflow-y: auto;
   height: calc(100vh - 64px); /* Subtract the height of the NavigationBar */
-  padding: 20px;
-  margin: 20px;
+  padding: 10px;
 }
 
 
