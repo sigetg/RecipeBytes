@@ -53,7 +53,7 @@ export default function NavigationBar() {
               variant="h6"
               noWrap
               component={Link}
-              to="/"
+              to="/home"
               sx={{
                 fontWeight: 700,
                 letterSpacing: '.3rem',
