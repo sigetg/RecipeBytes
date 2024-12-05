@@ -143,7 +143,13 @@ export default function Home() {
       <div className={css.containerContent}>
         {/* Suggestions Section */}
         <div className={css.recipeSuggestionContainer}>
-          <Box className={css.sectionHeader}>
+          <Box
+            className={css.sectionHeader}
+            sx={{
+              marginTop: "20px", // Add margin to create spacing
+              padding: "10px 0", // Optional: Add padding for better layout
+            }}
+          >
             <Typography
               className={css.sectionTitle}
               variant="h5"
@@ -155,6 +161,7 @@ export default function Home() {
               Recipes You Might Like
             </Typography>
           </Box>
+
           {loading ? (
             <CircularProgress />
           ) : error ? (
