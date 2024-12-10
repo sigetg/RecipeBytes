@@ -148,3 +148,17 @@ background-color: #ffff80;
 .favoriteCard:hover {
     color: #306ba392;
 }
+
+@media (max-width: 768px) {
+    .recipeSuggestionContainer,
+    .favoritesContainer,
+    .expirationContainer {
+        padding: 20px; /* Adjust padding for smaller screens */
+    }
+
+    .containerContent {
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+    }
+}
