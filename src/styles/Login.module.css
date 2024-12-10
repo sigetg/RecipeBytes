@@ -1,44 +1,44 @@
 * {
-    box-sizing: border-box;
-  }
-  [hidden] {
-    display: none !important;
-  }
-  
-  body,
-  section,
-  header,
-  div,
-  p,
-  h1,
-  h2,
-  h3,
-  ul,
-  li,
-  figure,
-  figcaption {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
-  }
+  box-sizing: border-box;
+}
+[hidden] {
+  display: none !important;
+}
+
+body,
+section,
+header,
+div,
+p,
+h1,
+h2,
+h3,
+ul,
+li,
+figure,
+figcaption {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+}
 
 .container {
-    margin: 1em;
-    display: flex;
-    flex-direction: column;
-    font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
-    height: 80%;
-    align-items: center;
-    overflow: auto;
-    justify-content: center;
+  margin: 1em;
+  display: flex;
+  flex-direction: column;
+  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+  height: 80%;
+  align-items: center;
+  overflow: auto;
+  justify-content: center;
 }
 
 .login {
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    margin: 20px 0px; 
-    height: 80%;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin: 20px 0px; 
+  height: 80%;
+  justify-content: center;
 }

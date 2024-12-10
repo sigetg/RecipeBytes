@@ -50,7 +50,6 @@
     justify-content: space-between;
 }
 
-
 .favoriteContainer button {
     background-color: white;
     border: white;
@@ -100,7 +99,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    gap: 30px;
     margin-top: 30px;
     margin-bottom: 30px;
 }
@@ -143,7 +141,6 @@
     background-color: rgba(226, 240, 252, 0.5);
 }
 
-
 .tipsText {
     padding: 10px 20px;
 }
@@ -159,10 +156,84 @@
     list-style-type: none;
 }
 
-.substitutesContainer ul li{
+.substitutesContainer ul li {
     margin-bottom: 10px;
     display: flex;
     align-items: center;
     gap: 10px;
     font-family: "inter", serif;
+}
+
+/* Mobile Compatibility */
+@media (max-width: 768px) {
+    .contentContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .ingredientsContainer,
+    .tipsContainer,
+    .substitutesContainer {
+        padding: 15px;
+        border-radius: 20px;
+    }
+
+    .sectionHeader {
+        flex-direction: column;
+        gap: 5px;
+        text-align: center;
+    }
+
+    .recipeImage {
+        max-height: 200px; /* Adjust image height for smaller screens */
+    }
+
+    .timeInfo {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .navigation {
+        font-size: 16px; /* Adjust navigation font size */
+        width: 80px;
+        padding: 5px 10px;
+    }
+
+    .favoriteContainer button {
+        font-size: 14px;
+        gap: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 16px; /* Adjust body font size for very small screens */
+    }
+
+    .ingredientsContainer,
+    .tipsContainer,
+    .substitutesContainer {
+        padding: 10px;
+        border-radius: 15px;
+    }
+
+    .recipeImage {
+        max-height: 150px;
+    }
+
+    .favoriteContainer button {
+        font-size: 12px;
+        gap: 3px;
+    }
+
+    .sectionTitle {
+        font-size: 18px; /* Adjust section title size */
+    }
+
+    .navigation {
+        font-size: 14px;
+        width: 70px;
+        padding: 3px 8px;
+    }
 }

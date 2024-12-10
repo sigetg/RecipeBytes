@@ -10,9 +10,6 @@ section,
 header,
 div,
 p,
-h1,
-h2,
-h3,
 ul,
 li,
 figure,
@@ -22,12 +19,18 @@ figcaption {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+  font-family: "Inter", sans-serif; /* Body font */
 }
 
-.pantry-body {
-  overflow-y:hidden;
-  height:100%;
+h1,
+h2,
+h3 {
+  font-family: "Patrick Hand SC", cursive; /* Title fonts */
+}
+
+.grocery-body {
+  overflow-y: hidden;
+  height: 100%;
 }
 
 .container {
@@ -36,11 +39,12 @@ figcaption {
   height: 100%;
   align-items: flex-start;
   justify-content: space-between;
-  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+  font-family: "Inter", sans-serif; /* Body font */
 }
 
 .container h1 {
-  padding: 10px 30px 20px 30px;
+  padding: 10px 20px;
+  font-size: 26px;
 }
 
 .header {
@@ -50,10 +54,11 @@ figcaption {
 }
 
 .header h1 {
-  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+  font-family: "Patrick Hand SC", cursive; /* Title font */
+  font-size: 28px;
 }
 
-.pantry {
+.grocery {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: auto auto;
@@ -61,29 +66,31 @@ figcaption {
   padding: 20px;
   justify-content: space-between;
   border-radius: 20px;
-  font-family: "Inter", "Open Sans", "Times New Roman", sans-serif;
+  font-family: "Inter", sans-serif; /* Body font */
 }
 
 .form {
   display: flex;
   flex-direction: column;
   border-radius: 10px;
-  padding: 2px;
+  padding: 10px;
   border: 1px solid black;
 }
 
 .form h2 {
-  padding: 5px 0px;
-  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+  padding: 10px 0;
+  font-family: "Patrick Hand SC", cursive; /* Title font */
   text-align: center;
+  font-size: 20px;
 }
 
 .form button {
-  padding: 5px;
-  margin: 5px;
+  padding: 10px;
+  margin: 10px;
   border-radius: 10px;
   background: #d1e6f9;
-  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+  font-family: "Inter", sans-serif; /* Body font */
+  font-size: 16px;
 }
 
 .form button:hover {
@@ -91,34 +98,40 @@ figcaption {
   font-weight: medium;
 }
 
-.pantry h2 {
-  padding: 10px 0px;
-  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+.grocery h2 {
+  padding: 10px 0;
+  font-family: "Patrick Hand SC", cursive; /* Title font */
+  font-size: 25px;
 }
 
-.pantry ul {
-  padding: 5px 0px;
+.grocery ul {
+  padding: 5px 0;
 }
 
-.pantry ul li {
+.grocery ul li {
   list-style: none;
-  padding: 7px 0px;
+  padding: 7px 0;
+  font-size: 25px;
+  font-family: "Inter", sans-serif; /* Body font */
 }
 
-.pantry input {
-  padding: 10px;
+.grocery input {
+  padding: 12px;
+  font-family: "Inter", sans-serif; /* Body font */
 }
 
-.pantry label {
+.grocery label {
   padding: 10px;
-  font-size: 16px;
+  font-size: 18px;
+  font-family: "Inter", sans-serif; /* Body font */
 }
 
 .expirationLabel {
   background-color: #b3ccff;
   border-radius: 15px;
-  margin-left:21px;
+  margin-left: 15px;
   padding: 0px 10px;
+  font-size: 14px;
 }
 
 .expired {
@@ -134,24 +147,19 @@ figcaption {
 .dairy,
 .grain,
 .other {
-  background-color: #d1e6f9;
+  background-color: rgba(226, 240, 252, 0.5);
   display: flex;
   flex-direction: column;
   padding: 3em;
   border-radius: 20px;
   height: 100%;
-  grid-row: 1 / span 2;
+  grid-row: auto;
+  font-family: "Inter", sans-serif; /* Body font */
 }
 
 .noItem {
-  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
-}
-
-.grain {
-  grid-row: 1;
-} 
-.other {
-  grid-row: 2;
+  font-family: "Inter", sans-serif; /* Body font */
+  font-size: 18px;
 }
 
 .smallColumn {
@@ -159,8 +167,9 @@ figcaption {
 }
 
 @media (max-width: 950px) {
-  .pantry {
+  .grocery {
     grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
   }
 
   .produce,
@@ -168,15 +177,69 @@ figcaption {
   .dairy,
   .grain,
   .other {
-    padding: 3em;
-    min-height: 100%;
+    padding: 2em;
+    min-height: auto;
     grid-row: auto;
+    margin: 20px 0;
+  }
+
+  .container h1 {
+    font-size: 24px;
+  }
+
+  .form h2 {
+    font-size: 18px;
+  }
+
+  .form button {
+    font-size: 14px;
+  }
+
+  .grocery ul li {
+    font-size: 22px;
+  }
+
+  .grocery label {
+    font-size: 22px;
   }
 }
 
-
 @media (max-width: 600px) {
-  .pantry {
+  .grocery {
     grid-template-columns: 1fr;
+    grid-gap: 15px;
+    padding: 10px;
+  }
+
+  .produce,
+  .protein,
+  .dairy,
+  .grain,
+  .other {
+    padding: 1.5em;
+    min-height: auto;
+    grid-row: auto;
+  }
+
+  .container h1 {
+    font-size: 25px;
+    padding: 5px;
+  }
+
+  .form h2 {
+    font-size: 16px;
+  }
+
+  .form button {
+    padding: 8px;
+    font-size: 20px;
+  }
+
+  .grocery ul li {
+    font-size: 20px;
+  }
+
+  .grocery label {
+    font-size: 20px;
   }
 }
