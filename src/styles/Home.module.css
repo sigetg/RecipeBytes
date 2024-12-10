@@ -47,8 +47,9 @@ body{
 
 .favoritesContainer {
     grid-column: 2 / 3;
-    background-color: rgb(226, 240, 252);
+    background-color: rgb(226, 240, 252, 0.5);
     min-height:100%;
+    overflow-y: scroll;
 }
 
 .expirationContainer {
@@ -56,6 +57,10 @@ body{
     grid-column: 2 / 3;
     background-color: rgb(226, 240, 252, 0.5);
     min-height:100%;
+}
+
+.expirationContainer ul{
+    overflow-y: scroll;
 }
 
 .expirationContainer li {
