@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/RecipeBytes/static/css/main.dda99ee7.css",
-    "main.js": "/RecipeBytes/static/js/main.f04eeb02.js",
-    "static/js/453.430cf63b.chunk.js": "/RecipeBytes/static/js/453.430cf63b.chunk.js",
-    "static/media/Mix.gif": "/RecipeBytes/static/media/Mix.4b1eefce2857d4aeaa4c.gif",
-    "static/media/Baking.gif": "/RecipeBytes/static/media/Baking.02b9994ed56645eb5b74.gif",
-    "static/media/Dicing.gif": "/RecipeBytes/static/media/Dicing.ce29e8126acd289de63d.gif",
-    "static/media/Saute.gif": "/RecipeBytes/static/media/Saute.978ee2a3f9827757ad02.gif",
-    "static/media/Avatar.png": "/RecipeBytes/static/media/Avatar.b58b3419a4a311864eff.png",
-    "index.html": "/RecipeBytes/index.html",
-    "main.dda99ee7.css.map": "/RecipeBytes/static/css/main.dda99ee7.css.map",
-    "main.f04eeb02.js.map": "/RecipeBytes/static/js/main.f04eeb02.js.map",
-    "453.430cf63b.chunk.js.map": "/RecipeBytes/static/js/453.430cf63b.chunk.js.map"
+    "main.css": "/static/css/main.dda99ee7.css",
+    "main.js": "/static/js/main.1f382ea6.js",
+    "static/js/453.430cf63b.chunk.js": "/static/js/453.430cf63b.chunk.js",
+    "static/media/Mix.gif": "/static/media/Mix.4b1eefce2857d4aeaa4c.gif",
+    "static/media/Baking.gif": "/static/media/Baking.02b9994ed56645eb5b74.gif",
+    "static/media/Dicing.gif": "/static/media/Dicing.ce29e8126acd289de63d.gif",
+    "static/media/Saute.gif": "/static/media/Saute.978ee2a3f9827757ad02.gif",
+    "static/media/Avatar.png": "/static/media/Avatar.b58b3419a4a311864eff.png",
+    "index.html": "/index.html",
+    "main.dda99ee7.css.map": "/static/css/main.dda99ee7.css.map",
+    "main.1f382ea6.js.map": "/static/js/main.1f382ea6.js.map",
+    "453.430cf63b.chunk.js.map": "/static/js/453.430cf63b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.dda99ee7.css",
-    "static/js/main.f04eeb02.js"
+    "static/js/main.1f382ea6.js"
   ]
 }
