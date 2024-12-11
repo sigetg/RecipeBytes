@@ -147,26 +147,11 @@
   text-align: center;
 }
 
-@media (max-width: 950px) {
-  .pantry {
-    grid-template-columns: 1fr 1fr; /* Switch to 2 columns */
-    grid-gap: 20px;
-  }
-
-  .produce,
-  .protein,
-  .dairy,
-  .grain,
-  .other {
-    grid-column: span 2; /* Take full width in 2-column layout */
-    padding: 2em;
-  }
-}
 
 @media (max-width: 600px) {
   .pantry {
-    grid-template-columns: 1fr; /* Switch to 1 column */
-    grid-gap: 15px;
+    display: flex;
+    flex-direction: column;
   }
 
   .produce,
@@ -174,7 +159,6 @@
   .dairy,
   .grain,
   .other {
-    grid-column: span 1; /* Take full width in 1-column layout */
     padding: 1.5em;
   }
 
