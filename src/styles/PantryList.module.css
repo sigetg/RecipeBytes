@@ -1,34 +1,4 @@
-* {
-  box-sizing: border-box;
-}
-[hidden] {
-  display: none !important;
-}
-
-body,
-section,
-header,
-div,
-p,
-ul,
-li,
-figure,
-label,
-span,
-figcaption {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Inter", sans-serif; /* Body font */
-}
-
-h1,
-h2,
-h3 {
-  font-family: "Patrick Hand SC", cursive; /* Title fonts */
-}
-
-.grocery-body {
+.pantry-body {
   overflow-y: hidden;
   height: 100%;
 }
@@ -39,12 +9,11 @@ h3 {
   height: 100%;
   align-items: flex-start;
   justify-content: space-between;
-  font-family: "Inter", sans-serif; /* Body font */
+  font-family: "Inter", sans-serif;
 }
 
 .container h1 {
-  padding: 10px 20px;
-  font-size: 26px;
+  padding: 10px 30px 20px 30px;
 }
 
 .header {
@@ -54,19 +23,19 @@ h3 {
 }
 
 .header h1 {
-  font-family: "Patrick Hand SC", cursive; /* Title font */
-  font-size: 28px;
+  font-family: "Patrick Hand SC", cursive;
+  font-size: 28px; /* Larger header text */
 }
 
-.grocery {
+.pantry {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: auto auto;
-  grid-gap: 45px;
+  grid-template-columns: 1fr 1fr 1fr 1fr; /* 4 columns */
+  grid-auto-rows: auto; /* Dynamic row heights */
+  grid-gap: 30px; /* Spacing between grid items */
   padding: 20px;
   justify-content: space-between;
   border-radius: 20px;
-  font-family: "Inter", sans-serif; /* Body font */
+  font-family: "Inter", sans-serif;
 }
 
 .form {
@@ -79,7 +48,7 @@ h3 {
 
 .form h2 {
   padding: 10px 0;
-  font-family: "Patrick Hand SC", cursive; /* Title font */
+  font-family: "Patrick Hand SC", cursive;
   text-align: center;
   font-size: 20px;
 }
@@ -89,8 +58,7 @@ h3 {
   margin: 10px;
   border-radius: 10px;
   background: #d1e6f9;
-  font-family: "Inter", sans-serif; /* Body font */
-  font-size: 16px;
+  font-family: "Patrick Hand SC", cursive;
 }
 
 .form button:hover {
@@ -98,44 +66,41 @@ h3 {
   font-weight: medium;
 }
 
-.grocery h2 {
+.pantry h2 {
   padding: 10px 0;
-  font-family: "Patrick Hand SC", cursive; /* Title font */
-  font-size: 25px;
+  font-family: "Patrick Hand SC", cursive;
 }
 
-.grocery ul {
+.pantry ul {
   padding: 5px 0;
 }
 
-.grocery ul li {
+.pantry ul li {
   list-style: none;
   padding: 7px 0;
-  font-size: 25px;
-  font-family: "Inter", sans-serif; /* Body font */
 }
 
-.grocery input {
-  padding: 12px;
-  font-family: "Inter", sans-serif; /* Body font */
-}
-
-.grocery label {
+.pantry input {
   padding: 10px;
-  font-size: 18px;
-  font-family: "Inter", sans-serif; /* Body font */
+}
+
+.pantry label {
+  padding: 10px;
+  font-size: 16px;
 }
 
 .expirationLabel {
-  background-color: #b3ccff;
+  background-color: #d1e6f9;
   border-radius: 15px;
-  margin-left: 15px;
-  padding: 0px 10px;
+  margin: 5px;
+  padding: 5px 10px;
   font-size: 14px;
+  text-align: center;
 }
 
 .expired {
   background-color: #ff8080;
+  color: white;
 }
 
 .soonToExpire {
@@ -144,31 +109,47 @@ h3 {
 
 .produce,
 .protein,
-.dairy,
+.dairy {
+  background-color: rgba(226, 240, 252, 0.5);
+  display: flex;
+  flex-direction: column;
+  padding: 2em;
+  border-radius: 20px;
+  height: 100%;
+  grid-column: span 1; /* Full column for other categories */
+  grid-row: 1 / 3;
+}
+
 .grain,
 .other {
   background-color: rgba(226, 240, 252, 0.5);
   display: flex;
+  grid-column-start: 4;
   flex-direction: column;
-  padding: 3em;
+  padding: 2em;
   border-radius: 20px;
-  height: 100%;
-  grid-row: auto;
-  font-family: "Inter", sans-serif; /* Body font */
+  height: auto;
+  grid-column: span 1; /* Shared column for Grains and Other */
+}
+
+.grain {
+  grid-row: span 1; /* First half of the column */
+}
+
+.other {
+  grid-row: span 1; /* Second half of the column */
 }
 
 .noItem {
-  font-family: "Inter", sans-serif; /* Body font */
-  font-size: 18px;
-}
-
-.smallColumn {
-  min-height: 23em;
+  font-family: "Patrick Hand SC", cursive;
+  font-size: 16px;
+  color: gray;
+  text-align: center;
 }
 
 @media (max-width: 950px) {
-  .grocery {
-    grid-template-columns: 1fr 1fr;
+  .pantry {
+    grid-template-columns: 1fr 1fr; /* Switch to 2 columns */
     grid-gap: 20px;
   }
 
@@ -177,38 +158,15 @@ h3 {
   .dairy,
   .grain,
   .other {
+    grid-column: span 2; /* Take full width in 2-column layout */
     padding: 2em;
-    min-height: auto;
-    grid-row: auto;
-    margin: 20px 0;
-  }
-
-  .container h1 {
-    font-size: 24px;
-  }
-
-  .form h2 {
-    font-size: 18px;
-  }
-
-  .form button {
-    font-size: 14px;
-  }
-
-  .grocery ul li {
-    font-size: 22px;
-  }
-
-  .grocery label {
-    font-size: 22px;
   }
 }
 
 @media (max-width: 600px) {
-  .grocery {
-    grid-template-columns: 1fr;
+  .pantry {
+    grid-template-columns: 1fr; /* Switch to 1 column */
     grid-gap: 15px;
-    padding: 10px;
   }
 
   .produce,
@@ -216,9 +174,8 @@ h3 {
   .dairy,
   .grain,
   .other {
+    grid-column: span 1; /* Take full width in 1-column layout */
     padding: 1.5em;
-    min-height: auto;
-    grid-row: auto;
   }
 
   .container h1 {
@@ -227,19 +184,19 @@ h3 {
   }
 
   .form h2 {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .form button {
     padding: 8px;
-    font-size: 20px;
+    font-size: 16px;
   }
 
-  .grocery ul li {
-    font-size: 20px;
+  .pantry ul li {
+    font-size: 18px;
   }
 
-  .grocery label {
-    font-size: 20px;
+  .pantry label {
+    font-size: 18px;
   }
 }
