@@ -184,26 +184,6 @@ h3 {
     min-height: auto;
     grid-row: auto;
   }
-
-  .container h1 {
-    font-size: 24px;
-  }
-
-  .form h2 {
-    font-size: 18px;
-  }
-
-  .form button {
-    font-size: 14px;
-  }
-
-  .grocery ul li {
-    font-size: 22px;
-  }
-
-  .grocery label {
-    font-size: 22px;
-  }
 }
 
 @media (max-width: 600px) {
