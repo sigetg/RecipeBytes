@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Patrick+Hand+SC&family=Shadows+Into+Light&display=swap');
+
+body {
+    font-family: "Inter", serif;
+    font-size: 16px; /* Adjust font size for better readability on smaller screens */
+    font-weight: 400;
+    color: black;
+    line-height: 1.4;
+}
+
+.pageContainer {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.titleContainer {
+    padding: 20px 10px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.containerContent {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 40px;
+    margin-top: 20px;
+    padding: 10px;
+    height: 80%;
+}
+
+.sectionHeader {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.recipeSuggestionContainer {
+    background-color: rgba(226, 240, 252, 0.5);
+    grid-row: span 2;
+    min-height: 100%;
+}
+
+.favoritesContainer {
+    grid-column: 2 / 3;
+    background-color: rgba(226, 240, 252, 0.5);
+    min-height: 100%;
+    overflow-y: scroll;
+}
+
+.expirationContainer {
+    grid-column: 2 / 3;
+    background-color: rgba(226, 240, 252, 0.5);
+    min-height: 100%;
+}
+
+.expirationContainer ul {
+    overflow-y: scroll;
+}
+
+.expirationContainer li {
+    list-style: none;
+}
+
+.expiringItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 7px 0;
+}
+
+.expiringItem li {
+    font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+    padding: 7px 0;
+}
+
+.expirationLabel {
+    background-color: #b3ccff;
+    border-radius: 15px;
+    margin-left: 21px;
+    padding: 0px 10px;
+}
+
+.expired {
+    background-color: #ff8080;
+}
+
+.soonToExpire {
+    background-color: #ffff80;
+}
+
+.recipeLink {
+    text-decoration: none;
+}
+
+.favoritesTitle:hover {
+    color: rgba(48, 108, 163, 0.52);
+}
+
+.recipeSuggestionContainer,
+.favoritesContainer,
+.expirationContainer {
+    padding: 20px 40px;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 20px;
+    font-weight: 200;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.recipeCardHome {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Adjust for responsive layout */
+    max-width: 440px; /* Maintain consistent card size */
+}
+
+.recipeCardHome:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+}
+
+.recipeImage {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.favoriteCard {
+    color: #154777;
+}
+
+.favoriteCard:hover {
+    color: #306ba392;
+}
+
+/* Mobile Responsiveness */@media (max-width: 768px) {
+    .containerContent {
+        display: flex;
+        flex-direction: column; 
+        gap: 20px; 
+        margin-top: 10px; 
+        padding: 10px;
+        height: auto; 
+    }
+
+    .recipeSuggestionContainer,
+    .favoritesContainer,
+    .expirationContainer {
+        width: 100%; 
+        
+    }
+
+    .recipeImage {
+        height: 100px;
+    }
+
+    .recipeSuggestionContainer {
+        order: 1; /* Control order of sections (optional) */
+    }
+
+    .favoritesContainer {
+        order: 2;
+    }
+
+    .expirationContainer {
+        order: 3;
+    }
+}

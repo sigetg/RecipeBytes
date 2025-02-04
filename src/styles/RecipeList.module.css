@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Patrick+Hand+SC&family=Shadows+Into+Light&display=swap');
+
+:global(body, html, #root) {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+:global(body) {
+    font-family: 'inter', serif;
+    box-sizing: border-box;
+    margin: 10px 20px;
+}
+
+.recipeContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.recipeCard {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 440px;
+}
+
+.recipeImage {
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    width: 100%;
+    height: 180px;
+}
+
+.recipeTitle {
+    font-size: 16px; /* Reduced title size */
+    font-weight: bold;
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+.recipeDescription {
+    font-size: 14px;
+    line-height: 1.4;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.favoriteButton {
+    background-color: rgba(48, 108, 163, 0.72);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.favoriteButton:hover {
+    background-color: rgba(48, 108, 163, 0.52);
+}
+
+/* Responsive Styles */
+@media (max-width: 900px) {
+    .recipeContainer {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .recipeCard {
+        padding: 10px;
+        max-width: 360px;
+    }
+
+    .recipeImage {
+        height: 150px;
+    }
+
+    .recipeTitle {
+        font-size: 14px; /* Smaller title size for medium screens */
+    }
+
+    .recipeDescription {
+        font-size: 12px;
+    }
+
+    .favoriteButton {
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+}
+
+@media (max-width: 600px) {
+    .recipeContainer {
+        gap: 10px;
+    }
+
+    .recipeCard {
+        padding: 8px;
+        max-width: 300px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .recipeCard h5 {
+        font-size: 16px;
+    }
+
+    .recipeImage {
+        height: 120px;
+    }
+
+    .recipeTitle {
+        font-size: 12px; /* Smallest title size for small screens */
+    }
+
+    .recipeDescription {
+        font-size: 10px;
+    }
+
+    .favoriteButton {
+        font-size: 10px;
+        padding: 3px 6px;
+    }
+}
