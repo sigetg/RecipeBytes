@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Patrick+Hand+SC&family=Shadows+Into+Light&display=swap');
 
-:global(body, html, #root) {
+:global(html, body, #root) {
     margin: 0;
     padding: 0;
     height: 100%;
@@ -9,65 +9,101 @@
 :global(body) {
     font-family: 'inter', serif;
     box-sizing: border-box;
-    margin: 10px 20px;
+    margin: 0; /* remove body margin so we can fully control layout */
 }
 
+/* 
+  Top-level container:
+  - Fill the viewport height (100vh)
+  - Stack vertically (column)
+  - No scrolling, so if content overflows, it will be hidden.
+*/
 .container {
-    padding: 20px;
-    height: 90%;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    gap: 20px;
+    height: 85vh;
+    padding: 0 20px; /* optional side padding */
+    box-sizing: border-box;
+    overflow: hidden; /* hide any overflow, no scroll */
 }
 
+/* Optional top header (Step #) */
+.sectionHeader {
+    flex: 0 0 auto; /* do not grow/shrink */
+    padding-top: 20px;
+    text-align: center;
+}
+
+/* 
+  The main content (ingredients, instructions, GIF).
+  We'll allow it to expand (flex: 1), but hide overflow so no scrolling occurs.
+*/
+.mainContent {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    box-sizing: border-box;
+    /* Add some spacing if needed */
+    padding: 10px 0;
+}
+
+/* Instruction text */
 .instruction {
-    margin-top: 20px;
+    position: fixed;
+    bottom: 100px;
+    left: 0;
+    right: 0;
+    width: 100%;
     text-align: center;
-    font-size: 18px;
-    padding: 10px;
+    z-index: 100; /* Ensures the text appears above other elements */
+    padding: 0 30px; /* Optional: adds horizontal padding */
 }
 
-.stepTitle {
-    font-family: "Patrick Hand SC", cursive;
-    margin-bottom: 20px;
-    font-size: 24px;
-    text-align: center;
-}
-
-.stepDescription {
-    margin-bottom: 20px;
-    font-size: 16px;
-    line-height: 1.5;
-    text-align: justify;
-    padding: 10px;
-}
-
+/* Ingredients container, etc. Adjust as needed. */
 .ingredientsList {
-    margin-bottom: 20px;
-    position: relative;
+    margin: 10px 0;
+    text-align: left;
     font-size: 16px;
-    padding: 10px;
+    width: 100%;
+    font-family: 'inter', serif;
 }
 
-.ingredientsTitle {
-    font-weight: bold;
-    margin-bottom: 10px;
-    font-size: 18px;
+/* The GIF container. We limit its max-height so it shrinks if needed. */
+.animationContainer {
+    max-height: 40vh; /* occupy at most 40% of screen */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden; /* hide anything beyond container bounds */
+    margin: 10px 0;
 }
 
-.ingredientsItem {
-    list-style-type: none;
-    padding: 5px 0;
-    font-size: 16px;
+/* The GIF itself: fully contained in its container, shrinks if needed. */
+.stepAnimation {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain; /* ensure no stretching */
+    border-radius: 10px;
 }
 
+/* 
+  Navigation buttons pinned to the bottom by 
+  placing them after mainContent and using margin-top: auto.
+*/
 .navigationButtons {
+    flex: 0 0 auto;
+    margin-top: auto; /* push this section to the bottom of the container */
     display: flex;
     justify-content: space-between;
+    padding: 10px 0;
     gap: 10px;
 }
 
+/* Error and loading states */
 .errorText {
     color: red;
     font-weight: bold;
@@ -81,126 +117,42 @@
     font-size: 16px;
 }
 
-.animationContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100px;
-    position: relative;
-    padding: 10px;
-}
-  
-.stepAnimation {
-    border-radius: 10px;
-    width: 1000px;
-}
-
 /* Tablet Compatibility (max-width: 768px) */
 @media (max-width: 768px) {
     .container {
-        padding: 10px;
-        height: 90%;
-        gap: 15px;
-        justify-content: space-between;
+        padding: 0 10px;
     }
 
     .instruction {
         font-size: 16px;
-        margin-top: 10px;
-    }
-
-    .stepTitle {
-        font-size: 20px;
-        margin-bottom: 15px;
-    }
-
-    .stepDescription {
-        font-size: 14px;
-        margin-bottom: 15px;
     }
 
     .ingredientsList {
         font-size: 14px;
-        padding: 5px;
-    }
-
-    .ingredientsTitle {
-        font-size: 16px;
-    }
-
-    .ingredientsItem {
-        font-size: 14px;
-    }
-
-
-    .errorText {
-        font-size: 14px;
-    }
-
-    .loadingContainer {
-        font-size: 14px;
     }
 
     .animationContainer {
-        height: 100px;
-        padding: 5px;
-    }
-
-    .stepAnimation {
-        width: 700px; /* Allow full width for smaller screens */
+        max-height: 35vh; /* reduce further on smaller screens if needed */
+        margin: 5px 0;
     }
 }
 
 /* Mobile Compatibility (max-width: 480px) */
 @media (max-width: 480px) {
     .container {
-        padding: 5px;
-        height: 90%;
-        gap: 10px;
-        justify-content: space-between;
+        padding: 0 5px;
     }
 
     .instruction {
         font-size: 14px;
-        padding: 5px;
-    }
-
-    .stepTitle {
-        font-size: 18px;
-    }
-
-    .stepDescription {
-        font-size: 12px;
-        padding: 5px;
     }
 
     .ingredientsList {
         font-size: 12px;
-        padding: 5px;
-    }
-
-    .ingredientsTitle {
-        font-size: 14px;
-    }
-
-    .ingredientsItem {
-        font-size: 12px;
-    }
-
-    .errorText {
-        font-size: 12px;
-    }
-
-    .loadingContainer {
-        font-size: 12px;
     }
 
     .animationContainer {
-        height: 100px;
-        padding: 5px;
-    }
-
-    .stepAnimation {
-        width: 600px;
+        max-height: 30vh; /* reduce further on mobile if needed */
+        margin: 5px 0;
     }
 }

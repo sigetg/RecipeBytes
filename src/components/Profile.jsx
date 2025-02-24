@@ -31,12 +31,28 @@ export default function Pantry() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    await updateProfile(auth.currentUser, {
-      displayName: firstName && lastName ? `${firstName} ${lastName}` : user.displayName,
-    });
-    navigate('/');
-    setShowForm(false);
+    // Check if user is authenticated
+    if (!auth.currentUser) {
+      console.error('No user is currently authenticated.');
+      return;
+  }
+
+  try {
+      // Log the values being used for the update
+      console.log('Updating profile with:', {
+          displayName: firstName && lastName ? `${firstName} ${lastName}` : user.displayName,
+      });
+
+      await updateProfile(auth.currentUser, {
+          displayName: firstName && lastName ? `${firstName} ${lastName}` : user.displayName,
+      });
+
+      console.log('Profile updated successfully');
+      navigate('/');
+      setShowForm(false);
+  } catch (error) {
+      console.error('Error updating profile:', error.message);
+  }
   };
 
   // const handleChange = async (e) => {

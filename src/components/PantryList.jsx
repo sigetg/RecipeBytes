@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { getAuth } from "firebase/auth";
-import { getData, addData, deleteData, getSingleData } from "../services/firestoreService";
+import { getData, addData, deleteData, getSingleData, updateData} from "../services/firestoreService";
 import css from './../styles/PantryList.module.css';
 import Button from '@mui/material/Button';
 import { catagories } from "../data/catagory";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 
 const PantryList = () => {
@@ -104,6 +105,37 @@ const PantryList = () => {
     setShowForm(prevShowForm => !prevShowForm);
   };
 
+
+  // ========================
+  // DRAG & DROP
+  // ========================
+  const handleDragEnd = async (result) => {
+    const { destination, source, draggableId } = result;
+
+    // If there is no valid destination (dropped outside or was cancelled), do nothing
+    if (!destination) return;
+
+    // If user drags and drops in the same category, do nothing
+    if (destination.droppableId === source.droppableId) return;
+
+    // At this point, user moved item to a new category
+    try {
+      await updateData(user.uid, "grocery", draggableId, {
+        category: destination.droppableId,
+      });
+      setIngredients((prev) =>
+        prev.map((ing) =>
+          ing.id === draggableId
+            ? { ...ing, category: destination.droppableId }
+            : ing
+        )
+      );
+    } catch (error) {
+      console.error("Error updating category in Firestore:", error);
+    }
+  };
+
+
 // Maybe refactor to implement this later...
   // const Pantrytem = ({ name }) => (
   //     <li key={ingredient.id}>
@@ -158,35 +190,58 @@ const PantryList = () => {
     } 
   }
 
+  const PantryCategory = ({ name, ingredients }) => {
+    const filtered = ingredients.filter((ingredient) => ingredient.category === name);
 
-  const PantryCategory = ({ name, ingredients }) => (
-    <div className={`${css[name.toLowerCase()]} ${(name === "grain" || name === "other") ? css.smallColumn : ""}`}>
-      <h2>{name}</h2>
-      {ingredients.filter(ingredient => ingredient.category === name).length > 0 ? (
-        <ul>
-          {ingredients
-            .filter(ingredient => ingredient.category === name)
-            .map(ingredient => (
-              <li key={ingredient.id}>
-                <div><input
-                  type="checkbox"
-                  name={`${name}${ingredient.id}`}
-                  value={ingredient.title}
-                  checked={selectedItems.includes(ingredient.id)}
-                  onChange={() => handleCheckboxChange(ingredient.id)}
-                />
-                <label htmlFor={`${name}${ingredient.id}`}>{ingredient.quantity > 1 ? `${ingredient.title} (${ingredient.quantity} ${ingredient.unit})` : `${ingredient.title} (${ingredient.quantity} ${ingredient.unit})`}</label><br />
-                </div>
-                {generateLabel(ingredient)}  
-                <br />
-              </li>
-            ))}
-          </ul>
-      ) : (
-        <p className = {css.noItem}>No items yet. Click 'New Item' to add one now!</p>
-      )}
-    </div>
-  );
+    return (
+      <Droppable droppableId={name} key={name}>
+        {(provided) => (
+          <div
+            className={css[name.toLowerCase()]}
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+            <h2>{name}</h2>
+            {filtered.length > 0 ? (
+              <ul>
+                {filtered.map((ingredient, index) => (
+                  <Draggable
+                    key={ingredient.id}
+                    draggableId={ingredient.id}
+                    index={index}
+                  >
+                    {(provided) => (
+                      <li
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={selectedItems.includes(ingredient.id)}
+                          onChange={() => handleCheckboxChange(ingredient.id)}
+                        />
+                        <label>
+                          {ingredient.quantity > 1
+                            ? `${ingredient.title} (${ingredient.quantity} ${ingredient.unit})`
+                            : `${ingredient.title} (${ingredient.quantity} ${ingredient.unit})`}
+                        </label>
+                      </li>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </ul>
+            ) : (
+              <p className={css.noItem}>
+                No items yet. Click 'New Item' to add one now!
+              </p>
+            )}
+          </div>
+        )}
+      </Droppable>
+    );
+  };
 
     return (
       <body className="pantry-body">
@@ -287,11 +342,17 @@ const PantryList = () => {
         )}
 
         </div>
-        <section className={css.pantry}>
-          {catagories.map((category) => (
-              <PantryCategory key={category.name} name={category.name} ingredients={ingredients} />
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <section className={css.pantry}>
+            {catagories.map((cat) => (
+              <PantryCategory
+                key={cat.name}
+                name={cat.name}
+                ingredients={ingredients}
+              />
             ))}
-        </section>
+          </section>
+        </DragDropContext>
       </main>
     </body>
     )

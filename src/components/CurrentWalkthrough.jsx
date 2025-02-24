@@ -132,101 +132,102 @@ export default function CurrentWalkthrough() {
 
   return (
     <Box className={css.container}>
-      <div className={css.sectionHeader}>
-        <Typography
-          variant="h4"
-          sx={{
-            fontFamily: "'Patrick Hand SC', cursive",
-            fontSize: { xs: "25px", md: "30px" }, // Adjust for small screens
-          }}
-        >
-          Step {currentIndex + 1} of {instructions.length}
-        </Typography>
-      </div>
-
-      {matchedIngredients.filter(Boolean).length > 0 && (
-        <Box className={css.ingredientsList}>
+      <div className={css.mainContent}>
+        <div className={css.sectionHeader}>
           <Typography
-            variant="h6"
-            className={css.ingredientsTitle}
+            variant="h4"
             sx={{
-              fontSize: { xs: "14px", md: "18px" }, // Adjust text size
+              fontFamily: "'Patrick Hand SC', cursive",
+              fontSize: { xs: "25px", md: "30px" }, // Adjust for small screens
             }}
           >
-            Ingredients in this step:
+            Step {currentIndex + 1} of {instructions.length}
           </Typography>
-          <ul>
-            {matchedIngredients.filter(Boolean).map((ingredient, index) => (
-              <li
-                key={index}
-                className={css.ingredientsItem}
-                style={{ fontSize: "14px" }}
-              >
-                {ingredient}
-              </li>
-            ))}
-          </ul>
-        </Box>
-      )}
+        </div>
 
-      {animation && (
-        <Box className={css.animationContainer}>
-          <img src={animation} alt="Step Animation" className={css.stepAnimation} />
-        </Box>
-      )}
+        {matchedIngredients.filter(Boolean).length > 0 && (
+          <Box className={css.ingredientsList}>
+            <Typography
+              sx={{
+                fontSize: { xs: "14px", md: "18px" }, // Adjust text size
+                fontFamily: 'inter, sans-serif',
+              }}
+            >
+              Ingredients in this step:
+            </Typography>
+            <ul>
+              {matchedIngredients.filter(Boolean).map((ingredient, index) => (
+                <li
+                  key={index}
+                  className={css.ingredientsItem}
+                  style={{ fontSize: "14px" }}
+                >
+                  {ingredient}
+                </li>
+              ))}
+            </ul>
+          </Box>
+        )}
 
-      <div className={css.instruction}>
-        <Typography
-          variant="h4"
-          sx={{
-            fontFamily: "'Patrick Hand SC', cursive",
-            padding: "10px 0",
-            fontSize: { xs: "20px", md: "24px" }, // Adjust for small screens
-          }}
-        >
-          {currentStep.step}
-        </Typography>
+        {animation && (
+          <Box className={css.animationContainer}>
+            <img src={animation} alt="Step Animation" className={css.stepAnimation} />
+          </Box>
+        )}
+
+        <div className={css.instruction}>
+          <Typography
+            variant="h4"
+            sx={{
+              fontFamily: "'Patrick Hand SC', cursive",
+              padding: "10px 0",
+              fontSize: { xs: "20px", md: "24px" }, // Adjust for small screens
+            }}
+          >
+            {currentStep.step}
+          </Typography>
+        </div>
+
+        {stepTime && (
+          <IconButton
+            onClick={() => setShowTimer((prev) => !prev)}
+            sx={{
+              position: "fixed",
+              top: "90px",
+              right: "20px",
+              zIndex: 1000,
+              backgroundColor: showTimer ? "rgba(48, 108, 163, 0.72)" : "white",
+              color: showTimer ? "white" : "rgba(48, 108, 163, 0.72)",
+              "&:hover": {
+                backgroundColor: "rgba(48, 108, 163, 0.62)",
+              },
+            }}
+          >
+            <TimerIcon />
+          </IconButton>
+        )}
+
+        {showTimer && stepTime && (
+          <Box
+            sx={{
+              position: "fixed",
+              top: "100px",
+              right: "10px",
+              zIndex: 1000,
+              padding: "10px 20px",
+              borderRadius: "8px",
+              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            <StepTimer
+              defaultTimeInSeconds={stepTime}
+              onTimerComplete={() => alert("Time's up for this step!")}
+            />
+          </Box>
+        )}
       </div>
 
-      {stepTime && (
-        <IconButton
-          onClick={() => setShowTimer((prev) => !prev)}
-          sx={{
-            position: "fixed",
-            top: "90px",
-            right: "20px",
-            zIndex: 1000,
-            backgroundColor: showTimer ? "rgba(48, 108, 163, 0.72)" : "white",
-            color: showTimer ? "white" : "rgba(48, 108, 163, 0.72)",
-            "&:hover": {
-              backgroundColor: "rgba(48, 108, 163, 0.62)",
-            },
-          }}
-        >
-          <TimerIcon />
-        </IconButton>
-      )}
-
-      {showTimer && stepTime && (
-        <Box
-          sx={{
-            position: "fixed",
-            top: "100px",
-            right: "10px",
-            zIndex: 1000,
-            padding: "10px 20px",
-            borderRadius: "8px",
-            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-          }}
-        >
-          <StepTimer
-            defaultTimeInSeconds={stepTime}
-            onTimerComplete={() => alert("Time's up for this step!")}
-          />
-        </Box>
-      )}
-
-      <Box className={css.navigationButtons}>
+  <Box className={css.navigationButtons}>
         <Button
           variant="contained"
           onClick={handlePrevClick}

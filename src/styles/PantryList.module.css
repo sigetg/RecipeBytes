@@ -115,6 +115,7 @@
   flex-direction: column;
   padding: 2em;
   border-radius: 20px;
+  min-height: 65vh;
   height: 100%;
   grid-column: span 1; /* Full column for other categories */
   grid-row: 1 / 3;

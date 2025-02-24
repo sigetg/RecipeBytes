@@ -251,7 +251,8 @@ export default function Home() {
             <Typography
               className={css.sectionTitle}
               variant="h5"
-              sx={{ fontFamily: "'Patrick Hand SC', cursive" }}
+              sx={{ fontFamily: "'Patrick Hand SC', cursive",
+              }}
             >
               Expiration Coming Up
             </Typography>
