@@ -1,5 +1,4 @@
-{
-  "compilerOptions": {
+{ "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
       "jsx": "react", // Add this line
       "outDir": "./dist",

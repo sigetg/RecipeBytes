@@ -3,7 +3,7 @@ import { initializeApp, FirebaseApp } from "firebase/app";
 import { getFirestore, Firestore } from "firebase/firestore";
 import { getAnalytics, Analytics } from "firebase/analytics";
 
-const API_KEY = process.env.FIREBASE_API_KEY;
+const API_KEY = process.env.REACT_APP_FIREBASE_API_KEY;
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: API_KEY,
