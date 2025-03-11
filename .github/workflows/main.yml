@@ -30,7 +30,7 @@ jobs:
         run: npm run build  # Adjust if your build command is different
 
       - name: Upload Build Artifacts
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist  # Update this to match your build directory
 
@@ -40,4 +40,4 @@ jobs:
 
     steps:
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
