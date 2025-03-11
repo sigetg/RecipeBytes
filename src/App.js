@@ -39,11 +39,19 @@ function App() {
       <NavigationBar />
       <div className="content">
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/RecipeBytes/login" element={<Login />}/>
+          <Route path="/RecipeBytes/signup" element={<SignUp />} />
+          <Route path="/RecipeBytes/forgot-password" element={<ForgotPassword />} />
           <Route
-            path="/"
+            path="/RecipeBytes"
+            element={              
+              <PrivateRoute>
+                <Home />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/RecipeBytes/home"
             element={
               <PrivateRoute>
                 <Home />
@@ -51,15 +59,7 @@ function App() {
             }
           />
           <Route
-            path="/home"
-            element={
-              <PrivateRoute>
-                <Home />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/recipes"
+            path="/RecipeBytes/recipes"
             element={
               <PrivateRoute>
                 <RecipeList />
@@ -67,7 +67,7 @@ function App() {
             }
           />
           <Route
-            path="/groceryList"
+            path="/RecipeBytes/groceryList"
             element={
               <PrivateRoute>
                 <GroceryList />
@@ -75,7 +75,7 @@ function App() {
             }
           />
           <Route
-            path="/pantry"
+            path="/RecipeBytes/pantry"
             element={
               <PrivateRoute>
                 <PantryList />
@@ -83,7 +83,7 @@ function App() {
             }
           />
           <Route
-            path="/profile"
+            path="/RecipeBytes/profile"
             element={
               <PrivateRoute>
                 <Profile />
@@ -91,7 +91,7 @@ function App() {
             }
           />
           <Route
-            path="/recipe/:id"
+            path="/RecipeBytes/recipe/:id"
             element={
               <PrivateRoute>
                 <RecipeDetailView />
@@ -99,7 +99,7 @@ function App() {
             }
           />
           <Route
-            path="/recipe/:id/:stepIndex"
+            path="/RecipeBytes/recipe/:id/:stepIndex"
             element={
               <PrivateRoute>
                 <CurrentWalkthrough />

@@ -20,7 +20,7 @@ export default function Pantry() {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      navigate('/login'); // Redirect to login page
+      navigate('/RecipeBytes/login'); // Redirect to login page
     } catch (error) {
       console.error('Logout failed:', error.message);
     }

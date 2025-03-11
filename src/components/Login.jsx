@@ -23,7 +23,7 @@ const Login = () => {
     try {
       const user = await signInUser(email, password);
       console.log("Logged in:", user);
-      navigate("/home");
+      navigate("/RecipeBytes/home");
     } catch (error) {
       console.error("Login failed:", error.message);
       if (error.message === "Password incorrect") {
@@ -89,7 +89,7 @@ const Login = () => {
           </Button>
           <Button
             variant="text"
-            onClick={() => navigate("/signup")}
+            onClick={() => navigate("/RecipeBytes/signup")}
             sx={{ fontFamily: "'Patrick Hand SC', cursive", fontSize: 18, border: 1 }}
           >
             Go to Sign Up
