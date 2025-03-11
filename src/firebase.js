@@ -3,9 +3,10 @@ import { initializeApp, FirebaseApp } from "firebase/app";
 import { getFirestore, Firestore } from "firebase/firestore";
 import { getAnalytics, Analytics } from "firebase/analytics";
 
+const API_KEY = process.env.FIREBASE_API_KEY;
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyD9pzD8dpfQX1xcPnvIgOG37GK4HuI5qak",
+  apiKey: API_KEY,
   authDomain: "recipe-bytes.firebaseapp.com",
   projectId: "recipe-bytes",
   storageBucket: "recipe-bytes.firebasestorage.app",
@@ -15,8 +16,8 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app: FirebaseApp = initializeApp(firebaseConfig);
-const db: Firestore = getFirestore(app);
-const analytics: Analytics = getAnalytics(app);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const analytics = getAnalytics(app);
 
 export { app, db, analytics };
