@@ -1,18 +1,27 @@
-# Getting Started with Create React App
-
+# 🥪 Welcome to [RecipeBytes](https://lindazhang23.github.io/RecipeBytes/)!
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## 👩🏻 I'm Linda Zhang
+- A wannabe SWE just messing around
+- Am neurodiverse, and hate the hassle and unnecessary stress around cooking
 
-In the project directory, you can run:
+## 👩🏻‍💻 So I made this Web App!
+- In the coming months or even years, I will be trying to improve this project
+- I want to make cooking fun, easy, and personable
+- Cooking is not just feeding yourself, it can be de-stressing and fun if done right! 
+- I hope my Web App eventually will allow you to fall in love with cooking!
 
-### `npm start`
+# 🚀 My Goals
+- Learn and transition to Typescript for scalability and error detection. It's just... better!!!
+- Migrate to MongoDB for better scalability
+- Allow users to add custom recipes, make the workflow much easier and personable
+- Add meal prep features
+- Might switch to a better API service, or if I really have the time, write my own
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🔥 This is a learning journey for me
+I want to make this process fun and learn many things in the world of SWE. I will change my mind plenty of times, or get disappointed, but I will eventually come to moments that remind me why I picked CS -- the dopamine rush that I solved a problem, not only for myself, but for those similar to me who want to fall in love with cooking.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+👾 unlock god mode :\)
 
 ### `npm test`
 
