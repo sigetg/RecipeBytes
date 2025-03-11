@@ -27,7 +27,7 @@ jobs:
         run: npm install
 
       - name: Build Project
-        run: npm run build  # Adjust if your build command is different
+        run: CI='' npm run build  # Adjust if your build command is different
 
       - name: Upload Build Artifacts
         uses: actions/upload-pages-artifact@v3
