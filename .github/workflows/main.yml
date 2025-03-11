@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # Change to your main branch
+      - main  # Change if necessary
 
 permissions:
   contents: read
@@ -21,22 +21,23 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 18  # Change to match your project
 
       - name: Install Dependencies
         run: npm install
 
       - name: Build Project
-        run: npm run build
+        run: npm run build  # Adjust if your build command is different
 
-      - name: Upload Artifact
+      - name: Upload Build Artifacts
         uses: actions/upload-pages-artifact@v2
         with:
-          path: ./dist  # Update if your build directory is different
+          path: ./dist  # Update this to match your build directory
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
+
     steps:
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v2
