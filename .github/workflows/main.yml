@@ -32,7 +32,10 @@ jobs:
       - name: Upload Build Artifacts
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist  # Update this to match your build directory
+          path: ./build  # Update this to match your build directory
+
+      - name: Debug - List files after build
+        run: ls -R
 
   deploy:
     needs: build
