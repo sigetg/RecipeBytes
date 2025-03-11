@@ -15,6 +15,11 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+
+  // signup validation messages
+  const [signupAlert, setSignupAlert] = useState('');
+  const [signupConf, setSignupConf] = useState('');
+
   const navigate = useNavigate();
   const auth = getAuth();
   const [showPassword, setShowPassword] = useState(false)
@@ -22,22 +27,45 @@ const SignUp = () => {
       setShowPassword(!showPassword)
   }
 
+  const validateEmail = (email) => {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(String(email).toLowerCase());
+  };
+
   const handleSignUp = async () => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       await updateProfile(user, { displayName: `${firstName} ${lastName}` });
       console.log('Signed up:', user);
-      navigate('/');
-    } catch (error) {
+      setSignupConf('Sign-up successful! Redirecting to login page...');
+      setTimeout(() => {
+        navigate('/RecipeBytes/login');
+      }, 1000);
+    } 
+    catch (error) {
       console.error('Sign-up failed:', error.message);
-    }
+      if (error.code === 'auth/email-already-in-use') {
+        setSignupAlert('Email already in use');
+      }
+      else if (error.code === 'auth/invalid-email') {
+        setSignupAlert('Invalid email');
+      }
+      else if (error.code === 'auth/weak-password') {
+        setSignupAlert('Weak password, need at least 6 characters');
+      }
+      else {
+        setSignupAlert(`Sign-up failed. ${error.message}$`);
+      }
+    };
   };
 
   return (
     <div className={style.container}>
       <div className={style.signup}>
         <h1>Sign Up</h1>
+        {signupAlert && <div className={style.alert}>{signupAlert}</div>}
+        {signupConf && <div className={style.confirmation}>{signupConf}</div>}
         <TextField
           label="First Name"
           variant="outlined"
@@ -81,7 +109,7 @@ const SignUp = () => {
           <Button variant="text" onClick={handleSignUp} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18, border: 1}}>
             Sign Up
           </Button>
-          <Button variant="text" onClick={() => navigate('/login')} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18, border: 1}}>
+          <Button variant="text" onClick={() => navigate('/RecipeBytes/login')} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18, border: 1}}>
             Go To Login
           </Button>
         </Stack>
