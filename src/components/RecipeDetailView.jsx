@@ -25,10 +25,11 @@ export default function RecipeDetailView() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [pantryItems, setPantryItems] = useState([]);
+  
+  const API_KEY = process.env.API_KEY;
 
   const API_URL = `https://api.spoonacular.com/recipes/${id}/information`;
   const SUBSTITUTES_URL = `https://api.spoonacular.com/food/ingredients/substitutes`;
-  const API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
 
   const auth = getAuth();
   const user = auth.currentUser;
