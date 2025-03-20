@@ -1,18 +1,12 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp, FirebaseApp } from "firebase/app";
-import { getFirestore, Firestore } from "firebase/firestore";
-import { getAnalytics, Analytics } from "firebase/analytics";
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { getAnalytics } from "firebase/analytics";
 
-<<<<<<< HEAD
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyD9pzD8dpfQX1xcPnvIgOG37GK4HuI5qak",
-=======
 const API_KEY = process.env.REACT_APP_FIREBASE_API_KEY;
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: API_KEY,
->>>>>>> linda-origin/main
   authDomain: "recipe-bytes.firebaseapp.com",
   projectId: "recipe-bytes",
   storageBucket: "recipe-bytes.firebasestorage.app",
@@ -22,14 +16,8 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-<<<<<<< HEAD
-const app: FirebaseApp = initializeApp(firebaseConfig);
-const db: Firestore = getFirestore(app);
-const analytics: Analytics = getAnalytics(app);
-=======
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const analytics = getAnalytics(app);
->>>>>>> linda-origin/main
 
 export { app, db, analytics };
