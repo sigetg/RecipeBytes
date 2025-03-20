@@ -39,11 +39,27 @@ function App() {
       <NavigationBar />
       <div className="content">
         <Routes>
+<<<<<<< HEAD
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route
             path="/"
+=======
+          <Route path="/RecipeBytes/login" element={<Login />}/>
+          <Route path="/RecipeBytes/signup" element={<SignUp />} />
+          <Route path="/RecipeBytes/forgot-password" element={<ForgotPassword />} />
+          <Route
+            path="/RecipeBytes"
+            element={              
+              <PrivateRoute>
+                <Home />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/RecipeBytes/home"
+>>>>>>> linda-origin/main
             element={
               <PrivateRoute>
                 <Home />
@@ -51,6 +67,7 @@ function App() {
             }
           />
           <Route
+<<<<<<< HEAD
             path="/home"
             element={
               <PrivateRoute>
@@ -60,6 +77,9 @@ function App() {
           />
           <Route
             path="/recipes"
+=======
+            path="/RecipeBytes/recipes"
+>>>>>>> linda-origin/main
             element={
               <PrivateRoute>
                 <RecipeList />
@@ -67,7 +87,11 @@ function App() {
             }
           />
           <Route
+<<<<<<< HEAD
             path="/groceryList"
+=======
+            path="/RecipeBytes/groceryList"
+>>>>>>> linda-origin/main
             element={
               <PrivateRoute>
                 <GroceryList />
@@ -75,7 +99,11 @@ function App() {
             }
           />
           <Route
+<<<<<<< HEAD
             path="/pantry"
+=======
+            path="/RecipeBytes/pantry"
+>>>>>>> linda-origin/main
             element={
               <PrivateRoute>
                 <PantryList />
@@ -83,7 +111,11 @@ function App() {
             }
           />
           <Route
+<<<<<<< HEAD
             path="/profile"
+=======
+            path="/RecipeBytes/profile"
+>>>>>>> linda-origin/main
             element={
               <PrivateRoute>
                 <Profile />
@@ -91,7 +123,11 @@ function App() {
             }
           />
           <Route
+<<<<<<< HEAD
             path="/recipe/:id"
+=======
+            path="/RecipeBytes/recipe/:id"
+>>>>>>> linda-origin/main
             element={
               <PrivateRoute>
                 <RecipeDetailView />
@@ -99,7 +135,11 @@ function App() {
             }
           />
           <Route
+<<<<<<< HEAD
             path="/recipe/:id/:stepIndex"
+=======
+            path="/RecipeBytes/recipe/:id/:stepIndex"
+>>>>>>> linda-origin/main
             element={
               <PrivateRoute>
                 <CurrentWalkthrough />

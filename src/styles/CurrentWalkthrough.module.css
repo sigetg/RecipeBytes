@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Patrick+Hand+SC&family=Shadows+Into+Light&display=swap');
 
+<<<<<<< HEAD
 :global(html, body, #root) {
+=======
+:global(body, html, #root) {
+>>>>>>> linda-origin/main
     margin: 0;
     padding: 0;
     height: 100%;
@@ -9,6 +13,7 @@
 :global(body) {
     font-family: 'inter', serif;
     box-sizing: border-box;
+<<<<<<< HEAD
     margin: 0; /* remove body margin so we can fully control layout */
 }
 
@@ -104,6 +109,67 @@
 }
 
 /* Error and loading states */
+=======
+    margin: 10px 20px;
+}
+
+.container {
+    padding: 20px;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.instruction {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 18px;
+    padding: 10px;
+}
+
+.stepTitle {
+    font-family: "Patrick Hand SC", cursive;
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.stepDescription {
+    margin-bottom: 20px;
+    font-size: 16px;
+    line-height: 1.5;
+    text-align: justify;
+    padding: 10px;
+}
+
+.ingredientsList {
+    margin-bottom: 20px;
+    position: relative;
+    font-size: 16px;
+    padding: 10px;
+}
+
+.ingredientsTitle {
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.ingredientsItem {
+    list-style-type: none;
+    padding: 5px 0;
+    font-size: 16px;
+}
+
+.navigationButtons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+>>>>>>> linda-origin/main
 .errorText {
     color: red;
     font-weight: bold;
@@ -117,42 +183,159 @@
     font-size: 16px;
 }
 
+<<<<<<< HEAD
 /* Tablet Compatibility (max-width: 768px) */
 @media (max-width: 768px) {
     .container {
         padding: 0 10px;
+=======
+.animationContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    position: relative;
+    padding: 10px;
+}
+  
+.stepAnimation {
+    border-radius: 10px;
+    width: 1000px;
+}
+
+/* Tablet Compatibility (max-width: 768px) */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+        height: 90%;
+        gap: 15px;
+        justify-content: space-between;
+>>>>>>> linda-origin/main
     }
 
     .instruction {
         font-size: 16px;
+<<<<<<< HEAD
+=======
+        margin-top: 10px;
+    }
+
+    .stepTitle {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    .stepDescription {
+        font-size: 14px;
+        margin-bottom: 15px;
+>>>>>>> linda-origin/main
     }
 
     .ingredientsList {
         font-size: 14px;
+<<<<<<< HEAD
     }
 
     .animationContainer {
         max-height: 35vh; /* reduce further on smaller screens if needed */
         margin: 5px 0;
+=======
+        padding: 5px;
+    }
+
+    .ingredientsTitle {
+        font-size: 16px;
+    }
+
+    .ingredientsItem {
+        font-size: 14px;
+    }
+
+
+    .errorText {
+        font-size: 14px;
+    }
+
+    .loadingContainer {
+        font-size: 14px;
+    }
+
+    .animationContainer {
+        height: 100px;
+        padding: 5px;
+    }
+
+    .stepAnimation {
+        width: 700px; /* Allow full width for smaller screens */
+>>>>>>> linda-origin/main
     }
 }
 
 /* Mobile Compatibility (max-width: 480px) */
 @media (max-width: 480px) {
     .container {
+<<<<<<< HEAD
         padding: 0 5px;
+=======
+        padding: 5px;
+        height: 90%;
+        gap: 10px;
+        justify-content: space-between;
+>>>>>>> linda-origin/main
     }
 
     .instruction {
         font-size: 14px;
+<<<<<<< HEAD
+=======
+        padding: 5px;
+    }
+
+    .stepTitle {
+        font-size: 18px;
+    }
+
+    .stepDescription {
+        font-size: 12px;
+        padding: 5px;
+>>>>>>> linda-origin/main
     }
 
     .ingredientsList {
         font-size: 12px;
+<<<<<<< HEAD
     }
 
     .animationContainer {
         max-height: 30vh; /* reduce further on mobile if needed */
         margin: 5px 0;
+=======
+        padding: 5px;
+    }
+
+    .ingredientsTitle {
+        font-size: 14px;
+    }
+
+    .ingredientsItem {
+        font-size: 12px;
+    }
+
+    .errorText {
+        font-size: 12px;
+    }
+
+    .loadingContainer {
+        font-size: 12px;
+    }
+
+    .animationContainer {
+        height: 100px;
+        padding: 5px;
+    }
+
+    .stepAnimation {
+        width: 600px;
+>>>>>>> linda-origin/main
     }
 }

@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { getAuth } from "firebase/auth";
+<<<<<<< HEAD
 import { getData, addData, deleteData, getSingleData, updateData } from "../services/firestoreService";
 import css from './../styles/GroceryList.module.css';
 import Button from '@mui/material/Button';
 import { catagories } from "../data/catagory";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+=======
+import { getData, addData, deleteData, getSingleData } from "../services/firestoreService";
+import css from './../styles/GroceryList.module.css';
+import Button from '@mui/material/Button';
+import { catagories } from "../data/catagory";
+>>>>>>> linda-origin/main
 
 const GroceryList = () => {
   const [ingredients, setIngredients] = useState([]);
@@ -28,11 +35,14 @@ const GroceryList = () => {
     fetchIngredients();
   }, []);
 
+<<<<<<< HEAD
 
   // ========================
   // HANDLERS
   // ========================
 
+=======
+>>>>>>> linda-origin/main
   const handleCheckboxChange = (id) => {
     setSelectedItems((prevSelectedItems) => {
       if (prevSelectedItems.includes(id)) {
@@ -304,6 +314,7 @@ const GroceryList = () => {
         )}
 
         </div>
+<<<<<<< HEAD
         <DragDropContext onDragEnd={handleDragEnd}>
           <section className={css.grocery}>
             {catagories.map((cat) => (
@@ -315,6 +326,13 @@ const GroceryList = () => {
             ))}
           </section>
         </DragDropContext>
+=======
+        <section className={css.grocery}>
+          {catagories.map((category) => (
+              <GroceryCategory key={category.name} name={category.name} ingredients={ingredients} />
+            ))}
+        </section>
+>>>>>>> linda-origin/main
       </main>
     </body>
     )

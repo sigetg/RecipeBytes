@@ -41,4 +41,25 @@
     margin: 20px 0px; 
     height: 80%;
     justify-content: center;
+<<<<<<< HEAD
+=======
+}
+
+.alert {
+    display: inline-block;
+    padding: 10px;
+    margin: 20px 0px; 
+    color: red;
+    border-radius: 5px;
+    background-color: #ffcccc;
+}
+
+.confirmation {
+  display: inline-block;
+  padding: 10px;
+  margin: 20px 0px; 
+  color: green;
+  border-radius: 5px;
+  background-color: #c2f0c2;
+>>>>>>> linda-origin/main
 }
