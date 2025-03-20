@@ -1,22 +1,23 @@
 # 🥪 Welcome to [RecipeBytes](https://lindazhang23.github.io/RecipeBytes/)!
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## 👩🏻 I'm Linda Zhang
-- A wannabe SWE just messing around
-- Am neurodiverse, and hate the hassle and unnecessary stress around cooking
+## Meet Linda and George, the Recipe Bytes team
+- Two wannabe SWEs just messing around
+- Linda is neurodiverse, and hates the hassle and unnecessary stress assocated with cooking
+- George has been cooking his whole life ands the cooking club at BC, and wanted a way to organize his recipes.
 
-## 👩🏻‍💻 So I made this Web App!
-- In the coming months or even years, I will be trying to improve this project
-- I want to make cooking fun, easy, and personable
+## 👩🏻‍💻 So we made this Web App!
+- In the coming months or even years, we will be trying to improve this project
+- We want to make cooking fun, easy, and personable
 - Cooking is not just feeding yourself, it can be de-stressing and fun if done right! 
-- I hope my Web App eventually will allow you to fall in love with cooking!
+- We hope the Web App eventually will allow you to fall in love with cooking!
 
-# 🚀 My Goals
+# 🚀 Our Goals
 - Learn and transition to Typescript for scalability and error detection. It's just... better!!!
 - Migrate to MongoDB for better scalability
 - Allow users to add custom recipes, make the workflow much easier and personable
 - Add meal prep features
-- Might switch to a better API service, or if I really have the time, write my own
+- Might switch to a better API service, or if we really have the time, write our own
 
 ## 🔥 This is a learning journey for me
 I want to make this process fun and learn many things in the world of SWE. I will change my mind plenty of times, or get disappointed, but I will eventually come to moments that remind me why I picked CS -- the dopamine rush that I solved a problem, not only for myself, but for those similar to me who want to fall in love with cooking.
