@@ -89,11 +89,7 @@ const Login = () => {
           </Button>
           <Button
             variant="text"
-<<<<<<< HEAD
-            onClick={() => navigate("/signup")}
-=======
             onClick={() => navigate("/RecipeBytes/signup")}
->>>>>>> linda-origin/main
             sx={{ fontFamily: "'Patrick Hand SC', cursive", fontSize: 18, border: 1 }}
           >
             Go to Sign Up
