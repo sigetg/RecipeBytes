@@ -15,10 +15,10 @@ import IconButton from '@mui/material/IconButton';
 import { Link } from "react-router-dom";
 
 const pages = [
-    { name: "Recipes", path: "/RecipeBytes/recipes" },
-    { name: "Groceries", path: "/RecipeBytes/groceryList" },
-    { name: "Pantry", path: "/RecipeBytes/pantry" },
-    { name: "Profile", path: "/RecipeBytes/profile" },
+    { name: "Recipes", path: "/recipes" },
+    { name: "Groceries", path: "/groceryList" },
+    { name: "Pantry", path: "/pantry" },
+    { name: "Profile", path: "/profile" },
 ];
 
 export default function NavigationBar() {

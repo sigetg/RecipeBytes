@@ -79,6 +79,7 @@ export default function RecipeDetailView() {
         await Promise.all(ingredientFetches);
         setSubstitutes(ingredientSubstitutes);
       } catch (err) {
+        console.log(err);
         setError("Failed to fetch recipe details");
       } finally {
         setLoading(false);
