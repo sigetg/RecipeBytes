@@ -8,7 +8,7 @@ import Stack from '@mui/material/Stack';
 import { TextField, IconButton, InputAdornment } from '@mui/material';
 import VisibilityRoundedOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityRoundedIcon from '@mui/icons-material/Visibility';
-
+import { NAVBAR } from '../routes/routes';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -40,7 +40,7 @@ const SignUp = () => {
       console.log('Signed up:', user);
       setSignupConf('Sign-up successful! Redirecting to login page...');
       setTimeout(() => {
-        navigate('/RecipeBytes/login');
+        navigate(NAVBAR.LOGIN);
       }, 1000);
     } 
     catch (error) {
@@ -109,7 +109,7 @@ const SignUp = () => {
           <Button variant="text" onClick={handleSignUp} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18, border: 1}}>
             Sign Up
           </Button>
-          <Button variant="text" onClick={() => navigate('/RecipeBytes/login')} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18, border: 1}}>
+          <Button variant="text" onClick={() => navigate(NAVBAR.LOGIN)} sx={{fontFamily: "'Patrick Hand SC', cursive", fontSize: 18, border: 1}}>
             Go To Login
           </Button>
         </Stack>

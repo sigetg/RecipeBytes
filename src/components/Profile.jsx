@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { TextField } from '@mui/material';
+import { NAVBAR } from '../routes/routes';
 
 export default function Pantry() {
   const auth = getAuth();
@@ -20,7 +21,7 @@ export default function Pantry() {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      navigate('/login'); // Redirect to login page
+      navigate(NAVBAR.LOGIN, {replace : true}); // Redirect to login page
     } catch (error) {
       console.error('Logout failed:', error.message);
     }
@@ -48,7 +49,7 @@ export default function Pantry() {
       });
 
       console.log('Profile updated successfully');
-      navigate('/');
+      navigate(NAVBAR.PROFILE, {replace: true});
       setShowForm(false);
   } catch (error) {
       console.error('Error updating profile:', error.message);

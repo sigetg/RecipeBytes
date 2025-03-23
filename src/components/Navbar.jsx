@@ -13,12 +13,14 @@ import { RecipeIcon } from '../assets/icons';
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 import { Link } from "react-router-dom";
+import { NAVBAR } from '../routes/routes';
 
 const pages = [
-    { name: "Recipes", path: "/RecipeBytes/recipes" },
-    { name: "Groceries", path: "/RecipeBytes/groceryList" },
-    { name: "Pantry", path: "/RecipeBytes/pantry" },
-    { name: "Profile", path: "/RecipeBytes/profile" },
+    { name: "Home", path: NAVBAR.HOME },
+    { name: "Recipes", path: NAVBAR.RECIPES },
+    { name: "Groceries", path: NAVBAR.GROCERY },
+    { name: "Pantry", path: NAVBAR.PANTRY },
+    { name: "Profile", path: NAVBAR.PROFILE },
 ];
 
 export default function NavigationBar() {
@@ -53,7 +55,7 @@ export default function NavigationBar() {
               variant="h6"
               noWrap
               component={Link}
-              to="/home"
+              to= {NAVBAR.HOME}
               sx={{
                 fontWeight: 700,
                 letterSpacing: '.3rem',

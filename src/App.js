@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import NavigationBar from "./components/Navbar";
 import RecipeList from "./components/RecipeList";
@@ -13,7 +13,8 @@ import SignUp from "./components/SignUp";
 import ForgotPassword from "./components/ForgetPassword";
 import PrivateRoute from "./components/PrivateRoute";
 import Home from "./components/Home";
-import "./App.css";
+import "./styles/App.css";
+import { NAVBAR, RECIPE_ROUTES } from "./routes/routes";
 
 function App() {
   const [isAuthInitialized, setIsAuthInitialized] = useState(false);
@@ -35,15 +36,15 @@ function App() {
   }
 
   return (
-    <Router>
+    <Router basename = {NAVBAR.BASE}>
       <NavigationBar />
       <div className="content">
         <Routes>
-          <Route path="/RecipeBytes/login" element={<Login />}/>
-          <Route path="/RecipeBytes/signup" element={<SignUp />} />
-          <Route path="/RecipeBytes/forgot-password" element={<ForgotPassword />} />
+          <Route path={NAVBAR.LOGIN} element={<Login />}/>
+          <Route path={NAVBAR.SIGNUP} element={<SignUp />} />
+          <Route path={NAVBAR.FORGOT_PASSWORD} element={<ForgotPassword />} />
           <Route
-            path="/RecipeBytes"
+            path= {NAVBAR.EMPTY}
             element={              
               <PrivateRoute>
                 <Home />
@@ -51,7 +52,7 @@ function App() {
             }
           />
           <Route
-            path="/RecipeBytes/home"
+            path={NAVBAR.HOME}
             element={
               <PrivateRoute>
                 <Home />
@@ -59,7 +60,7 @@ function App() {
             }
           />
           <Route
-            path="/RecipeBytes/recipes"
+            path={NAVBAR.RECIPES}
             element={
               <PrivateRoute>
                 <RecipeList />
@@ -67,7 +68,7 @@ function App() {
             }
           />
           <Route
-            path="/RecipeBytes/groceryList"
+            path={NAVBAR.GROCERY}
             element={
               <PrivateRoute>
                 <GroceryList />
@@ -75,7 +76,7 @@ function App() {
             }
           />
           <Route
-            path="/RecipeBytes/pantry"
+            path={NAVBAR.PANTRY}
             element={
               <PrivateRoute>
                 <PantryList />
@@ -83,7 +84,7 @@ function App() {
             }
           />
           <Route
-            path="/RecipeBytes/profile"
+            path={NAVBAR.PROFILE}
             element={
               <PrivateRoute>
                 <Profile />
@@ -91,7 +92,7 @@ function App() {
             }
           />
           <Route
-            path="/RecipeBytes/recipe/:id"
+            path={RECIPE_ROUTES.RECIPE}
             element={
               <PrivateRoute>
                 <RecipeDetailView />
@@ -99,7 +100,7 @@ function App() {
             }
           />
           <Route
-            path="/RecipeBytes/recipe/:id/:stepIndex"
+            path={RECIPE_ROUTES.RECIPE_STEP}
             element={
               <PrivateRoute>
                 <CurrentWalkthrough />

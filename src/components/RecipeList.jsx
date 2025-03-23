@@ -7,6 +7,7 @@ import { Typography, CircularProgress } from "@mui/material";
 import { Link } from "react-router-dom";
 import css from "../styles/RecipeList.module.css";
 import axios from "axios";
+import { RECIPE_ROUTES } from "../routes/routes";
 
 const SearchBar = styled("div")(({ theme }) => ({
   display: "flex",
@@ -140,7 +141,7 @@ export default function RecipeList() {
           {favorites.map((recipe) => (
             <div className={css.recipeCard} key={recipe.id}>
               <Link
-                to={`/recipe/${recipe.id}`}
+                to={RECIPE_ROUTES.RECIPE.replace(":id", recipe.id)}
                 className={css.recipeLink}
                 style={{ width: "100%" }}
               >

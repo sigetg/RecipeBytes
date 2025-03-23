@@ -3,11 +3,12 @@ import { useParams, Link } from "react-router-dom";
 import { Box, CircularProgress, Typography, Button } from "@mui/material";
 import { IngredientsIcon, TipsIcon, SubstitutionIcon } from "../assets/icons";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { Favorite } from "@mui/icons-material";
+import { Favorite, ReceiptOutlined } from "@mui/icons-material";
 import axios from "axios";
 import css from "../styles/RecipeDetails.module.css";
 import { getAuth } from "firebase/auth";
 import { getData, addData } from "../services/firestoreService";
+import { RECIPE_ROUTES } from "../routes/routes";
 
 export default function RecipeDetailView() {
   const { id } = useParams();
@@ -212,7 +213,7 @@ export default function RecipeDetailView() {
             <strong>Total Time:</strong> {recipe.readyInMinutes} mins
           </span>
         )}
-        <Link to={`/recipe/${id}/step1`} className={css.navigation}>
+        <Link to={RECIPE_ROUTES.RECIPE_STEP.replace(":id",recipe.id).replace(":stepNumber","1")} className={css.navigation}>
           START
         </Link>
       </div>

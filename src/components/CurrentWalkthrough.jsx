@@ -9,6 +9,7 @@ import bakingGif from "./../assets/Baking.gif";
 import mixGif from "./../assets/Mix.gif";
 import sauteGif from "./../assets/Saute.gif";
 import dicingGif from "./../assets/Dicing.gif";
+import { RECIPE_ROUTES } from "../routes/routes";
 
 export default function CurrentWalkthrough() {
   const { id, stepIndex } = useParams();
@@ -56,7 +57,7 @@ export default function CurrentWalkthrough() {
     if (currentIndex > 0) {
       const newIndex = currentIndex - 1;
       setCurrentIndex(newIndex);
-      navigate(`/recipe/${id}/step${newIndex + 1}`);
+      navigate(RECIPE_ROUTES.RECIPE_STEP.replace(":id", id).replace(":stepNumber", newIndex), {replace: true});
     }
   };
 
@@ -64,7 +65,7 @@ export default function CurrentWalkthrough() {
     if (currentIndex < instructions.length - 1) {
       const newIndex = currentIndex + 1;
       setCurrentIndex(newIndex);
-      navigate(`/recipe/${id}/step${newIndex + 1}`);
+      navigate(RECIPE_ROUTES.RECIPE_STEP.replace(":id", id).replace(":stepNumber", newIndex), {replace: true});
     }
   };
 

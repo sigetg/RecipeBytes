@@ -8,6 +8,7 @@ import axios from "axios";
 import css from "../styles/Home.module.css";
 import { getAuth } from "firebase/auth";
 import { getData } from "../services/firestoreService";
+import { NAVBAR, RECIPE_ROUTES } from "../routes/routes";
 
 export default function Home() {
   const auth = getAuth();
@@ -169,7 +170,7 @@ export default function Home() {
           ) : (
             suggestions.map((recipe) => (
               <Link
-                to={`/recipe/${recipe.id}`}
+                to={RECIPE_ROUTES.RECIPE.replace(":id", recipe.id)}
                 key={recipe.id}
                 className={css.recipeLink}
               >
@@ -194,7 +195,7 @@ export default function Home() {
           )}
           <Button
             variant="contained"
-            onClick={() => navigate("/recipes")}
+            onClick={() => navigate(NAVBAR.RECIPES)}
             sx={{
               marginTop: "20px",
               backgroundColor: "rgba(48, 108, 163, 0.52)",
@@ -224,7 +225,7 @@ export default function Home() {
           )}
           {favorites.slice(0, 4).map((recipe) => (
             <Link
-              to={`/recipe/${recipe.id}`}
+              to={RECIPE_ROUTES.RECIPE.replace(":id", recipe.id)}
               key={recipe.id}
               className={css.recipeLink}
             >
