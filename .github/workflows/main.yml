@@ -36,6 +36,17 @@ jobs:
 
       - name: Debug - List files after build
         run: ls -R
+      
+      - name: Set up environment variables
+        run: |
+          echo "REACT_APP_SPOONACULAR_API_KEY=${{ secrets.REACT_APP_SPOONACULAR_API_KEY }}" >> $GITHUB_ENV
+          echo "REACT_APP_FIREBASE_API_KEY=${{ secrets.REACT_APP_FIREBASE_API_KEY }}" >> $GITHUB_ENV
+
+      - name: Build Project
+        run: CI='' npm run build
+        env:
+          REACT_APP_SPOONACULAR_API_KEY: ${{ secrets.REACT_APP_SPOONACULAR_API_KEY }}
+          REACT_APP_FIREBASE_API_KEY: ${{ secrets.REACT_APP_FIREBASE_API_KEY }}
 
   deploy:
     needs: build
