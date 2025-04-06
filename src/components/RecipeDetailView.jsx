@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Box, CircularProgress, Typography, Button } from "@mui/material";
 import { IngredientsIcon, TipsIcon, SubstitutionIcon } from "../assets/icons";

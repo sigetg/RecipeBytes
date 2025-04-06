@@ -24,18 +24,18 @@
 
 .header h1 {
   font-family: "Patrick Hand SC", cursive;
-  font-size: 28px; /* Larger header text */
+  font-size: 28px;
 }
 
 .grocery {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr; /* 4 columns */
-  grid-auto-rows: auto; /* Dynamic row heights */
-  grid-gap: 30px; /* Spacing between grid items */
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 30px;
   padding: 20px;
   justify-content: space-between;
   border-radius: 20px;
   font-family: "Inter", sans-serif;
+  min-height: 70vh;
 }
 
 .form {
@@ -94,8 +94,13 @@
   border-radius: 15px;
   margin: 5px;
   padding: 5px 10px;
-  font-size: 14px;
+  font-size: 10px;
   text-align: center;
+
+  white-space: nowrap;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1.2;
 }
 
 .expired {
@@ -109,37 +114,37 @@
 
 .produce,
 .protein,
-.dairy {
-  background-color: rgba(226, 240, 252, 0.5);
-  display: flex;
-  flex-direction: column;
-  padding: 2em;
-  border-radius: 20px;
-  min-height: 65vh;
-  height: 100%;
-  grid-column: span 1; /* Full column for other categories */
-  grid-row: 1 / 3;
-  width: 100%;
-}
-
+.dairy,
 .grain,
 .other {
   background-color: rgba(226, 240, 252, 0.5);
   display: flex;
-  grid-column-start: 4;
   flex-direction: column;
-  padding: 2em;
+  padding: 1.5em;
   border-radius: 20px;
+  grid-column: span 1;
+  grid-row: 1 / 3;
+}
+
+.produce,
+.protein,
+.dairy {
+  min-height: 100vh;
+  grid-row: 1 / 3;
+}
+
+.grain,
+.other {
+  grid-column-start: 4;
   height: auto;
-  grid-column: span 1; /* Shared column for Grains and Other */
 }
 
 .grain {
-  grid-row: span 1; /* First half of the column */
+  grid-row: span 1;
 }
 
 .other {
-  grid-row: span 1; /* Second half of the column */
+  grid-row: span 1;
 }
 
 .noItem {
@@ -149,14 +154,10 @@
   text-align: center;
 }
 
-
 @media (max-width: 600px) {
   .grocery {
     display: flex;
-    flex-wrap: wrap; /* Allow wrapping of items if they overflow horizontally */
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 20px; /* Spacing between items */
+    flex-direction: column;
   }
 
   .produce,
@@ -164,9 +165,7 @@
   .dairy,
   .grain,
   .other {
-    flex: 1 1 calc(100% - 20px); /* Each item takes full width minus gap */
     padding: 1.5em;
-    max-width: 100%; /* Ensure items don't exceed 100% width */
   }
 
   .container h1 {

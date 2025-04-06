@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { css } from '@emotion/react';
 import style from '../styles/SignUp.module.css';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
@@ -27,10 +26,10 @@ const SignUp = () => {
       setShowPassword(!showPassword)
   }
 
-  const validateEmail = (email) => {
-    const re = /\S+@\S+\.\S+/;
-    return re.test(String(email).toLowerCase());
-  };
+  // const validateEmail = (email) => {
+  //   const re = /\S+@\S+\.\S+/;
+  //   return re.test(String(email).toLowerCase());
+  // };
 
   const handleSignUp = async () => {
     try {
