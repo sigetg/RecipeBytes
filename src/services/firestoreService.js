@@ -15,7 +15,7 @@ export const addData = async (userId, collectionName, data) => {
 export const getData = async (userId, collectionName) => {
   try {
     const querySnapshot = await getDocs(collection(db, `users/${userId}/${collectionName}`));
-    const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const data = querySnapshot.docs.map(snapshotDoc => ({ id: snapshotDoc.id, ...snapshotDoc.data() }));
     return data;
   } catch (e) {
     console.error("Error getting documents: ", e);
