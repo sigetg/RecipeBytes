@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import { Navigate } from 'react-router-dom';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import NavigationBar from "./components/Navbar";
 import RecipeList from "./components/RecipeList";
@@ -107,6 +108,7 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route path="*" element={<Navigate to={NAVBAR.LOGIN} />} />
         </Routes>
       </div>
     </Router>
