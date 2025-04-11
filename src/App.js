@@ -5,7 +5,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import NavigationBar from "./components/Navbar";
 import RecipeList from "./components/RecipeList";
 import GroceryList from "./components/GroceryList";
-import Profile from "./components/Profile";
+import Profile from './components/Profile';
 import PantryList from "./components/PantryList";
 import RecipeDetailView from "./components/RecipeDetailView";
 import CurrentWalkthrough from "./components/CurrentWalkthrough";

@@ -6,11 +6,11 @@ import {
   deleteIngredient,
   addIngredient,
   updateIngredient,
-} from "../services/ingredientsService";
+} from "../services/ingredientService";
 import GroceryForm from "./GroceryForm";
 import GroceryCategory from "./GroceryCategory";
 import { createPortal } from "react-dom";
-import { Ingredient } from "../types";
+import { Ingredient } from "../types/ingredient";
 import {
   DndContext,
   DragOverlay,
@@ -39,7 +39,6 @@ const GroceryList: React.FC = () => {
   const [dragging, setDragging] = useState<Ingredient | null>(null);
   const [currentDate] = useState(new Date());
 
-
   const auth = getAuth();
   const user = auth.currentUser;
 
@@ -65,15 +64,29 @@ const GroceryList: React.FC = () => {
     );
   };
 
-  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleFormChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { id, value } = e.target;
     switch (id) {
-      case "title": setTitle(value); break;
-      case "quantity": setQuantity(Number(value)); break;
-      case "unit": setUnit(value); break;
-      case "customUnit": setCustomUnit(value); break;
-      case "category": setCategory(value); break;
-      case "expiration": setExpiration(value); break;
+      case "title":
+        setTitle(value);
+        break;
+      case "quantity":
+        setQuantity(Number(value));
+        break;
+      case "unit":
+        setUnit(value);
+        break;
+      case "customUnit":
+        setCustomUnit(value);
+        break;
+      case "category":
+        setCategory(value);
+        break;
+      case "expiration":
+        setExpiration(value);
+        break;
     }
   };
 
@@ -89,7 +102,12 @@ const GroceryList: React.FC = () => {
     await addIngredient(user!.uid, "grocery", newItem);
     const updated = await getIngredients(user!.uid, "grocery");
     setIngredients(updated);
-    setTitle(""); setQuantity(0); setUnit("unit"); setCustomUnit(""); setCategory("produce"); setExpiration("");
+    setTitle("");
+    setQuantity(0);
+    setUnit("unit");
+    setCustomUnit("");
+    setCategory("produce");
+    setExpiration("");
     setShowForm(false);
   };
 
@@ -137,7 +155,9 @@ const GroceryList: React.FC = () => {
       return;
     }
 
-    updateIngredient(user!.uid, "grocery", active.id.toString(), { category: toCat });
+    updateIngredient(user!.uid, "grocery", active.id.toString(), {
+      category: toCat,
+    });
     setIngredients((prev) =>
       prev.map((i) => (i.id === active.id ? { ...i, category: toCat } : i))
     );
@@ -148,20 +168,29 @@ const GroceryList: React.FC = () => {
     if (item) setDragging(item);
   };
 
-  function generateLabel(ingredient: Ingredient, currentDate: Date): JSX.Element {
+  function generateLabel(
+    ingredient: Ingredient,
+    currentDate: Date
+  ): JSX.Element {
     const getDaysLeft = (expiration: number, current: number): number => {
       return Math.ceil((expiration - current) / (1000 * 60 * 60 * 24));
     };
-  
+
     const daysLeft = getDaysLeft(
       new Date(ingredient.expiration).getTime(),
       currentDate.getTime()
     );
-  
+
     if (daysLeft < 0) {
-      return <span className={`${css.expirationLabel} ${css.expired}`}>EXPIRED</span>;
+      return (
+        <span className={`${css.expirationLabel} ${css.expired}`}>EXPIRED</span>
+      );
     } else if (daysLeft === 0) {
-      return <span className={`${css.expirationLabel} ${css.expired}`}>EXPIRES TODAY</span>;
+      return (
+        <span className={`${css.expirationLabel} ${css.expired}`}>
+          EXPIRES TODAY
+        </span>
+      );
     } else if (daysLeft <= 4) {
       return (
         <span className={`${css.expirationLabel} ${css.soonToExpire}`}>
@@ -169,9 +198,11 @@ const GroceryList: React.FC = () => {
         </span>
       );
     } else {
-      return <span className={css.expirationLabel}>expires in {daysLeft} days</span>;
+      return (
+        <span className={css.expirationLabel}>expires in {daysLeft} days</span>
+      );
     }
-  }  
+  }
 
   return (
     <body className="grocery-body">
@@ -179,7 +210,9 @@ const GroceryList: React.FC = () => {
         <div className={css.header}>
           <h1>Grocery List</h1>
           <Button onClick={handleDeleteSelected}>Delete Selected</Button>
-          <Button onClick={moveSelectedToPantry}>Move Selected to Pantry</Button>
+          <Button onClick={moveSelectedToPantry}>
+            Move Selected to Pantry
+          </Button>
           <Button onClick={toggleForm}>⨁ New Item</Button>
           {showForm && (
             <GroceryForm
@@ -203,7 +236,9 @@ const GroceryList: React.FC = () => {
         >
           <section className={css.grocery}>
             {categories.map((cat) => {
-              const items = ingredients.filter((ing) => ing.category === cat.name);
+              const items = ingredients.filter(
+                (ing) => ing.category === cat.name
+              );
               return (
                 <GroceryCategory
                   key={cat.name}

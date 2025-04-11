@@ -6,11 +6,11 @@ import {
   deleteIngredient,
   getIngredient,
   updateIngredient,
-} from "../services/ingredientsService";
+} from "../services/ingredientService";
 import PantryForm from "./PantryForm";
 import PantryCategory from "./PantryCategory";
 import { createPortal } from "react-dom";
-import { Ingredient } from "../types";
+import { Ingredient } from "../types/ingredient";
 import {
   DndContext,
   DragOverlay,
@@ -38,7 +38,6 @@ const PantryList: React.FC = () => {
   const [expiration, setExpiration] = useState("");
   const [currentDate, setCurrentDate] = useState(new Date());
   const [dragging, setDragging] = useState<Ingredient | null>(null);
-
 
   const auth = getAuth();
   const user = auth.currentUser;
@@ -69,15 +68,29 @@ const PantryList: React.FC = () => {
     );
   };
 
-  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleFormChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { id, value } = e.target;
     switch (id) {
-      case "title": setTitle(value); break;
-      case "quantity": setQuantity(Number(value)); break;
-      case "unit": setUnit(value); break;
-      case "customUnit": setCustomUnit(value); break;
-      case "category": setCategory(value); break;
-      case "expiration": setExpiration(value); break;
+      case "title":
+        setTitle(value);
+        break;
+      case "quantity":
+        setQuantity(Number(value));
+        break;
+      case "unit":
+        setUnit(value);
+        break;
+      case "customUnit":
+        setCustomUnit(value);
+        break;
+      case "category":
+        setCategory(value);
+        break;
+      case "expiration":
+        setExpiration(value);
+        break;
     }
   };
 
@@ -93,7 +106,12 @@ const PantryList: React.FC = () => {
     await addIngredient(user!.uid, "pantry", newItem);
     const updated = await getIngredients(user!.uid, "pantry");
     setIngredients(updated);
-    setTitle(""); setQuantity(0); setUnit(""); setCustomUnit(""); setCategory("produce"); setExpiration("");
+    setTitle("");
+    setQuantity(0);
+    setUnit("");
+    setCustomUnit("");
+    setCategory("produce");
+    setExpiration("");
     setShowForm(false);
   };
 
@@ -115,17 +133,29 @@ const PantryList: React.FC = () => {
     setSelectedItems([]);
   };
 
-  function generateLabel(ingredient: Ingredient, currentDate: Date): JSX.Element {
+  function generateLabel(
+    ingredient: Ingredient,
+    currentDate: Date
+  ): JSX.Element {
     const getDaysLeft = (expiration: number, current: number): number => {
       return Math.ceil((expiration - current) / (1000 * 60 * 60 * 24));
     };
-  
-    const daysLeft = getDaysLeft(ingredient.expiration.getTime(), currentDate.getTime());
-  
+
+    const daysLeft = getDaysLeft(
+      ingredient.expiration.getTime(),
+      currentDate.getTime()
+    );
+
     if (daysLeft < 0) {
-      return <span className={`${css.expirationLabel} ${css.expired}`}>EXPIRED</span>;
+      return (
+        <span className={`${css.expirationLabel} ${css.expired}`}>EXPIRED</span>
+      );
     } else if (daysLeft === 0) {
-      return <span className={`${css.expirationLabel} ${css.expired}`}>EXPIRES TODAY</span>;
+      return (
+        <span className={`${css.expirationLabel} ${css.expired}`}>
+          EXPIRES TODAY
+        </span>
+      );
     } else if (daysLeft <= 4) {
       return (
         <span className={`${css.expirationLabel} ${css.soonToExpire}`}>
@@ -133,36 +163,40 @@ const PantryList: React.FC = () => {
         </span>
       );
     } else {
-      return <span className={css.expirationLabel}>expires in {daysLeft} days</span>;
+      return (
+        <span className={css.expirationLabel}>expires in {daysLeft} days</span>
+      );
     }
   }
-  
+
   const handleDragEnd = (event: DragEndEvent) => {
     setDragging(null);
     const { active, over } = event;
     if (!over) return;
-  
+
     const fromCat = active.data.current?.containerId as string;
-    const toCat   = over.data.current?.containerId  as string;
-  
+    const toCat = over.data.current?.containerId as string;
+
     if (fromCat === toCat) {
       setIngredients((prev) => {
         // split list
         const list = prev.filter((i) => i.category === fromCat);
         const others = prev.filter((i) => i.category !== fromCat);
-    
+
         const oldIndex = list.findIndex((i) => i.id === active.id);
         const newIndex = list.findIndex((i) => i.id === over.id);
-    
+
         const reordered = arrayMove(list, oldIndex, newIndex);
         return [...others, ...reordered];
       });
       return;
     }
-  
+
     // different column -> change category
-    updateIngredient(user!.uid, "pantry", active.id.toString(), { category: toCat });
-  
+    updateIngredient(user!.uid, "pantry", active.id.toString(), {
+      category: toCat,
+    });
+
     setIngredients((prev) =>
       prev.map((i) => (i.id === active.id ? { ...i, category: toCat } : i))
     );
@@ -179,7 +213,9 @@ const PantryList: React.FC = () => {
         <div className={css.header}>
           <h1>Pantry Tracker</h1>
           <Button onClick={handleDeleteSelected}>Delete Selected</Button>
-          <Button onClick={addSelectedToGrocery}>Add Selected to Grocery</Button>
+          <Button onClick={addSelectedToGrocery}>
+            Add Selected to Grocery
+          </Button>
           <Button onClick={toggleForm}>⨁ New Item</Button>
           {showForm && (
             <PantryForm
@@ -195,30 +231,31 @@ const PantryList: React.FC = () => {
           )}
         </div>
 
-        <DndContext 
+        <DndContext
           sensors={sensors}
           collisionDetection={closestCenter}
           onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}
         >
-        <section className={css.pantry}>
+          <section className={css.pantry}>
             {categories.map((cat) => {
-                  const items = ingredients
-                  .filter((ing): ing is Ingredient => !!ing && ing.category === cat.name);
+              const items = ingredients.filter(
+                (ing): ing is Ingredient => !!ing && ing.category === cat.name
+              );
 
               return (
-              <PantryCategory 
-                key={cat.name}
-                name={cat.name}
-                ingredients={items}
-                currentDate={currentDate}
-                selectedItems={selectedItems}
-                onCheckboxChange={handleCheckboxChange}
-                generateLabel={generateLabel}
-              />
-            );
-          })}
-        </section>
+                <PantryCategory
+                  key={cat.name}
+                  name={cat.name}
+                  ingredients={items}
+                  currentDate={currentDate}
+                  selectedItems={selectedItems}
+                  onCheckboxChange={handleCheckboxChange}
+                  generateLabel={generateLabel}
+                />
+              );
+            })}
+          </section>
           {createPortal(
             <DragOverlay>
               {dragging ? (

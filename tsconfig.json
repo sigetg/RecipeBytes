@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "ES2020",          // 1) Specifies which ECMAScript version of JavaScript
-                                 //    TypeScript should output. ES2020 includes modern
-                                 //    features like optional chaining, nullish coalescing, etc.
+    "target": "ES2020", // 1) Specifies which ECMAScript version of JavaScript
+    //    TypeScript should output. ES2020 includes modern
+    //    features like optional chaining, nullish coalescing, etc.
 
     "lib": ["dom", "dom.iterable", "esnext"],
     // 2) Tells the compiler which library declarations (built-in APIs)
@@ -11,40 +11,40 @@
     //    (iterable DOM collections), and "esnext" (latest JavaScript
     //    features like Promise, async/await, etc.).
 
-    "allowJs": true,             // 3) Lets TypeScript compile .js files in addition
-                                 //    to .ts/.tsx. This is handy if you’re migrating
-                                 //    incrementally and still have some JavaScript.
+    "allowJs": true, // 3) Lets TypeScript compile .js files in addition
+    //    to .ts/.tsx. This is handy if you’re migrating
+    //    incrementally and still have some JavaScript.
 
-    "skipLibCheck": true,        // 4) Skips type-checking of .d.ts files from node_modules.
-                                 //    Speeds up builds. If set to 'false,' TypeScript will
-                                 //    check all installed type definitions (which can be slow
-                                 //    and sometimes produce conflicts).
+    "skipLibCheck": true, // 4) Skips type-checking of .d.ts files from node_modules.
+    //    Speeds up builds. If set to 'false,' TypeScript will
+    //    check all installed type definitions (which can be slow
+    //    and sometimes produce conflicts).
 
-    "strict": true,              // 5) Enables all strict type-checking options. It's considered
-                                 //    a best practice as it forces you to write safer, more
-                                 //    type-accurate code.
+    "strict": true, // 5) Enables all strict type-checking options. It's considered
+    //    a best practice as it forces you to write safer, more
+    //    type-accurate code.
 
-    "module": "ESNext",          // 6) Controls how TypeScript generates import/export code. "ESNext"
-                                 //    uses modern ES modules (import/export). If you’re bundling
-                                 //    with webpack, CRA, or Vite, they can handle ES modules fine.
+    "module": "ESNext", // 6) Controls how TypeScript generates import/export code. "ESNext"
+    //    uses modern ES modules (import/export). If you’re bundling
+    //    with webpack, CRA, or Vite, they can handle ES modules fine.
 
-    "moduleResolution": "node",  // 7) The strategy used to resolve module imports. "node" is the
-                                 //    standard for most JavaScript/TypeScript projects, matching
-                                 //    Node.js’ resolution rules (looking in node_modules, etc.).
+    "moduleResolution": "node", // 7) The strategy used to resolve module imports. "node" is the
+    //    standard for most JavaScript/TypeScript projects, matching
+    //    Node.js’ resolution rules (looking in node_modules, etc.).
 
-    "jsx": "react-jsx",          // 8) Specifies how TypeScript should handle JSX syntax. 
-                                 //    - "react" is for older React (pre-17).
-                                 //    - "react-jsx" is for React 17+ with the new JSX transform.
-                                 //    This ensures .tsx files can contain JSX tags (like <div>).
+    "jsx": "react-jsx", // 8) Specifies how TypeScript should handle JSX syntax.
+    //    - "react" is for older React (pre-17).
+    //    - "react-jsx" is for React 17+ with the new JSX transform.
+    //    This ensures .tsx files can contain JSX tags (like <div>).
 
-    "outDir": "dist",            // 9) The folder to place the compiled JavaScript files. 
-                                 //    This won’t matter if you’re using a bundler like CRA or Vite,
-                                 //    but it’s good to specify if you ever run tsc directly.
+    "outDir": "dist", // 9) The folder to place the compiled JavaScript files.
+    //    This won’t matter if you’re using a bundler like CRA or Vite,
+    //    but it’s good to specify if you ever run tsc directly.
 
-    "esModuleInterop": true,     // 10) Makes import/export behavior more closely match
-                                 //     ES Modules. Allows default imports from CommonJS modules,
-                                 //     ensuring things like `import React from 'react'` work
-                                 //     smoothly.
+    "esModuleInterop": true, // 10) Makes import/export behavior more closely match
+    //     ES Modules. Allows default imports from CommonJS modules,
+    //     ensuring things like `import React from 'react'` work
+    //     smoothly.
 
     "forceConsistentCasingInFileNames": true
     // 11) On case-sensitive file systems, it’s easy to accidentally import
@@ -52,10 +52,10 @@
     //     import path’s casing doesn’t match the actual file name exactly,
     //     preventing subtle cross-platform issues.
   },
-  "include": ["src"],            // 12) Tells the TypeScript compiler which directories or files
-                                 //     to include for type-checking. "src" means everything in
-                                 //     your main application folder.
+  "include": ["src", "types"], // 12) Tells the TypeScript compiler which directories or files
+  //     to include for type-checking. "src" means everything in
+  //     your main application folder.
 
-  "exclude": ["node_modules"],    // 13) Tells TypeScript which directories to skip. Typically you
-                                 //     exclude node_modules or any build folders you don’t want to check.
+  "exclude": ["node_modules"] // 13) Tells TypeScript which directories to skip. Typically you
+  //     exclude node_modules or any build folders you don’t want to check.
 }

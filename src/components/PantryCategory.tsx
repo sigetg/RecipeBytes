@@ -1,9 +1,14 @@
 import React from "react";
 import { useDroppable } from "@dnd-kit/core";
-import { SortableContext, useSortable, verticalListSortingStrategy, defaultAnimateLayoutChanges } from "@dnd-kit/sortable";
+import {
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+  defaultAnimateLayoutChanges,
+} from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import css from "../styles/PantryList.module.css";
-import { Ingredient } from "../types";
+import { Ingredient } from "../types/ingredient";
 
 interface PantryCategoryProps {
   name: string;
@@ -16,7 +21,7 @@ interface PantryCategoryProps {
 
 interface SortableIngredientProps {
   ingredient: Ingredient;
-  containerId: string;               // 👈 new
+  containerId: string; // 👈 new
   selectedItems: string[];
   onCheckboxChange: (id: string) => void;
   currentDate: Date;
@@ -25,13 +30,13 @@ interface SortableIngredientProps {
 
 const SortableIngredient: React.FC<SortableIngredientProps> = (props) => {
   const {
-  ingredient,
-  containerId,
-  selectedItems,
-  onCheckboxChange,
-  currentDate,
-  generateLabel,
-} = props;
+    ingredient,
+    containerId,
+    selectedItems,
+    onCheckboxChange,
+    currentDate,
+    generateLabel,
+  } = props;
 
   const {
     isDragging,
@@ -43,13 +48,13 @@ const SortableIngredient: React.FC<SortableIngredientProps> = (props) => {
     active,
   } = useSortable({
     id: ingredient.id,
-    data: { containerId },   
+    data: { containerId },
     animateLayoutChanges: defaultAnimateLayoutChanges,
   });
 
   if (isDragging && active) {
     const height = active.rect.current?.translated?.height ?? 40;
-  
+
     return (
       <li
         ref={setNodeRef}
@@ -58,7 +63,7 @@ const SortableIngredient: React.FC<SortableIngredientProps> = (props) => {
         }}
       />
     );
-  }  
+  }
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -88,14 +93,14 @@ const SortableIngredient: React.FC<SortableIngredientProps> = (props) => {
 };
 
 const PantryCategory: React.FC<PantryCategoryProps> = (props) => {
-  const { 
+  const {
     name: categoryName,
     ingredients,
     selectedItems,
     onCheckboxChange,
     currentDate,
     generateLabel,
-   } = props;
+  } = props;
 
   /** list of items in this category */
   const items = ingredients.filter((ing) => ing.category === categoryName);
@@ -114,7 +119,10 @@ const PantryCategory: React.FC<PantryCategoryProps> = (props) => {
     >
       <h2>{categoryName}</h2>
 
-      <SortableContext items={items.map(i => i.id)} strategy={verticalListSortingStrategy}>
+      <SortableContext
+        items={items.map((i) => i.id)}
+        strategy={verticalListSortingStrategy}
+      >
         <ul>
           {items.map((ingredient) => (
             <SortableIngredient
@@ -125,12 +133,16 @@ const PantryCategory: React.FC<PantryCategoryProps> = (props) => {
               currentDate={currentDate}
               generateLabel={generateLabel}
               containerId={categoryName}
-             />
+            />
           ))}
         </ul>
       </SortableContext>
 
-      {items.length === 0 && <p className={css.noItem}>No items yet. Click 'New Item' to add one now!</p>}
+      {items.length === 0 && (
+        <p className={css.noItem}>
+          No items yet. Click 'New Item' to add one now!
+        </p>
+      )}
     </div>
   );
 };

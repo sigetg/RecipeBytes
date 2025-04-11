@@ -7,7 +7,7 @@ import {
   defaultAnimateLayoutChanges,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Ingredient } from "../types";
+import { Ingredient } from "../types/ingredient";
 import css from "../styles/GroceryList.module.css";
 
 interface GroceryCategoryProps {
@@ -106,7 +106,10 @@ const GroceryCategory: React.FC<GroceryCategoryProps> = ({
     >
       <h2>{categoryName}</h2>
 
-      <SortableContext items={items.map((i) => i.id)} strategy={verticalListSortingStrategy}>
+      <SortableContext
+        items={items.map((i) => i.id)}
+        strategy={verticalListSortingStrategy}
+      >
         <ul>
           {items.map((ingredient) => (
             <SortableIngredient
@@ -123,7 +126,9 @@ const GroceryCategory: React.FC<GroceryCategoryProps> = ({
       </SortableContext>
 
       {items.length === 0 && (
-        <p className={css.noItem}>No items yet. Click 'New Item' to add one now!</p>
+        <p className={css.noItem}>
+          No items yet. Click 'New Item' to add one now!
+        </p>
       )}
     </div>
   );
