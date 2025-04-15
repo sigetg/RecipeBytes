@@ -1,79 +1,127 @@
-
-
+/* ---------- layout containers ---------- */
 .container {
   margin: 1em;
   display: flex;
   flex-direction: column;
-  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
   align-items: center;
   justify-content: center;
+  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
 }
 
-.profileAvatar {
-  align-items: center;
-  padding: 20px;
-  margin: 20px 0px; 
+/* avatar + name/email row */
+.headerRow {
+  display: flex;
+  gap: 2rem;
   width: 100%;
+  align-items: flex-start;
 }
 
-.profileAvatar img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+.avatarColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 15em;
+}
+
+.avatarImg {
   width: 15em;
   border-radius: 50%;
-  background-color: #d9e9f9;
-  align-items: center;
+  background: #d9e9f9;
   border: 2px solid #d9e9f9;
 }
 
+.infoColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- profile avatar (legacy section still used) ---------- */
+.profileAvatar {
+  align-items: center;
+  padding: 20px;
+  margin: 20px 0;
+  width: 50%;
+}
+
+/* ---------- account‑info inputs ---------- */
 .accountInfo {
   display: flex;
   flex-direction: column;
   padding: 10px;
-  margin: 20px 0px; 
+  margin: 20px 0;
   width: 60%;
   justify-content: center;
 }
 
+/* **Editable textboxes should inherit default app font** */
 .accountInfo input {
-  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
   border: none;
   appearance: none;
-  background: #d9e9f9;
+  background: rgba(226, 240, 252, 0.5);
   border-radius: 10px;
-  padding: 0px 10px;
+  padding: 0 10px;
   font-size: 20px;
   text-align: center;
   width: 100%;
+  font-family: inherit;          /* ← default font, not Patrick Hand */
 }
 
-.accountInfo label {
-  padding: 10px; 
+/* All labels use handwriting font */
+label,
+.MuiInputLabel-root {
+  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif !important;
   font-weight: bold;
-  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
-  text-align: left;
 }
 
+/* ---------- name & email wrappers ---------- */
 .name,
 .email {
   padding: 10px;
   border-radius: 55px;
 }
 
+/* ---------- form grid ---------- */
 .form {
-  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
   display: flex;
   flex-direction: column;
   padding: 10px;
-  margin: 20px 0px; 
+  margin: 20px 0;
   justify-content: center;
-  border: 1px solid black;
+  font-family: inherit;
 }
 
-.profileUpdateButton {
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+  width: 100%;
+}
+
+/* ---------- restriction cards ---------- */
+.restrictionCard {
+  width: 100%;
+  background: rgba(226, 240, 252, 0.5);
+  border-radius: 10px;
+  padding: 1em;
+  border: none;                 /* ← removed card border */
+}
+
+/* Chips inside Autocomplete */
+.MuiChip-root {
+  background: #d1e6f9 !important;
   font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
-  display: flex;
+}
+
+/* ---------- buttons ---------- */
+.profileUpdateButton,
+.profileUpdateButton:hover,
+.MuiButton-text {
+  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
+}
+
+/* keep hover styling for save / logout buttons */
+.profileUpdateButton {
   background: #d9e9f9;
   border-radius: 10px;
   font-size: 20px;
@@ -81,11 +129,6 @@
 }
 
 .profileUpdateButton:hover {
-  font-family: "Patrick Hand SC", "Open Sans", "Times New Roman", sans-serif;
-  display: flex;
-  font-weight: medium;
+  font-weight: 500;
   background: #e3effb;
-  border-radius: 10px;
-  font-size: 20px;
-  text-align: center;
 }
