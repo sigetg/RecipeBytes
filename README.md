@@ -2,11 +2,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-# Meet Linda and George, the Recipe Bytes team
+# Meet the Recipe Bytes team
 
-- Two wannabe SWEs just messing around
+- Wannabe SWEs just messing around
 - Linda is neurodiverse, and hates the hassle and unnecessary stress assocated with cooking
 - George has been cooking his whole life ands the cooking club at BC, and wanted a way to organize his recipes.
+- Aimee has been struggling with cooking on a college budget among the daily stresses of college life
 
 # Why We Built This
 
